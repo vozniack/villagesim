@@ -28,6 +28,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/theme.scss",
               "src/styles.sass"
             ],
             "scripts": []
@@ -123,6 +124,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "villageSim"
 }

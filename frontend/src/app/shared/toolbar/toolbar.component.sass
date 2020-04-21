@@ -1,0 +1,65 @@
+mat-toolbar
+  height: 112px
+  display: flex
+  justify-content: center
+  align-items: center
+
+/* Ribbon */
+
+.ribbon-wrapper
+  position: relative
+  z-index: 1
+  margin-top: -12px
+
+h1.post-title
+  visibility: hidden
+  width: 0
+  height: 0
+
+.ribbon
+  font-size: 18px !important
+  text-transform: uppercase
+  width: 512px
+  position: relative
+  background: #f35b5b
+  color: #fff
+  display: flex
+  justify-content: center
+  padding: 16px 32px
+  margin: 32px auto
+
+.ribbon:after, .ribbon:before
+  content: ""
+  position: absolute
+  display: block
+  bottom: -16px
+  border: 1.5em solid #d74545
+  z-index: -1
+
+.ribbon:before
+  left: -32px
+  border-right-width: 1.5em
+  border-left-color: transparent
+
+.ribbon:after
+  right: -32px
+  border-left-width: 1.5em
+  border-right-color: transparent
+
+.ribbon .ribbon-inner:after,
+.ribbon .ribbon-inner:before
+  content: ""
+  position: absolute
+  display: block
+  border-style: solid
+  border-color: #b23232 transparent transparent
+  bottom: -16px
+
+.ribbon .ribbon-inner:before
+  left: 0
+  border-width: 16px 0 0 16px
+
+.ribbon .ribbon-inner:after
+  right: 0
+  border-width: 16px 16px 0 0
+
