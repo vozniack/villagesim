@@ -1,0 +1,24 @@
+<div class="action-bar-container">
+  <div *ngFor="let action of this.actions"
+       [class.parent-action-container-active-children]="action.active && action.children"
+       [class.parent-action-container-active]="action.active && !action.children"
+       class="parent-action-container">
+    <button (click)="this.changeActionActive(action)" [@showContentAnimated]
+            [class.button-margin-bottom]="action.children && action.active"
+            [color]="action.active === false ? 'primary' : 'accent'"
+            class="action-bar-button" mat-flat-button
+            matTooltip="{{action.tooltip}}" matTooltipPosition="before">
+      <mat-icon>{{action.icon}}</mat-icon>
+    </button>
+    <div *ngIf="action.active">
+      <button *ngFor="let child of action.children" [@showContentAnimated]
+              [color]="child.active === false ? 'primary' : 'accent'"
+              class="action-bar-button action-bar-button-child"
+              mat-flat-button matTooltip="{{child.tooltip}}"
+              matTooltipPosition="before">
+        <mat-icon>{{child.icon}}</mat-icon>
+      </button>
+    </div>
+  </div>
+
+</div>

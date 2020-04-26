@@ -1,15 +1,15 @@
-<mat-toolbar color="primary">
+<mat-toolbar [@showContentAnimated] color="primary">
   <div class="ribbon-wrapper">
     <h3 class="ribbon">
       <strong class="ribbon-inner">Village_Simulator</strong>
     </h3>
   </div>
 </mat-toolbar>
-<mat-toolbar class="sub-toolbar" color="primary">
+<mat-toolbar [@showContentAnimated] class="sub-toolbar" color="primary">
   <span class="toolbar-divider"></span>
-  <h4>Status serwera:<span
-    [class]="this.serverStatus === 'OK' ? 'text-success' : 'text-error'"> {{this.serverStatus}}
-  </span></h4>
+  <h4>Serwer:
+    <span [class]="this.serverStatus === 'OK' ? 'text-success' : 'text-error'"> {{this.serverStatus}}</span>
+  </h4>
 </mat-toolbar>
 
 

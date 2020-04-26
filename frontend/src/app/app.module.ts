@@ -11,12 +11,17 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatCardModule} from "@angular/material/card";
 import {HttpClientModule} from "@angular/common/http";
+import {WorldMapComponent} from './shared/world-map/world-map.component';
+import {ActionBarComponent} from './shared/action-bar/action-bar.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    WorldMapComponent,
+    ActionBarComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +31,8 @@ import {HttpClientModule} from "@angular/common/http";
     MatButtonModule,
     MatIconModule,
     MatCardModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]
