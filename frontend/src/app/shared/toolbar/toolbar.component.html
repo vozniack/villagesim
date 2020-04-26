@@ -5,5 +5,11 @@
     </h3>
   </div>
 </mat-toolbar>
+<mat-toolbar class="sub-toolbar" color="primary">
+  <span class="toolbar-divider"></span>
+  <h4>Status serwera:<span
+    [class]="this.serverStatus === 'OK' ? 'text-success' : 'text-error'"> {{this.serverStatus}}
+  </span></h4>
+</mat-toolbar>
 
 

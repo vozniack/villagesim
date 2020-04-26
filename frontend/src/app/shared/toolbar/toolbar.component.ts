@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {StatusService} from "../../service/status/status.service";
 
 @Component({
   selector: 'app-toolbar',
@@ -6,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./toolbar.component.sass']
 })
 export class ToolbarComponent implements OnInit {
+  serverStatus: string = 'Niedostępny'
 
-  constructor() { }
+  constructor(private statusService: StatusService) {
+  }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.getServerStatus();
+  }
+
+  getServerStatus() {
+    this.statusService.getServerStatus().subscribe(response => {
+      this.serverStatus = response.status;
+    })
   }
 
 }
