@@ -25,4 +25,9 @@ public class Unit extends Position {
     @Enumerated(EnumType.STRING)
     @NotNull
     private UnitState unitState;
+
+    public Unit(UnitType unitType) {
+        this.unitType = unitType;
+        this.unitState = UnitState.FREE;
+    }
 }

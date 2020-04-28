@@ -25,4 +25,9 @@ public class Building extends Position {
     @Enumerated(EnumType.STRING)
     @NotNull
     private BuildingState buildingState;
+
+    public Building(BuildingType buildingType) {
+        this.buildingType = buildingType;
+        this.buildingState = BuildingState.NOT_BROKEN;
+    }
 }

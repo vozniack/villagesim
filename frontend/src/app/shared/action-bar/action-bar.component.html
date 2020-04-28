@@ -1,4 +1,5 @@
 <div class="action-bar-container">
+  {{this.selectedAction}}
   <div *ngFor="let action of this.actions"
        [class.parent-action-container-active-children]="action.active && action.children"
        [class.parent-action-container-active]="action.active && !action.children"
@@ -13,8 +14,9 @@
     <div *ngIf="action.active">
       <button *ngFor="let child of action.children" [@showContentAnimated]
               [color]="child.active === false ? 'primary' : 'accent'"
-              class="action-bar-button action-bar-button-child"
-              mat-flat-button matTooltip="{{child.tooltip}}"
+              (click)="this.doAction(child)"
+              class="action-bar-button action-bar-button-child button button-margin-bottom" mat-flat-button
+              matTooltip="{{child.tooltip}}"
               matTooltipPosition="before">
         <mat-icon>{{child.icon}}</mat-icon>
       </button>
