@@ -1,6 +1,7 @@
 package pl.kielce.tu.villageSim.model.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.kielce.tu.villageSim.types.task.TaskState;
 import pl.kielce.tu.villageSim.types.task.TaskType;
 
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Task {
 
     @Id

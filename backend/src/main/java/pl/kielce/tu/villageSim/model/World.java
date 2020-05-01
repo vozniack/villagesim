@@ -1,6 +1,6 @@
 package pl.kielce.tu.villageSim.model;
 
-import lombok.Data;
+import lombok.Getter;
 import pl.kielce.tu.villageSim.model.entity.Task;
 import pl.kielce.tu.villageSim.model.entity.map.Building;
 import pl.kielce.tu.villageSim.model.entity.map.Structure;
@@ -9,22 +9,29 @@ import pl.kielce.tu.villageSim.model.entity.map.Unit;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 public class World {
 
-    /* Properties of world */
-    private static Integer sizeWidth = 128;
+    @Getter
+    public static World INSTANCE = new World();
 
-    private static Integer sizeHeight = 128;
+    /* Properties of world */
+
+    public static Boolean isWorldReady = false;
+
+    public static Integer sizeWidth = 128;
+
+    public static Integer sizeHeight = 128;
 
 
     /* Content of world */
 
-    private static List<Unit> units = new ArrayList<>();
+    public static List<Unit> units = new ArrayList<>();
 
-    private static List<Building> buildings = new ArrayList<>();
+    public static List<Building> buildings = new ArrayList<>();
 
-    private static List<Structure> structures = new ArrayList<>();
+    public static List<Structure> structures = new ArrayList<>();
 
-    private static List<Task> tasks = new ArrayList<>();
+    public static List<Task> tasks = new ArrayList<>();
+
+
 }

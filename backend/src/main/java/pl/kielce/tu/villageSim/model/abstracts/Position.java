@@ -1,15 +1,18 @@
 package pl.kielce.tu.villageSim.model.abstracts;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-public abstract class Position {
+@AllArgsConstructor
+public class Position {
 
-    private Integer[][] positionStart = new Integer[1][1]; // [x][y]
+    private Integer x;
 
-    private Integer[][] positionEnd = new Integer[1][1]; // [x][y]
+    private Integer y;
 
-    /*
-     * For 1-cell units and structures positionStart = positionEnd;
-     */
+    @Override
+    public String toString() {
+        return "[" + x + "][" + y + "]";
+    }
 }

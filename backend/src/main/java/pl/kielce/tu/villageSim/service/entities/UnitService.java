@@ -3,6 +3,7 @@ package pl.kielce.tu.villageSim.service.entities;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import pl.kielce.tu.villageSim.model.abstracts.Position;
 import pl.kielce.tu.villageSim.model.entity.map.Unit;
 import pl.kielce.tu.villageSim.repository.UnitRepository;
 import pl.kielce.tu.villageSim.types.unit.UnitType;
@@ -13,12 +14,10 @@ import pl.kielce.tu.villageSim.types.unit.UnitType;
 public class UnitService {
     private final UnitRepository unitRepository;
 
-    public Unit createUnit(UnitType unitType) {
-        log.info("# Creating new unit: " + unitType);
+    public Unit createUnit(UnitType unitType, Position start, Position end) {
+        log.info("# Creating new unit " + unitType + " at " + start.toString() + " / " + end.toString());
 
-        // #todo create unit started position (near to buildingType SCHOOL or something like that)
-
-        return unitRepository.save(new Unit(unitType));
+        return unitRepository.save(new Unit(unitType, start, end));
     }
 
     public void deleteAllUnits() {

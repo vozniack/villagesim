@@ -2,10 +2,8 @@ package pl.kielce.tu.villageSim.api.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pl.kielce.tu.villageSim.model.abstracts.Position;
 import pl.kielce.tu.villageSim.model.entity.map.Building;
 import pl.kielce.tu.villageSim.service.entities.BuildingService;
 import pl.kielce.tu.villageSim.types.building.BuildingType;
@@ -18,7 +16,7 @@ public class BuildingController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Building createBuilding(BuildingType buildingType) {
-        return buildingService.createBuilding(buildingType);
+    public Building createBuilding(@RequestParam BuildingType buildingType) {
+        return buildingService.createBuilding(buildingType, new Position(64, 64), new Position(64, 64));
     }
 }

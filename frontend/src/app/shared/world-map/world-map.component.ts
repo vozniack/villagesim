@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {WorldService} from "../../service/world/world.service";
 
 @Component({
   selector: 'app-world-map',
@@ -7,10 +8,16 @@ import {Component, OnInit} from '@angular/core';
 })
 export class WorldMapComponent implements OnInit {
 
-  constructor() {
+  constructor(private worldService: WorldService) {
   }
 
   ngOnInit(): void {
+    this.worldService.getWorld();
   }
 
+  generate() {
+    this.worldService.generate().subscribe(response => {
+      console.log(response);
+    })
+  }
 }
