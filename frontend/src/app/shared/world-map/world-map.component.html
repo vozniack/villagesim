@@ -1,3 +1,10 @@
-<div style="display: flex; justify-content: center; margin-top: 64px">
+<div *ngIf="!this.isGenerated" style="display: flex; justify-content: center; margin-top: 64px">
   <button (click)="this.generate()" color="primary" mat-flat-button>Generuj nowy świat</button>
+</div>
+
+{{this.world.sizeWidth}}
+{{this.world.sizeHeight}}
+
+<div #worldMapContainer (window:resize)="this.onResize()" class="world-map-container">
+  <canvas #worldMap class="world-map"></canvas>
 </div>

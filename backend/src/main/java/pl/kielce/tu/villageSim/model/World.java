@@ -12,15 +12,16 @@ import java.util.List;
 public class World {
 
     @Getter
+    @SuppressWarnings("InstantiationOfUtilityClass")
     public static World INSTANCE = new World();
 
     /* Properties of world */
 
     public static Boolean isWorldReady = false;
 
-    public static Integer sizeWidth = 128;
+    public static Integer sizeWidth = 64;
 
-    public static Integer sizeHeight = 128;
+    public static Integer sizeHeight = 64;
 
 
     /* Content of world */
