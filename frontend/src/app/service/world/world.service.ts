@@ -1,26 +1,29 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {WebSocket} from "./util/WebSocket";
+import {WebSocket} from "./util/webSocket";
+import {World} from "../../model/world/world";
+import {Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorldService {
 
-  worldApi: string = 'api/world'
+  private worldApi: string = 'api/world'
 
-  webSocket: any;
+  private worldDataSource = new Subject<World>();
+  world$ = this.worldDataSource.asObservable();
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private webSocket: WebSocket) {
+    this.webSocket.connect();
+
+    this.webSocket.world$.subscribe((value: World) => {
+      this.worldDataSource.next(value);
+    })
   }
 
   generate() {
     return this.httpClient.post<any>(environment.apiUrl + this.worldApi + "/generate", null, {observe: 'response'})
-  }
-
-  getWorld() {
-    this.webSocket = new WebSocket('//localhost:8080/world', '/topic/world', null);
-    this.webSocket.connect();
   }
 }

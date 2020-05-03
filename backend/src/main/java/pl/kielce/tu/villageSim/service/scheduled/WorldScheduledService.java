@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import pl.kielce.tu.villageSim.api.dto.WorldDto;
+import pl.kielce.tu.villageSim.api.mapper.WorldMapper;
 import pl.kielce.tu.villageSim.model.World;
 
 @Component
@@ -14,14 +14,15 @@ import pl.kielce.tu.villageSim.model.World;
 public class WorldScheduledService {
     private final static String WORLD_TOPIC = "/topic/world";
 
+    private final WorldMapper worldMapper;
     private final SimpMessagingTemplate simpMessagingTemplate;
 
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 10124)
     public void sendWorld() {
         if (World.isWorldReady) {
             log.info("## Trying to send world through WebSocket...");
 
-            simpMessagingTemplate.convertAndSend(WORLD_TOPIC, new WorldDto());
+            simpMessagingTemplate.convertAndSend(WORLD_TOPIC, worldMapper.createWorldDto());
         }
     }
 }

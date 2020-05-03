@@ -44,7 +44,7 @@ public class WorldGenerator {
     }
 
     private void generateStructures() {
-        World.structures.add(structureService.createStructure(StructureType.TREE, new Position(64, 64), new Position(64, 64)));
+        structureService.createStructure(StructureType.TREE, new Position(64, 64), new Position(64, 64));
     }
 
     public void generateUnits() {

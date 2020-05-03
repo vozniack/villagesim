@@ -1,20 +1,22 @@
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
+import {World} from "../../../model/world/world";
+import {Injectable} from "@angular/core";
+import {Subject} from "rxjs";
 
+@Injectable({
+  providedIn: 'root'
+})
 export class WebSocket {
 
-  stompClient: any;
+  private stompClient: any;
 
-  endpoint: string = 'http://localhost:8080/world';
+  private endpoint: string = 'http://localhost:8080/world';
+  private topicToReceive: string = '/topic/world';
+  private topicToSend: string = '/app/hello';
 
-  topicToReceive: string = '/topic/world';
-  topicToSend: string = '/app/hello';
-
-
-  public constructor(endpoint: string, topicToReceive: string, topicToSend: string) {
-    this.endpoint = endpoint;
-    this.topicToReceive = topicToReceive;
-  }
+  private worldDataSource = new Subject<World>();
+  world$ = this.worldDataSource.asObservable();
 
   connect() {
     console.log("Initialize Web Socket connection...")
@@ -32,9 +34,7 @@ export class WebSocket {
   }
 
   onMessageReceived(message) {
-    console.log("## Message received")
-
-    // #todo return message with emit @Output
+    this.worldDataSource.next(message.body);
   }
 
   onErrorCallback(error) {

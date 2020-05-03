@@ -5,6 +5,8 @@
 {{this.world.sizeWidth}}
 {{this.world.sizeHeight}}
 
+<span *ngFor="let unit of this.world.units">{{unit.id}}</span>
+
 <div #worldMapContainer (window:resize)="this.onResize()" class="world-map-container">
   <canvas #worldMap class="world-map"></canvas>
 </div>

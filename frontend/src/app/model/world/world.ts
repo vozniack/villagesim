@@ -1,6 +1,6 @@
-import {Unit} from "./Unit";
-import {Structure} from "./Structure";
-import {Building} from "./Building";
+import {Unit} from "./unit";
+import {Structure} from "./structure";
+import {Building} from "./building";
 
 export class World {
 

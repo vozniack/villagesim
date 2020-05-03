@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {WorldService} from "../../service/world/world.service";
-import {World} from "../../model/world/World";
+import {World} from "../../model/world/world";
 
 @Component({
   selector: 'app-world-map',
@@ -22,10 +22,15 @@ export class WorldMapComponent implements OnInit {
   ctx: CanvasRenderingContext2D;
 
   constructor(private worldService: WorldService) {
+    this.worldService.world$.subscribe((value: World) => {
+      if (this.isGenerated) {
+        this.world = value;
+        debugger;
+      }
+    })
   }
 
   ngOnInit(): void {
-    this.worldService.getWorld();
     this.initWorldMap();
   }
 
@@ -44,7 +49,6 @@ export class WorldMapComponent implements OnInit {
     this.ctx.canvas.width = this.worldMapContainer.nativeElement.clientWidth;
     this.ctx.canvas.height = 256
   }
-
 
   onResize() {
     this.setCanvasSize();
