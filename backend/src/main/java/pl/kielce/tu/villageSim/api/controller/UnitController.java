@@ -3,10 +3,12 @@ package pl.kielce.tu.villageSim.api.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import pl.kielce.tu.villageSim.model.World;
 import pl.kielce.tu.villageSim.model.entity.map.Unit;
 import pl.kielce.tu.villageSim.model.util.Position;
 import pl.kielce.tu.villageSim.service.entities.UnitService;
 import pl.kielce.tu.villageSim.types.unit.UnitType;
+import pl.kielce.tu.villageSim.util.RandUtil;
 
 @RestController
 @RequestMapping("/api/units")
@@ -17,6 +19,6 @@ public class UnitController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Unit createUnit(@RequestParam UnitType unitType) {
-        return unitService.createUnit(unitType, new Position(64, 64), new Position(64, 64));
+        return unitService.createUnit(unitType, new Position(RandUtil.generateRand(0, World.sizeWidth), RandUtil.generateRand(0, World.sizeHeight), 1));
     }
 }

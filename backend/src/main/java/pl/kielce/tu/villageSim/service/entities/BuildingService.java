@@ -16,10 +16,10 @@ import java.util.List;
 public class BuildingService {
     private final BuildingRepository buildingRepository;
 
-    public Building createBuilding(BuildingType buildingType, Position start, Position end) {
-        log.info("# Creating new building " + buildingType + " at " + start.toString() + " / " + end.toString());
+    public Building createBuilding(BuildingType buildingType, Position position) {
+        log.info("# Creating new building " + buildingType + " at " + position.toString());
 
-        return buildingRepository.save(new Building(buildingType, start, end));
+        return buildingRepository.save(new Building(buildingType, position));
     }
 
     public List<Building> getAllBuildings() {

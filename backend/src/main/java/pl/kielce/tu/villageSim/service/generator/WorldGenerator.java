@@ -45,9 +45,12 @@ public class WorldGenerator {
     }
 
     private void generateStructures() {
-        for (int i = 0; i < 20; i++) {
-            Position treePosition = new Position(RandUtil.generateRand(0, World.sizeWidth), RandUtil.generateRand(0, World.sizeHeight));
-            structureService.createStructure(StructureType.TREE, treePosition, treePosition);
+        for (int i = 0; i < 100; i++) {
+            structureService.createStructure(StructureType.TREE, RandUtil.generateRand(1, 3), new Position(RandUtil.generateRand(0, World.sizeWidth), RandUtil.generateRand(0, World.sizeHeight), 1));
+        }
+
+        for (int i = 0; i < 100; i++) {
+            structureService.createStructure(StructureType.ROCK, 3, new Position(RandUtil.generateRand(0, World.sizeWidth), RandUtil.generateRand(0, World.sizeHeight), 1));
         }
     }
 

@@ -31,24 +31,20 @@ public class Building {
     /* Position */
 
     @NotNull
-    private Integer positionStartX;
+    private Integer positionX;
 
     @NotNull
-    private Integer positionStartY;
+    private Integer positionY;
 
     @NotNull
-    private Integer positionEndX;
-
-    @NotNull
-    private Integer positionEndY;
+    private Integer size;
 
     /* Custom constructor */
 
-    public Building(BuildingType buildingType, Position start, Position end) {
-        this.positionStartX = start.getX();
-        this.positionStartY = start.getY();
-        this.positionEndX = end.getX();
-        this.positionEndY = end.getY();
+    public Building(BuildingType buildingType, Position position) {
+        this.positionX = position.getX();
+        this.positionY = position.getY();
+        this.size = position.getSize();
 
         this.buildingType = buildingType;
         this.buildingState = BuildingState.NOT_BROKEN;

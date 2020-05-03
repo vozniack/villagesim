@@ -16,10 +16,10 @@ import java.util.List;
 public class UnitService {
     private final UnitRepository unitRepository;
 
-    public Unit createUnit(UnitType unitType, Position start, Position end) {
-        log.info("# Creating new unit " + unitType + " at " + start.toString() + " / " + end.toString());
+    public Unit createUnit(UnitType unitType, Position position) {
+        log.info("# Creating new unit " + unitType + " at " + position.toString());
 
-        return unitRepository.save(new Unit(unitType, start, end));
+        return unitRepository.save(new Unit(unitType, position));
     }
 
     public List<Unit> getAllUnits() {

@@ -11,7 +11,7 @@ import {CanvasService} from "../../service/canvas/canvas.service";
 export class WorldMapComponent implements OnInit {
 
   world: World = new World();
-  isGenerated: boolean = false;
+  isActive: boolean = false;
 
   @ViewChild("worldMapContainer", {static: true})
   worldMapContainer: ElementRef;
@@ -23,7 +23,7 @@ export class WorldMapComponent implements OnInit {
 
   constructor(private worldService: WorldService, private canvasService: CanvasService) {
     this.worldService.world$.subscribe((value: World) => {
-      if (this.isGenerated) {
+      if (this.isActive) {
         this.parseJson(value);
         this.canvasService.drawMap(this.world);
       }
@@ -47,11 +47,19 @@ export class WorldMapComponent implements OnInit {
     // #todo some modal with properties
 
     this.worldService.generate().subscribe(() => {
-      this.isGenerated = true;
+      this.isActive = true;
+      this.resizeMap();
     })
   }
 
   resizeMap() {
-    this.canvasService.resize();
+    this.canvasService.resize(this.world.sizeHeight);
+  }
+
+  pause() {
+    this.isActive = !this.isActive;
+    this.worldService.pause().subscribe(() => {
+
+    });
   }
 }

@@ -30,25 +30,23 @@ public class Unit {
 
     /* Position */
 
-    @NotNull
-    private Integer positionStartX;
+    /* Position */
 
     @NotNull
-    private Integer positionStartY;
+    private Integer positionX;
 
     @NotNull
-    private Integer positionEndX;
+    private Integer positionY;
 
     @NotNull
-    private Integer positionEndY;
+    private Integer size;
 
     /* Custom constructor */
 
-    public Unit(UnitType unitType, Position start, Position end) {
-        this.positionStartX = start.getX();
-        this.positionStartY = start.getY();
-        this.positionEndX = end.getX();
-        this.positionEndY = end.getY();
+    public Unit(UnitType unitType, Position position) {
+        this.positionX = position.getX();
+        this.positionY = position.getY();
+        this.size = position.getSize();
 
         this.unitType = unitType;
         this.unitState = UnitState.FREE;

@@ -26,4 +26,8 @@ export class WorldService {
   generate() {
     return this.httpClient.post<any>(environment.apiUrl + this.worldApi + "/generate", null, {observe: 'response'})
   }
+
+  pause() {
+    return this.httpClient.put<any>(environment.apiUrl + this.worldApi + "/pause", null, {observe: 'response'});
+  }
 }

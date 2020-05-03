@@ -12,8 +12,8 @@ public class World {
 
     public static Boolean isWorldReady = false;
 
-    public static Integer sizeWidth = 64;
+    public static Integer sizeWidth = 96;
 
-    public static Integer sizeHeight = 16;
+    public static Integer sizeHeight = 32;
 
 }
