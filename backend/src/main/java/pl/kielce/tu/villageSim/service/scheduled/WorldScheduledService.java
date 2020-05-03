@@ -17,10 +17,10 @@ public class WorldScheduledService {
     private final WorldMapper worldMapper;
     private final SimpMessagingTemplate simpMessagingTemplate;
 
-    @Scheduled(fixedDelay = 10124)
+    @Scheduled(fixedDelay = 1024)
     public void sendWorld() {
         if (World.isWorldReady) {
-            log.info("## Trying to send world through WebSocket...");
+            log.debug("## Trying to send world through WebSocket...");
 
             simpMessagingTemplate.convertAndSend(WORLD_TOPIC, worldMapper.createWorldDto());
         }

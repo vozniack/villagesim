@@ -24,14 +24,22 @@ export class WorldMapComponent implements OnInit {
   constructor(private worldService: WorldService) {
     this.worldService.world$.subscribe((value: World) => {
       if (this.isGenerated) {
-        this.world = value;
-        debugger;
+        this.parseJson(value);
       }
     })
   }
 
   ngOnInit(): void {
     this.initWorldMap();
+  }
+
+  parseJson(value: any) {
+    this.world.sizeWidth = JSON.parse(value).sizeWidth;
+    this.world.sizeHeight = JSON.parse(value).sizeHeight;
+
+    this.world.units = JSON.parse(value).units;
+    this.world.buildings = JSON.parse(value).buildings;
+    this.world.structures = JSON.parse(value).structures;
   }
 
   generate() {

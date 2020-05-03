@@ -13,8 +13,5 @@ export class World {
   buildings: Building[] = [];
 
   structures: Structure[] = [];
-
-  constructor() {
-  }
 }
 
