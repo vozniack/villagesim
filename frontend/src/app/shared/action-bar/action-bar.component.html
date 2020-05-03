@@ -1,26 +1,20 @@
 <div class="action-bar-container">
-  {{this.selectedAction}}
-  <div *ngFor="let action of this.actions"
-       [class.parent-action-container-active-children]="action.active && action.children"
-       [class.parent-action-container-active]="action.active && !action.children"
+  <div *ngFor="let action of this.actions" [class.parent-action-container-active]="action.active"
        class="parent-action-container">
     <button (click)="this.changeActionActive(action)" [@showContentAnimated]
-            [class.button-margin-bottom]="action.children && action.active"
             [color]="action.active === false ? 'primary' : 'accent'"
-            class="action-bar-button" mat-flat-button
-            matTooltip="{{action.tooltip}}" matTooltipPosition="before">
+            [class.button-primary]="!action.active" [class.button-secondary]="action.active"
+            class="action-bar-button" mat-stroked-button
+            matTooltip="{{action.name}}" matTooltipPosition="below">
       <mat-icon>{{action.icon}}</mat-icon>
     </button>
-    <div *ngIf="action.active">
+    <span *ngIf="action.active">
       <button *ngFor="let child of action.children" [@showContentAnimated]
-              [color]="child.active === false ? 'primary' : 'accent'"
-              (click)="this.doAction(child)"
-              class="action-bar-button action-bar-button-child button button-margin-bottom" mat-flat-button
-              matTooltip="{{child.tooltip}}"
-              matTooltipPosition="before">
-        <mat-icon>{{child.icon}}</mat-icon>
+              (click)="this.doAction(child)" class="action-bar-button action-bar-button-child" color="accent"
+              mat-flat-button matTooltip="{{child.name}}" matTooltipPosition="below">
+         <mat-icon>{{child.icon}}</mat-icon>
       </button>
-    </div>
+    </span>
   </div>
-
 </div>
+

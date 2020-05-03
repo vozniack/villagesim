@@ -1,7 +1,20 @@
-<div *ngIf="!this.isGenerated" style="display: flex; justify-content: center; margin-top: 64px">
-  <button (click)="this.generate()" color="primary" mat-flat-button>Generuj nowy świat</button>
-</div>
+<mat-card class="world-map-card">
+  <mat-card-header class="mat-card-header-primary">
+    <h2>Mapa świata</h2>
+    <span class="card-bar-divider"></span>
+    <button (click)="this.generate()" class="card-bar-button button-border-white" mat-stroked-button>Generuj nowy
+      świat
+    </button>
+    <button class="card-bar-button button-border-white" mat-stroked-button>
+      <mat-icon class="icon-margin-right">linear_scale</mat-icon>
+      Wyświetl statystyki
+    </button>
+  </mat-card-header>
+  <mat-card-content>
+    <div #worldMapContainer (window:resize)="this.resizeMap()" class="world-map-container">
+      <canvas #worldMap class="world-map"></canvas>
+    </div>
+  </mat-card-content>
+</mat-card>
 
-<div #worldMapContainer (window:resize)="this.onResize()" class="world-map-container">
-  <canvas #worldMap class="world-map"></canvas>
-</div>
+

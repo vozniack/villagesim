@@ -1,6 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {WorldService} from "../../service/world/world.service";
 import {World} from "../../model/world/world";
+import {CanvasService} from "../../service/canvas/canvas.service";
 
 @Component({
   selector: 'app-world-map',
@@ -10,7 +11,6 @@ import {World} from "../../model/world/world";
 export class WorldMapComponent implements OnInit {
 
   world: World = new World();
-
   isGenerated: boolean = false;
 
   @ViewChild("worldMapContainer", {static: true})
@@ -21,16 +21,17 @@ export class WorldMapComponent implements OnInit {
 
   ctx: CanvasRenderingContext2D;
 
-  constructor(private worldService: WorldService) {
+  constructor(private worldService: WorldService, private canvasService: CanvasService) {
     this.worldService.world$.subscribe((value: World) => {
       if (this.isGenerated) {
         this.parseJson(value);
+        this.canvasService.drawMap(this.world);
       }
     })
   }
 
   ngOnInit(): void {
-    this.initWorldMap();
+    this.canvasService.initCanvas(this.canvas, this.ctx, this.worldMapContainer);
   }
 
   parseJson(value: any) {
@@ -48,17 +49,7 @@ export class WorldMapComponent implements OnInit {
     })
   }
 
-  initWorldMap() {
-    this.ctx = this.canvas.nativeElement.getContext("2d");
-    this.setCanvasSize();
-  }
-
-  setCanvasSize() {
-    this.ctx.canvas.width = this.worldMapContainer.nativeElement.clientWidth;
-    this.ctx.canvas.height = 256
-  }
-
-  onResize() {
-    this.setCanvasSize();
+  resizeMap() {
+    this.canvasService.resize();
   }
 }

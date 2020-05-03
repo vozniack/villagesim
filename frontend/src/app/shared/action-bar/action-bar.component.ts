@@ -10,7 +10,7 @@ import {UnitService} from "../../service/unit/unit.service";
   animations: [
     trigger('showContentAnimated', [
       transition(':enter', [
-        style({opacity: 0.5}),
+        style({opacity: 0}),
         animate('0.2s linear', style({opacity: 1}))
       ]),
     ]),
@@ -18,21 +18,19 @@ import {UnitService} from "../../service/unit/unit.service";
 })
 export class ActionBarComponent implements OnInit {
 
-  selectedAction: string = null;
-
   actions: any[] = [
     {
-      'icon': 'house', 'tooltip': 'Budynki', 'active': false, 'children': [
-        {'icon': 'home', 'tooltip': 'Dom', 'actionType': 'BUILDING_HOUSE'}
+      'icon': 'home', 'name': 'Budynki', 'active': false, 'children': [
+        {'icon': 'house', 'name': 'Dom', 'actionType': 'BUILDING_HOUSE'}
       ]
     },
     {
-      'icon': 'nature_people', 'tooltip': 'Jednostki', 'active': false, 'children': [
-        {'icon': 'person', 'tooltip': 'Pomocnik', 'actionType': 'UNIT_PEASANT'},
-        {'icon': 'people', 'tooltip': 'Robotnik', 'actionType': 'UNIT_WORKER'}
+      'icon': 'nature_people', 'name': 'Jednostki', 'active': false, 'children': [
+        {'icon': 'person', 'name': 'Pomocnik', 'actionType': 'UNIT_PEASANT'},
+        {'icon': 'person', 'name': 'Robotnik', 'actionType': 'UNIT_WORKER'}
       ]
     },
-    {'icon': 'book', 'tooltip': 'Polecenia', 'active': false}
+    {'icon': 'book', 'name': 'Polecenia', 'active': false}
   ];
 
   constructor(private buildingService: BuildingService, private unitService: UnitService) {
