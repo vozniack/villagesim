@@ -1,10 +1,8 @@
 package pl.kielce.tu.villageSim.model.entity.map;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import pl.kielce.tu.villageSim.model.abstracts.Coordinates;
-import pl.kielce.tu.villageSim.model.abstracts.Position;
+import pl.kielce.tu.villageSim.model.util.Position;
 import pl.kielce.tu.villageSim.types.unit.UnitState;
 import pl.kielce.tu.villageSim.types.unit.UnitType;
 
@@ -13,13 +11,14 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class Unit extends Coordinates {
+public class Unit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    /* Properties */
 
     @Enumerated(EnumType.STRING)
     @NotNull
@@ -29,8 +28,27 @@ public class Unit extends Coordinates {
     @NotNull
     private UnitState unitState;
 
+    /* Position */
+
+    @NotNull
+    private Integer positionStartX;
+
+    @NotNull
+    private Integer positionStartY;
+
+    @NotNull
+    private Integer positionEndX;
+
+    @NotNull
+    private Integer positionEndY;
+
+    /* Custom constructor */
+
     public Unit(UnitType unitType, Position start, Position end) {
-        super(start, end);
+        this.positionStartX = start.getX();
+        this.positionStartY = start.getY();
+        this.positionEndX = end.getX();
+        this.positionEndY = end.getY();
 
         this.unitType = unitType;
         this.unitState = UnitState.FREE;

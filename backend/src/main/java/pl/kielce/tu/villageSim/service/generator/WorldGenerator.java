@@ -4,12 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import pl.kielce.tu.villageSim.model.World;
-import pl.kielce.tu.villageSim.model.abstracts.Position;
+import pl.kielce.tu.villageSim.model.util.Position;
 import pl.kielce.tu.villageSim.service.entities.BuildingService;
 import pl.kielce.tu.villageSim.service.entities.StructureService;
 import pl.kielce.tu.villageSim.service.entities.TaskService;
 import pl.kielce.tu.villageSim.service.entities.UnitService;
 import pl.kielce.tu.villageSim.types.structure.StructureType;
+import pl.kielce.tu.villageSim.util.RandUtil;
 
 @Component
 @Slf4j
@@ -44,11 +45,13 @@ public class WorldGenerator {
     }
 
     private void generateStructures() {
-        structureService.createStructure(StructureType.TREE, new Position(64, 64), new Position(64, 64));
+        for (int i = 0; i < 20; i++) {
+            Position treePosition = new Position(RandUtil.generateRand(0, World.sizeWidth), RandUtil.generateRand(0, World.sizeHeight));
+            structureService.createStructure(StructureType.TREE, treePosition, treePosition);
+        }
     }
 
     public void generateUnits() {
-
         // #todo generate few units in a center of map or next to main building
     }
 }

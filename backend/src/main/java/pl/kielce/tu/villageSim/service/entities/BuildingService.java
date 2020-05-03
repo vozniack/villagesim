@@ -3,10 +3,12 @@ package pl.kielce.tu.villageSim.service.entities;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import pl.kielce.tu.villageSim.model.abstracts.Position;
 import pl.kielce.tu.villageSim.model.entity.map.Building;
+import pl.kielce.tu.villageSim.model.util.Position;
 import pl.kielce.tu.villageSim.repository.BuildingRepository;
 import pl.kielce.tu.villageSim.types.building.BuildingType;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -18,6 +20,10 @@ public class BuildingService {
         log.info("# Creating new building " + buildingType + " at " + start.toString() + " / " + end.toString());
 
         return buildingRepository.save(new Building(buildingType, start, end));
+    }
+
+    public List<Building> getAllBuildings() {
+        return (List<Building>) buildingRepository.findAll();
     }
 
     public void deleteAllBuildings() {

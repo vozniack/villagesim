@@ -3,8 +3,8 @@ package pl.kielce.tu.villageSim.service.entities;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import pl.kielce.tu.villageSim.model.abstracts.Position;
 import pl.kielce.tu.villageSim.model.entity.map.Unit;
+import pl.kielce.tu.villageSim.model.util.Position;
 import pl.kielce.tu.villageSim.repository.UnitRepository;
 import pl.kielce.tu.villageSim.types.unit.UnitType;
 

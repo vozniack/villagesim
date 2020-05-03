@@ -44,6 +44,8 @@ export class WorldMapComponent implements OnInit {
   }
 
   generate() {
+    // #todo some modal with properties
+
     this.worldService.generate().subscribe(() => {
       this.isGenerated = true;
     })

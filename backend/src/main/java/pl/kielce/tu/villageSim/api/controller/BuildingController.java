@@ -3,8 +3,8 @@ package pl.kielce.tu.villageSim.api.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import pl.kielce.tu.villageSim.model.abstracts.Position;
 import pl.kielce.tu.villageSim.model.entity.map.Building;
+import pl.kielce.tu.villageSim.model.util.Position;
 import pl.kielce.tu.villageSim.service.entities.BuildingService;
 import pl.kielce.tu.villageSim.types.building.BuildingType;
 

@@ -1,10 +1,8 @@
 package pl.kielce.tu.villageSim.model.entity.map;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import pl.kielce.tu.villageSim.model.abstracts.Coordinates;
-import pl.kielce.tu.villageSim.model.abstracts.Position;
+import pl.kielce.tu.villageSim.model.util.Position;
 import pl.kielce.tu.villageSim.types.structure.StructureType;
 
 import javax.persistence.*;
@@ -12,13 +10,14 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class Structure extends Coordinates {
+public class Structure {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    /* Properties */
 
     @Enumerated(EnumType.STRING)
     @NotNull
@@ -27,8 +26,27 @@ public class Structure extends Coordinates {
     @NotNull
     private Integer structureLevel;
 
+    /* Position */
+
+    @NotNull
+    private Integer positionStartX;
+
+    @NotNull
+    private Integer positionStartY;
+
+    @NotNull
+    private Integer positionEndX;
+
+    @NotNull
+    private Integer positionEndY;
+
+    /* Custom constructor */
+
     public Structure(StructureType structureType, Position start, Position end) {
-        super(start, end);
+        this.positionStartX = start.getX();
+        this.positionStartY = start.getY();
+        this.positionEndX = end.getX();
+        this.positionEndY = end.getY();
 
         this.structureType = structureType;
         this.structureLevel = 3;

@@ -16,7 +16,7 @@ public class WorldDto {
 
     private Integer sizeWidth = 64;
 
-    private Integer sizeHeight = 64;
+    private Integer sizeHeight = 16;
 
 
     /* Content of world */

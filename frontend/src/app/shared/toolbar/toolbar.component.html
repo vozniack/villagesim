@@ -8,7 +8,7 @@
 <mat-toolbar [@showContentAnimated] class="sub-toolbar" color="primary">
   <app-action-bar></app-action-bar>
   <span class="toolbar-divider"></span>
-  <h4>Serwer:
+  <h4 style="margin-right: 12px">Serwer:
     <span [class]="this.serverStatus === 'OK' ? 'text-success' : 'text-error'"> {{this.serverStatus}}</span>
   </h4>
 </mat-toolbar>
