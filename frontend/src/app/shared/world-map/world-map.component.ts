@@ -2,16 +2,28 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {WorldService} from "../../service/world/world.service";
 import {World} from "../../model/world/world";
 import {CanvasService} from "../../service/canvas/canvas.service";
+import {animate, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-world-map',
   templateUrl: './world-map.component.html',
-  styleUrls: ['./world-map.component.sass']
+  styleUrls: ['./world-map.component.sass'],
+  animations: [
+    trigger('showContentAnimated', [
+      transition(':enter', [
+        style({opacity: 0}),
+        animate('0.2s linear', style({opacity: 1}))
+      ]),
+    ]),
+  ]
 })
 export class WorldMapComponent implements OnInit {
 
   world: World = new World();
+
   isActive: boolean = false;
+  isGenerated: boolean = false;
+  wasFirstGenerated: boolean = false;
 
   @ViewChild("worldMapContainer", {static: true})
   worldMapContainer: ElementRef;
@@ -44,10 +56,16 @@ export class WorldMapComponent implements OnInit {
   }
 
   generate() {
+    this.isActive = false;
+    this.isGenerated = false;
+    this.wasFirstGenerated = true;
+
     // #todo some modal with properties
 
     this.worldService.generate().subscribe(() => {
       this.isActive = true;
+      this.isGenerated = true;
+      this.wasFirstGenerated = true;
       this.resizeMap();
     })
   }

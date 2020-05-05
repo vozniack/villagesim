@@ -14,6 +14,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {WorldMapComponent} from './shared/world-map/world-map.component';
 import {ActionBarComponent} from './shared/action-bar/action-bar.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     MatIconModule,
     MatCardModule,
     HttpClientModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

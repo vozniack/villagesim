@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import pl.kielce.tu.villageSim.model.entity.map.Unit;
 import pl.kielce.tu.villageSim.model.util.Position;
 import pl.kielce.tu.villageSim.repository.UnitRepository;
+import pl.kielce.tu.villageSim.types.unit.UnitState;
 import pl.kielce.tu.villageSim.types.unit.UnitType;
 
 import java.util.List;
@@ -22,8 +23,16 @@ public class UnitService {
         return unitRepository.save(new Unit(unitType, position));
     }
 
+    public void updateUnit(Unit unit) {
+        unitRepository.save(unit);
+    }
+
     public List<Unit> getAllUnits() {
         return (List<Unit>) unitRepository.findAll();
+    }
+
+    public List<Unit> getAllUnitsByUnitState(UnitState unitState) {
+        return (List<Unit>) unitRepository.findAllByUnitState(unitState);
     }
 
     public void deleteAllUnits() {
