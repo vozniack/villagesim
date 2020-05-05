@@ -26,6 +26,10 @@ public class BuildingService {
         return (List<Building>) buildingRepository.findAll();
     }
 
+    public List<Building> getBuildingsByType(BuildingType buildingType) {
+        return (List<Building>) buildingRepository.getAllByBuildingType(buildingType);
+    }
+
     public void deleteAllBuildings() {
         buildingRepository.deleteAll();
     }

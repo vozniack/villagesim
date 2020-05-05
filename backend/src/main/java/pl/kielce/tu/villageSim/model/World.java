@@ -14,6 +14,6 @@ public class World {
 
     public static Integer sizeWidth = 96;
 
-    public static Integer sizeHeight = 32;
+    public static Integer sizeHeight = 42;
 
 }
