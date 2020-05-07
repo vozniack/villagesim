@@ -89,11 +89,7 @@ public class PathFindingService {
 
                 newPathNode = new PathNode(currentNode.getX() + x, currentNode.getY() + y, currentNode.getG(), countDistanceRelativeToCurrentNode(x, y), currentNode);
 
-                if ((x != 0 || y != 0)
-                        && currentNode.getX() + x >= 0 && currentNode.getX() + x < world.length
-                        && currentNode.getY() + y >= 0 && currentNode.getY() + y < world[0].length
-                        && world[currentNode.getX() + x][currentNode.getY() + y] != -1
-                        && !findNeighborInList(openNodes, newPathNode) && !findNeighborInList(closedNodes, newPathNode)) {
+                if (checkConditions(x, y, newPathNode)) {
                     newPathNode.setG(newPathNode.getParent().getG() + 1d);
                     newPathNode.setG(newPathNode.getG() + (double) (world[currentNode.getX() + x][currentNode.getY() + y]));
 
@@ -111,6 +107,14 @@ public class PathFindingService {
 
     private Boolean findNeighborInList(List<PathNode> pathNodes, PathNode pathNode) {
         return pathNodes.stream().anyMatch((neighborNode) -> (neighborNode.getX().equals(pathNode.getX())) && neighborNode.getY().equals(pathNode.getY()));
+    }
+
+    private Boolean checkConditions(Integer x, Integer y, PathNode newPathNode) {
+        return (x != 0 || y != 0)
+                && currentNode.getX() + x >= 0 && currentNode.getX() + x < world.length
+                && currentNode.getY() + y >= 0 && currentNode.getY() + y < world[0].length
+                && world[currentNode.getX() + x][currentNode.getY() + y] != -1
+                && !findNeighborInList(openNodes, newPathNode) && !findNeighborInList(closedNodes, newPathNode);
     }
 
 }
