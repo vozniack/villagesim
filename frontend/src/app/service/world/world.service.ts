@@ -30,4 +30,10 @@ export class WorldService {
   pause() {
     return this.httpClient.put<any>(environment.apiUrl + this.worldApi + "/pause", null, {observe: 'response'});
   }
+
+  /* Temporary */
+
+  getPathNodes(posX: number, posY: number) {
+    return this.httpClient.get<any>(environment.apiUrl + 'api/move?posX=' + posX + "&posY=" + posY);
+  }
 }

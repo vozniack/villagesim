@@ -54,11 +54,11 @@ public class WorldGenerator {
         int worldSize = World.sizeWidth * World.sizeHeight;
 
         for (int i = 0; i < worldSize * 0.1; i++) {
-            structureService.createStructure(StructureType.TREE, RandUtil.generateRand(1, 3), new Coordinates(RandUtil.generateRand(0, World.sizeWidth), RandUtil.generateRand(0, World.sizeHeight), 1));
+            structureService.createStructure(StructureType.TREE, RandUtil.generateRand(1, 3), new Coordinates(RandUtil.generateRand(1, World.sizeWidth - 2), RandUtil.generateRand(1, World.sizeHeight - 2), 1));
         }
 
         for (int i = 0; i < worldSize * 0.05; i++) {
-            structureService.createStructure(StructureType.ROCK, RandUtil.generateRand(1, 3), new Coordinates(RandUtil.generateRand(0, World.sizeWidth), RandUtil.generateRand(0, World.sizeHeight), 1));
+            structureService.createStructure(StructureType.ROCK, RandUtil.generateRand(1, 3), new Coordinates(RandUtil.generateRand(1, World.sizeWidth - 2), RandUtil.generateRand(1, World.sizeHeight - 2), 1));
         }
     }
 
@@ -67,9 +67,9 @@ public class WorldGenerator {
 
         Building warehouse = buildingService.getBuildingsByType(BuildingType.WAREHOUSE).get(0);
 
-        buildingService.createBuilding(BuildingType.HOUSE, new Coordinates(warehouse.getPositionX() - 4, warehouse.getPositionY() - 4, 2));
-        buildingService.createBuilding(BuildingType.HOUSE, new Coordinates(warehouse.getPositionX() + warehouse.getSize() + 1, warehouse.getPositionY() + warehouse.getSize() + 3, 2));
-        buildingService.createBuilding(BuildingType.HOUSE, new Coordinates(warehouse.getPositionX() + warehouse.getSize() + 3, warehouse.getPositionY() - 2, 2));
+        // buildingService.createBuilding(BuildingType.HOUSE, new Coordinates(warehouse.getPositionX() - 4, warehouse.getPositionY() - 4, 2));
+        // buildingService.createBuilding(BuildingType.HOUSE, new Coordinates(warehouse.getPositionX() + warehouse.getSize() + 1, warehouse.getPositionY() + warehouse.getSize() + 3, 2));
+        // buildingService.createBuilding(BuildingType.HOUSE, new Coordinates(warehouse.getPositionX() + warehouse.getSize() + 3, warehouse.getPositionY() - 2, 2));
 
         // #todo random house coordinates
 
@@ -80,10 +80,11 @@ public class WorldGenerator {
         Building warehouse = buildingService.getBuildingsByType(BuildingType.WAREHOUSE).get(0);
 
         unitService.createUnit(UnitType.PEASANT, new Coordinates(warehouse.getPositionX() - 2, warehouse.getPositionY() - 2, 1));
-        unitService.createUnit(UnitType.PEASANT, new Coordinates(warehouse.getPositionX() - 4, warehouse.getPositionY() - 1, 1));
-        unitService.createUnit(UnitType.PEASANT, new Coordinates(warehouse.getPositionX() - 3, warehouse.getPositionY(), 1));
-        unitService.createUnit(UnitType.PEASANT, new Coordinates(warehouse.getPositionX() - 1, warehouse.getPositionY() + 2, 1));
-        unitService.createUnit(UnitType.PEASANT, new Coordinates(warehouse.getPositionX() - 4, warehouse.getPositionY() + 2, 1));
+
+        // unitService.createUnit(UnitType.PEASANT, new Coordinates(warehouse.getPositionX() - 4, warehouse.getPositionY() - 1, 1));
+        // unitService.createUnit(UnitType.PEASANT, new Coordinates(warehouse.getPositionX() - 3, warehouse.getPositionY(), 1));
+        // unitService.createUnit(UnitType.PEASANT, new Coordinates(warehouse.getPositionX() - 1, warehouse.getPositionY() + 2, 1));
+        // unitService.createUnit(UnitType.PEASANT, new Coordinates(warehouse.getPositionX() - 4, warehouse.getPositionY() + 2, 1));
 
         // #todo generate few units next to warehouse
     }

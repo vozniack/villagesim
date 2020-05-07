@@ -80,4 +80,16 @@ export class WorldMapComponent implements OnInit {
 
     });
   }
+
+  look() {
+    this.canvasService.drawMap(this.world);
+
+    let posX = Math.floor(Math.random() * (this.world.sizeWidth - 1)) + 1;
+    let posY = Math.floor(Math.random() * (this.world.sizeHeight - 1)) + 1;
+
+    this.worldService.getPathNodes(posX, posY).subscribe(response => {
+      this.canvasService.drawPath(response.path);
+      this.canvasService.drawUnits(this.world.units);
+    })
+  }
 }

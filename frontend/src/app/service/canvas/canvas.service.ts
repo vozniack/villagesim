@@ -3,6 +3,7 @@ import {World} from "../../model/world/world";
 import {Structure} from "../../model/world/structure";
 import {Unit} from "../../model/world/unit";
 import {Building} from "../../model/world/building";
+import {PathNode} from "../../model/world/pathNode";
 
 @Injectable({
   providedIn: 'root'
@@ -88,6 +89,20 @@ export class CanvasService {
     units.forEach(unit => {
       this.setUnitColor(unit.unitType);
       this.drawRectangle((unit.positionX * this.tileSize) + (this.tileSize * 0.18), (unit.positionY * this.tileSize) + (this.tileSize * 0.18), this.tileSize * 0.55, this.tileSize * 0.55);
+    })
+  }
+
+  /* Temporary drawing */
+
+  drawTarget(posX: number, posY: number) {
+    this.ctx.fillStyle = 'rgba(239, 83, 80, 1.0)';
+    this.drawRectangle(posX * this.tileSize, posY * this.tileSize, this.tileSize, this.tileSize);
+  }
+
+  drawPath(pathNodes: PathNode[]) {
+    pathNodes.forEach(pathNode => {
+      this.ctx.fillStyle = 'rgba(239, 83, 80, 1.0)';
+      this.drawRectangle((pathNode.x * this.tileSize) + (this.tileSize * 0.18), (pathNode.y * this.tileSize) + (this.tileSize * 0.18), this.tileSize * 0.55, this.tileSize * 0.55);
     })
   }
 
