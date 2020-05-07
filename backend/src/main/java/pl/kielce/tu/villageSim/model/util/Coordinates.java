@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Position {
+public class Coordinates {
 
     private Integer x;
 

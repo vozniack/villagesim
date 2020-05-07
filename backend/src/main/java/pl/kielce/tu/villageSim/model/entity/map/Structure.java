@@ -2,7 +2,8 @@ package pl.kielce.tu.villageSim.model.entity.map;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.kielce.tu.villageSim.model.util.Position;
+import pl.kielce.tu.villageSim.model.entity.map.interfaces.EntityPosition;
+import pl.kielce.tu.villageSim.model.util.Coordinates;
 import pl.kielce.tu.villageSim.types.structure.StructureType;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Data
 @NoArgsConstructor
-public class Structure {
+public class Structure implements EntityPosition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,12 +42,20 @@ public class Structure {
 
     /* Custom constructor */
 
-    public Structure(StructureType structureType, Integer structureLevel, Position position) {
-        this.positionX = position.getX();
-        this.positionY = position.getY();
-        this.size = position.getSize();
+    public Structure(StructureType structureType, Integer structureLevel, Coordinates coordinates) {
+        this.positionX = coordinates.getX();
+        this.positionY = coordinates.getY();
+        this.size = coordinates.getSize();
 
         this.structureType = structureType;
         this.structureLevel = structureLevel;
+    }
+
+    /* Custom setter */
+
+    @Override
+    public void setPosition(Integer positionX, Integer positionY) {
+        this.positionX = positionX;
+        this.positionY = positionY;
     }
 }

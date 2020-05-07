@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.kielce.tu.villageSim.model.World;
 import pl.kielce.tu.villageSim.model.entity.map.Building;
-import pl.kielce.tu.villageSim.model.util.Position;
+import pl.kielce.tu.villageSim.model.util.Coordinates;
 import pl.kielce.tu.villageSim.service.entities.BuildingService;
 import pl.kielce.tu.villageSim.types.building.BuildingType;
 import pl.kielce.tu.villageSim.util.RandUtil;
@@ -19,6 +19,6 @@ public class BuildingController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Building createBuilding(@RequestParam BuildingType buildingType) {
-        return buildingService.createBuilding(buildingType, new Position(RandUtil.generateRand(0, World.sizeWidth), RandUtil.generateRand(0, World.sizeHeight), 2));
+        return buildingService.createBuilding(buildingType, new Coordinates(RandUtil.generateRand(0, World.sizeWidth), RandUtil.generateRand(0, World.sizeHeight), 2));
     }
 }

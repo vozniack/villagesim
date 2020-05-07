@@ -8,4 +8,8 @@ public class RandUtil {
     public static Integer generateRand(int min, int max) {
         return random.nextInt(max - min + 1) + min;
     }
+
+    public static boolean generateChance(Double possibility) {
+        return random.nextDouble() <= possibility;
+    }
 }

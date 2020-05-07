@@ -6,8 +6,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import pl.kielce.tu.villageSim.api.mapper.WorldMapper;
-import pl.kielce.tu.villageSim.model.World;
 import pl.kielce.tu.villageSim.service.entities.StructureService;
+import pl.kielce.tu.villageSim.util.SchedulerUtil;
 
 @Component
 @Slf4j
@@ -21,7 +21,7 @@ public class WorldScheduledService {
 
     @Scheduled(fixedDelay = 512)
     public void sendWorld() {
-        if (World.isWorldReady) {
+        if (SchedulerUtil.canPerform()) {
             log.debug("## Trying to send world through WebSocket...");
 
             /* #todo to delete, it's just for communication tests

@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.kielce.tu.villageSim.model.entity.map.Building;
 import pl.kielce.tu.villageSim.model.entity.map.Structure;
-import pl.kielce.tu.villageSim.model.util.Position;
+import pl.kielce.tu.villageSim.model.util.Coordinates;
 import pl.kielce.tu.villageSim.repository.StructureRepository;
 import pl.kielce.tu.villageSim.types.structure.StructureType;
 import pl.kielce.tu.villageSim.util.RandUtil;
@@ -18,10 +18,10 @@ import java.util.List;
 public class StructureService {
     private final StructureRepository structureRepository;
 
-    public void createStructure(StructureType structureType, Integer structureLevel, Position position) {
-        log.info("# Creating new structure " + structureType + " at " + position.toString());
+    public void createStructure(StructureType structureType, Integer structureLevel, Coordinates coordinates) {
+        log.info("# Creating new structure " + structureType + " at " + coordinates.toString());
 
-        structureRepository.save(new Structure(structureType, RandUtil.generateRand(1, 3), position));
+        structureRepository.save(new Structure(structureType, RandUtil.generateRand(1, 3), coordinates));
     }
 
     public List<Structure> getAllStructures() {
