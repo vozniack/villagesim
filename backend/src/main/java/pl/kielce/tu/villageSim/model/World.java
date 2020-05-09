@@ -10,10 +10,10 @@ public class World {
 
     /* Properties of world */
 
-    public static Boolean isWorldReady = false;
+    public static Boolean isActive = false;
 
-    public static Integer sizeWidth = 64;
+    public static Integer sizeWidth = 96;
 
-    public static Integer sizeHeight = 28;
+    public static Integer sizeHeight = 32;
 
 }

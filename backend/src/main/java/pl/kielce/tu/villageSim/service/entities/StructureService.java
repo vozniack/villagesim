@@ -21,11 +21,23 @@ public class StructureService {
     public void createStructure(StructureType structureType, Integer structureLevel, Coordinates coordinates) {
         log.info("# Creating new structure " + structureType + " at " + coordinates.toString());
 
-        structureRepository.save(new Structure(structureType, RandUtil.generateRand(1, 3), coordinates));
+        structureRepository.save(new Structure(structureType, structureLevel, coordinates));
+    }
+
+    public void updateStructure(Structure structure) {
+        structureRepository.save(structure);
     }
 
     public List<Structure> getAllStructures() {
         return (List<Structure>) structureRepository.findAll();
+    }
+
+    public List<Structure> getAllStructuresByType(StructureType structureType) {
+        return (List<Structure>) structureRepository.findAllByStructureType(structureType);
+    }
+
+    public List<Structure> getAllTreesToGrow() {
+        return (List<Structure>) structureRepository.findAllByStructureTypeAndStructureLevelLessThan(StructureType.TREE, 3);
     }
 
     public void deleteAllStructures() {

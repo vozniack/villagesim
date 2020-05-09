@@ -27,7 +27,7 @@ public class WorldGenerator {
     public void generateNewWorld(Integer width, Integer height) {
         log.info("## Generating new world...");
 
-        World.isWorldReady = false;
+        World.isActive = false;
 
         clearWorld();
 
@@ -38,7 +38,7 @@ public class WorldGenerator {
         generateBuildings();
         generateUnits();
 
-        World.isWorldReady = true;
+        World.isActive = true;
 
         log.info("## New world generated");
     }

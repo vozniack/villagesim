@@ -5,6 +5,6 @@ import pl.kielce.tu.villageSim.model.World;
 public class SchedulerUtil {
 
     public static boolean canPerform() {
-        return World.isWorldReady;
+        return World.isActive;
     }
 }

@@ -20,6 +20,6 @@ public class WorldController {
 
     @PutMapping("/pause")
     public void pauseOrUnpause() {
-        World.isWorldReady = !World.isWorldReady;
+        World.isActive = !World.isActive;
     }
 }
