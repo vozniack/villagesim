@@ -3,6 +3,8 @@ import {WorldService} from "../../service/world/world.service";
 import {World} from "../../model/world/world";
 import {CanvasService} from "../../service/canvas/canvas.service";
 import {animate, style, transition, trigger} from "@angular/animations";
+import {MatDialog} from "@angular/material/dialog";
+import {GenerateModalComponent} from "../modals/generate-modal/generate-modal.component";
 
 @Component({
   selector: 'app-world-map',
@@ -33,7 +35,7 @@ export class WorldMapComponent implements OnInit {
 
   ctx: CanvasRenderingContext2D;
 
-  constructor(private worldService: WorldService, private canvasService: CanvasService) {
+  constructor(private worldService: WorldService, private canvasService: CanvasService, private dialog: MatDialog) {
     this.worldService.world$.subscribe((value: World) => {
       if (this.isActive) {
         this.parseJson(value);
@@ -55,12 +57,21 @@ export class WorldMapComponent implements OnInit {
     this.world.structures = JSON.parse(value).structures;
   }
 
+  generateModal() {
+    const dialogRef = this.dialog.open(GenerateModalComponent, {
+      width: '768px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    })
+  }
+
   generate() {
     this.isActive = false;
     this.isGenerated = false;
     this.wasFirstGenerated = true;
 
-    // #todo some modal with properties
 
     this.worldService.generate().subscribe(() => {
       this.isActive = true;

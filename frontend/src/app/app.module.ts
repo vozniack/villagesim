@@ -15,28 +15,41 @@ import {WorldMapComponent} from './shared/world-map/world-map.component';
 import {ActionBarComponent} from './shared/action-bar/action-bar.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {GenerateModalComponent} from "./shared/modals/generate-modal/generate-modal.component";
+import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    ToolbarComponent,
-    WorldMapComponent,
-    ActionBarComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    HttpClientModule,
-    MatTooltipModule,
-    MatProgressSpinnerModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        ToolbarComponent,
+        WorldMapComponent,
+        ActionBarComponent,
+        GenerateModalComponent,
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCardModule,
+        HttpClientModule,
+        MatTooltipModule,
+        MatProgressSpinnerModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule
+    ],
+    providers: [{
+        provide: MatDialogRef,
+        useValue: {}
+    }],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
