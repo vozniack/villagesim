@@ -22,7 +22,7 @@ export class CanvasService {
   treeColor: string = 'rgba(46, 125, 50,'; // alpha canal is filled by method
   rockColor: string = 'rgba(117, 117, 117,'; // alpha canal is filled by method
 
-  warehouseColor: string = 'rgba(135, 0, 0, 1.0)';
+  buildingColor: string = 'rgba(135, 0, 0, 1.0)';
 
   unitColor: string = 'rgba(0, 188, 212, 1.0)';
 
@@ -64,7 +64,7 @@ export class CanvasService {
 
     for (let x = 0; x <= sizeWidth; x++) {
       for (let y = 0; y <= sizeHeight; y++) {
-        this.drawRectangle(x * this.tileSize, y * this.tileSize, this.tileSize - 2, this.tileSize - 2);
+        this.drawRectangle(x * this.tileSize, y * this.tileSize, this.tileSize - 2, this.tileSize - 2, true);
       }
     }
 
@@ -74,42 +74,42 @@ export class CanvasService {
   drawStructures(structures: Structure[]) {
     structures.forEach(structure => {
       this.setStructureColor(structure.structureType, structure.structureLevel);
-      this.drawRectangle(structure.positionX * this.tileSize, structure.positionY * this.tileSize, this.tileSize - 1, this.tileSize - 1);
+      this.drawRectangle(structure.positionX * this.tileSize, structure.positionY * this.tileSize, this.tileSize - 1, this.tileSize - 1, true);
     })
   }
 
   drawBuildings(building: Building[]) {
     building.forEach(building => {
-      this.setBuildingColor(building.buildingType);
-      this.drawRectangle(building.positionX * this.tileSize, building.positionY * this.tileSize, (this.tileSize * building.size) - 1, (this.tileSize * building.size) - 1);
+      this.setBuildingColor();
+      this.drawRectangle(building.positionX * this.tileSize, building.positionY * this.tileSize, (this.tileSize * building.size) - 1, (this.tileSize * building.size) - 1, building.buildingState !== 'PLAN');
     })
   }
 
   drawUnits(units: Unit[]) {
     units.forEach(unit => {
-      this.setUnitColor(unit.unitType);
-      this.drawRectangle((unit.positionX * this.tileSize) + (this.tileSize * 0.18), (unit.positionY * this.tileSize) + (this.tileSize * 0.18), this.tileSize * 0.55, this.tileSize * 0.55);
+      this.setUnitColor();
+      this.drawRectangle((unit.positionX * this.tileSize) + (this.tileSize * 0.18), (unit.positionY * this.tileSize) + (this.tileSize * 0.18), this.tileSize * 0.55, this.tileSize * 0.55, true);
     })
   }
 
   /* Temporary drawing */
 
-  drawTarget(posX: number, posY: number) {
-    this.ctx.fillStyle = 'rgba(239, 83, 80, 1.0)';
-    this.drawRectangle(posX * this.tileSize, posY * this.tileSize, this.tileSize, this.tileSize);
-  }
-
   drawPath(pathNodes: PathNode[]) {
     pathNodes.forEach(pathNode => {
       this.ctx.fillStyle = 'rgba(239, 83, 80, 1.0)';
-      this.drawRectangle((pathNode.x * this.tileSize) + (this.tileSize * 0.18), (pathNode.y * this.tileSize) + (this.tileSize * 0.18), this.tileSize * 0.55, this.tileSize * 0.55);
+      this.drawRectangle((pathNode.x * this.tileSize) + (this.tileSize * 0.18), (pathNode.y * this.tileSize) + (this.tileSize * 0.18), this.tileSize * 0.55, this.tileSize * 0.55, true);
     })
   }
 
   /* Support methods */
 
-  drawRectangle(x, y, width, height) {
-    this.ctx.fillRect(x, y, width, height);
+  drawRectangle(x, y, width, height, fill: boolean) {
+    if (fill) {
+      this.ctx.fillRect(x, y, width, height);
+    } else {
+      this.ctx.strokeRect(x, y, width, height);
+    }
+
   }
 
   drawCircle(x, y, radius) {
@@ -130,27 +130,12 @@ export class CanvasService {
     }
   }
 
-  setBuildingColor(buildingType: string) {
-    switch (buildingType) {
-      case 'WAREHOUSE':
-        this.ctx.fillStyle = this.warehouseColor;
-        break;
-
-      case 'HOUSE':
-        this.ctx.fillStyle = this.warehouseColor;
-        break;
-    }
+  setBuildingColor() {
+    this.ctx.fillStyle = this.buildingColor;
+    this.ctx.strokeStyle = this.buildingColor;
   }
 
-  setUnitColor(unitType: string) {
-    switch (unitType) {
-      case 'PEASANT':
-        this.ctx.fillStyle = this.unitColor;
-        break;
-
-      case 'WORKER':
-        this.ctx.fillStyle = this.unitColor;
-        break;
-    }
+  setUnitColor() {
+    this.ctx.fillStyle = this.unitColor;
   }
 }

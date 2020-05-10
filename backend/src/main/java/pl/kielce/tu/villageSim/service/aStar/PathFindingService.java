@@ -3,14 +3,14 @@ package pl.kielce.tu.villageSim.service.aStar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.kielce.tu.villageSim.model.entity.map.Unit;
-import pl.kielce.tu.villageSim.util.components.PathFindingUtil;
+import pl.kielce.tu.villageSim.util.components.WorldMapUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PathFindingService {
-    private final PathFindingUtil pathFindingUtil;
+    private final WorldMapUtil worldMapUtil;
     private final Boolean diagonalMove = false;
     private Integer posXStart, posYStart;
     private Integer posXEnd, posYEnd;
@@ -24,8 +24,8 @@ public class PathFindingService {
     private PathNode currentNode;
 
     @Autowired
-    public PathFindingService(PathFindingUtil pathFindingUtil) {
-        this.pathFindingUtil = pathFindingUtil;
+    public PathFindingService(WorldMapUtil worldMapUtil) {
+        this.worldMapUtil = worldMapUtil;
     }
 
     public List<PathNode> findPathTo(Unit unit, Integer posXEnd, Integer posYEnd) {
@@ -65,7 +65,7 @@ public class PathFindingService {
         this.posXEnd = posXEnd;
         this.posYEnd = posYEnd;
 
-        this.world = pathFindingUtil.prepareWorldArray();
+        this.world = worldMapUtil.prepareWorldArray(0, -1);
 
         this.openNodes = new ArrayList<>();
         this.closedNodes = new ArrayList<>();

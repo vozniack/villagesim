@@ -21,7 +21,9 @@ export class ActionBarComponent implements OnInit {
   actions: any[] = [
     {
       'icon': 'home', 'name': 'Budynki', 'active': false, 'children': [
-        {'icon': 'house', 'name': 'Dom', 'actionType': 'BUILDING_HOUSE'}
+        {'icon': 'house', 'name': 'Dom', 'actionType': 'BUILDING_HOUSE'},
+        {'icon': 'house', 'name': 'Szkoła', 'actionType': 'BUILDING_SCHOOL'},
+        {'icon': 'house', 'name': 'Gospoda', 'actionType': 'BUILDING_INN'}
       ]
     },
     {

@@ -42,13 +42,13 @@ public class Building implements EntityPosition {
 
     /* Custom constructor */
 
-    public Building(BuildingType buildingType, Coordinates coordinates) {
+    public Building(BuildingType buildingType, BuildingState buildingState, Coordinates coordinates) {
         this.positionX = coordinates.getX();
         this.positionY = coordinates.getY();
         this.size = coordinates.getSize();
 
         this.buildingType = buildingType;
-        this.buildingState = BuildingState.NOT_BROKEN;
+        this.buildingState = buildingState;
     }
 
     /* Custom setter */

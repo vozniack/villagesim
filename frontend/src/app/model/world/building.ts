@@ -4,6 +4,8 @@ export class Building {
 
   buildingType: string;
 
+  buildingState: string;
+
   positionX: number;
 
   positionY: number;
