@@ -1,0 +1,121 @@
+<div class="header-title-container">
+  <h1 class="text-primary text-bold header-title">PARAMETRY ŚWIATA</h1>
+  <button (click)="this.default()" class="default-button" color="primary" mat-stroked-button>Wartości domyślne</button>
+</div>
+
+
+<div class="row">
+  <div class="col-4">
+    <h4 class="section-title">Rozmiar świata</h4>
+  </div>
+  <div class="col-4">
+    <mat-form-field class="full-width">
+      <mat-label>Szerokość</mat-label>
+      <label>
+        <input [(ngModel)]="this.worldParameters.width" matInput max="256" min="16" required
+               type="number">
+      </label>
+    </mat-form-field>
+  </div>
+  <div class="col-4">
+    <mat-form-field class="full-width">
+      <mat-label>Wysokość</mat-label>
+      <label>
+        <input [(ngModel)]="this.worldParameters.height" matInput max="256" min="16" required
+               type="number">
+      </label>
+    </mat-form-field>
+  </div>
+</div>
+<div class="row">
+  <div class="col-4">
+    <h4 class="section-title">Współczynniki generatora</h4>
+  </div>
+  <div class="col-4">
+    <mat-form-field class="full-width">
+      <mat-label>Gęstość drzew</mat-label>
+      <label>
+        <input [(ngModel)]="this.worldParameters.treeFactor" matInput max="1" min="0.01" required step="0.01"
+               type="number">
+      </label>
+    </mat-form-field>
+  </div>
+  <div class="col-4">
+    <mat-form-field class="full-width">
+      <mat-label>Gęstość kamieni</mat-label>
+      <label>
+        <input [(ngModel)]="this.worldParameters.rockFactor" matInput max="1" min="0.01" required step="0.01"
+               type="number">
+      </label>
+    </mat-form-field>
+  </div>
+</div>
+<div class="row">
+  <div class="col-4">
+    <h4 class="section-title">Zasoby początkowe</h4>
+  </div>
+  <div class="col-2">
+    <mat-form-field class="full-width">
+      <mat-label>Drewno</mat-label>
+      <label>
+        <input [(ngModel)]="this.worldParameters.wood" matInput max="512" min="0" required
+               type="number">
+      </label>
+    </mat-form-field>
+  </div>
+  <div class="col-2">
+    <mat-form-field class="full-width">
+      <mat-label>Kamień</mat-label>
+      <label>
+        <input [(ngModel)]="this.worldParameters.rock" matInput max="512" min="0" required
+               type="number">
+      </label>
+    </mat-form-field>
+  </div>
+  <div class="col-2">
+    <mat-form-field class="full-width">
+      <mat-label>Pożywienie</mat-label>
+      <label>
+        <input [(ngModel)]="this.worldParameters.food" matInput max="512" min="0" required
+               type="number">
+      </label>
+    </mat-form-field>
+  </div>
+  <div class="col-2">
+    <mat-form-field class="full-width">
+      <mat-label>Złoto</mat-label>
+      <label>
+        <input [(ngModel)]="this.worldParameters.gold" matInput max="512" min="0" required
+               type="number">
+      </label>
+    </mat-form-field>
+  </div>
+</div>
+<div class="row">
+  <div class="col-4">
+    <h4 class="section-title">Jednostki początkowe</h4>
+  </div>
+  <div class="col-4">
+    <mat-form-field class="full-width">
+      <mat-label>Robotnicy</mat-label>
+      <label>
+        <input [(ngModel)]="this.worldParameters.peasants" matInput max="16" min="1" required
+               type="number">
+      </label>
+    </mat-form-field>
+  </div>
+  <div class="col-4">
+    <mat-form-field class="full-width">
+      <mat-label>Pracownicy</mat-label>
+      <label>
+        <input [(ngModel)]="this.worldParameters.workers" matInput max="16" min="1" required
+               type="number">
+      </label>
+    </mat-form-field>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <button (click)="this.save()" class="full-width save-button" color="primary" mat-flat-button>Generuj świat</button>
+  </div>
+</div>

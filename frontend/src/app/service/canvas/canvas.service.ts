@@ -147,6 +147,10 @@ export class CanvasService {
       case 'PEASANT':
         this.ctx.fillStyle = this.unitColor;
         break;
+
+      case 'WORKER':
+        this.ctx.fillStyle = this.unitColor;
+        break;
     }
   }
 }

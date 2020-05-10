@@ -1,6 +1,7 @@
 package pl.kielce.tu.villageSim.service.scheduled;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import pl.kielce.tu.villageSim.service.entities.UnitService;
 import pl.kielce.tu.villageSim.types.unit.UnitState;
@@ -14,14 +15,15 @@ public class MoveScheduledService {
     private final UnitService unitService;
     private final PositionUtil positionUtil;
 
+    @Scheduled(fixedRate = 512)
     public void moveFreeUnit() {
         if (SchedulerUtil.canPerform()) {
             unitService.getAllUnitsByUnitState(UnitState.FREE).forEach(unit -> {
-                if (RandUtil.generateChance(0.25)) {
+                if (RandUtil.generateChance(0.1)) {
                     Integer positionX = unit.getPositionX() + RandUtil.generateRand(-1, 1);
                     Integer positionY = unit.getPositionY() + RandUtil.generateRand(-1, 1);
 
-                    if (positionUtil.isCellEmpty(positionX, positionY)) {
+                    if (positionUtil.isCellEmpty(positionX, positionY) && positionUtil.isNearWarehouse(positionX, positionY, 4)) {
                         unit.setPosition(positionX, positionY);
                         unitService.updateUnit(unit);
                     }

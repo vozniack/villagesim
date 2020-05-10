@@ -19,6 +19,6 @@ public class UnitController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Unit createUnit(@RequestParam UnitType unitType) {
-        return unitService.createUnit(unitType, new Coordinates(RandUtil.generateRand(0, World.sizeWidth), RandUtil.generateRand(0, World.sizeHeight), 1));
+        return unitService.createUnit(unitType, new Coordinates(RandUtil.generateRand(0, World.SIZE_WIDTH), RandUtil.generateRand(0, World.SIZE_HEIGHT), 1));
     }
 }

@@ -3,22 +3,23 @@
     <h2>Mapa świata</h2>
     <span class="card-bar-divider"></span>
     <button (click)="this.look()" class="card-bar-button" color="accent" mat-flat-button>Pa na to</button>
-    <button (click)="this.generateModal()" class="card-bar-button button-border-white" mat-stroked-button>Generuj nowy
-      świat
+    <button (click)="this.generateModal()" *ngIf="isActive || isGenerated" class="card-bar-button button-border-white"
+            mat-stroked-button>Generuj nowy świat
     </button>
-    <button class="card-bar-button button-border-white" mat-stroked-button>
+    <button *ngIf="isActive || isGenerated" class="card-bar-button button-border-white" mat-stroked-button>
       <mat-icon class="icon-margin-right">linear_scale</mat-icon>
       Wyświetl statystyki
     </button>
     <button (click)="this.pause()" [class.button-warn]="!isActive" [color]="this.isActive ? 'accent' : 'warn'"
-            [disabled]="!this.isGenerated" class="card-bar-button" color="accent" mat-flat-button matTooltip="Pauza"
-            matTooltipPosition="below">
+            *ngIf="isActive || isGenerated" [disabled]="!this.isGenerated" class="card-bar-button" color="accent"
+            mat-flat-button matTooltip="Pauza" matTooltipPosition="below">
       <mat-icon>pause</mat-icon>
     </button>
   </mat-card-header>
   <mat-card-content (window:resize)="this.resizeMap()">
     <div *ngIf="!wasFirstGenerated" [@showContentAnimated] class="startup-container">
-      <button (click)="this.generate()" color="primary" mat-flat-button>Wygeneruj świat by rozpocząć symulację</button>
+      <button (click)="this.generateModal()" color="primary" mat-flat-button>Wygeneruj świat by rozpocząć symulację
+      </button>
     </div>
     <div *ngIf="!isGenerated && wasFirstGenerated" [@showContentAnimated] class="loading-spinner">
       <mat-progress-spinner color="primary" diameter="60" mode="indeterminate"></mat-progress-spinner>

@@ -10,10 +10,20 @@ public class World {
 
     /* Properties of world */
 
-    public static Boolean isActive = false;
+    public static Boolean IS_ACTIVE = false;
 
-    public static Integer sizeWidth = 96;
+    public static Integer SIZE_WIDTH = 0;
 
-    public static Integer sizeHeight = 32;
+    public static Integer SIZE_HEIGHT = 0;
+
+    /* Resources */
+
+    public static Integer WOOD = 0;
+
+    public static Integer ROCK = 0;
+
+    public static Integer FOOD = 0;
+
+    public static Integer GOLD = 0;
 
 }

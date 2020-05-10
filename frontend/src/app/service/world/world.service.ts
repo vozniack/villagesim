@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {WebSocket} from "./util/webSocket";
 import {World} from "../../model/world/world";
 import {Subject} from "rxjs";
+import {WorldParameters} from "../../model/others/worldParameters";
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,17 @@ export class WorldService {
     })
   }
 
-  generate() {
-    return this.httpClient.post<any>(environment.apiUrl + this.worldApi + "/generate", null, {observe: 'response'})
+  getWorldParameters() {
+    return this.httpClient.get<any>(environment.apiUrl + this.worldApi + "/parameters");
+  }
+
+  generate(worldParameters: WorldParameters) {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
+
+    return this.httpClient.post<any>(environment.apiUrl + this.worldApi + "/generate", JSON.stringify(worldParameters), {
+      headers: headers,
+      observe: 'response'
+    })
   }
 
   pause() {

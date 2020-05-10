@@ -19,6 +19,6 @@ public class BuildingController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Building createBuilding(@RequestParam BuildingType buildingType) {
-        return buildingService.createBuilding(buildingType, new Coordinates(RandUtil.generateRand(0, World.sizeWidth), RandUtil.generateRand(0, World.sizeHeight), 2));
+        return buildingService.createBuilding(buildingType, new Coordinates(RandUtil.generateRand(0, World.SIZE_WIDTH), RandUtil.generateRand(0, World.SIZE_HEIGHT), 2));
     }
 }

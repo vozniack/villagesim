@@ -4,7 +4,8 @@ import {World} from "../../model/world/world";
 import {CanvasService} from "../../service/canvas/canvas.service";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {MatDialog} from "@angular/material/dialog";
-import {GenerateModalComponent} from "../modals/generate-modal/generate-modal.component";
+import {ModalGenerate} from "../modals/generate-modal/modal-generate.component";
+import {WorldParameters} from "../../model/others/worldParameters";
 
 @Component({
   selector: 'app-world-map',
@@ -26,6 +27,8 @@ export class WorldMapComponent implements OnInit {
   isActive: boolean = false;
   isGenerated: boolean = false;
   wasFirstGenerated: boolean = false;
+
+  worldParameters: WorldParameters = new WorldParameters();
 
   @ViewChild("worldMapContainer", {static: true})
   worldMapContainer: ElementRef;
@@ -58,26 +61,33 @@ export class WorldMapComponent implements OnInit {
   }
 
   generateModal() {
-    const dialogRef = this.dialog.open(GenerateModalComponent, {
-      width: '768px'
-    });
+    this.worldService.getWorldParameters().subscribe(response => {
+      this.worldParameters = response;
 
-    dialogRef.afterClosed().subscribe(result => {
+      const dialogRef = this.dialog.open(ModalGenerate, {
+        width: '768px',
+        data: this.worldParameters
+      });
 
-    })
-  }
+      dialogRef.afterClosed().subscribe(result => {
+        if (result != null) {
+          this.wasFirstGenerated = true;
+          this.isGenerated = false;
 
-  generate() {
-    this.isActive = false;
-    this.isGenerated = false;
-    this.wasFirstGenerated = true;
+          let worldParameters: WorldParameters = JSON.parse(result.worldParameters);
 
+          this.worldService.generate(worldParameters).subscribe(response => {
+            if (response.status === 201) {
+              this.isActive = true;
+              this.isGenerated = true;
+              this.wasFirstGenerated = true;
+              this.resizeMap();
+            }
 
-    this.worldService.generate().subscribe(() => {
-      this.isActive = true;
-      this.isGenerated = true;
-      this.wasFirstGenerated = true;
-      this.resizeMap();
+            // #todo some error message
+          })
+        }
+      })
     })
   }
 

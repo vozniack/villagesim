@@ -18,10 +18,10 @@ public class PathFindingUtil {
     private final UnitService unitService;
 
     public Integer[][] prepareWorldArray() {
-        Integer[][] array = new Integer[World.sizeWidth][World.sizeHeight];
+        Integer[][] array = new Integer[World.SIZE_WIDTH][World.SIZE_HEIGHT];
 
-        for (int i = 0; i < World.sizeWidth; i++) {
-            for (int j = 0; j < World.sizeHeight; j++) {
+        for (int i = 0; i < World.SIZE_WIDTH; i++) {
+            for (int j = 0; j < World.SIZE_HEIGHT; j++) {
                 array[i][j] = 0;
             }
         }
@@ -51,8 +51,8 @@ public class PathFindingUtil {
 
     // #todo to remove
     private void printArray(Integer[][] array) {
-        for (int i = 0; i < World.sizeWidth; i++) {
-            for (int j = 0; j < World.sizeHeight; j++) {
+        for (int i = 0; i < World.SIZE_WIDTH; i++) {
+            for (int j = 0; j < World.SIZE_HEIGHT; j++) {
                 System.out.print("[  " + array[i][j] + "  ]");
             }
 
