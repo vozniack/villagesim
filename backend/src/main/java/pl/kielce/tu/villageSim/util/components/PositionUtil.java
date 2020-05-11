@@ -8,25 +8,25 @@ import pl.kielce.tu.villageSim.model.entity.map.Structure;
 import pl.kielce.tu.villageSim.model.entity.map.Unit;
 import pl.kielce.tu.villageSim.model.entity.map.interfaces.EntityPosition;
 import pl.kielce.tu.villageSim.model.util.Coordinates;
-import pl.kielce.tu.villageSim.service.entities.BuildingService;
-import pl.kielce.tu.villageSim.service.entities.StructureService;
-import pl.kielce.tu.villageSim.service.entities.UnitService;
+import pl.kielce.tu.villageSim.repository.BuildingRepository;
+import pl.kielce.tu.villageSim.repository.StructureRepository;
+import pl.kielce.tu.villageSim.repository.UnitRepository;
 import pl.kielce.tu.villageSim.types.building.BuildingType;
 import pl.kielce.tu.villageSim.util.BuildingUtil;
 import pl.kielce.tu.villageSim.util.RandUtil;
 
 @Component
 public class PositionUtil {
-    private final StructureService structureService;
-    private final BuildingService buildingService;
-    private final UnitService unitService;
     private final WorldMapUtil worldMapUtil;
+    private final BuildingRepository buildingRepository;
+    private final StructureRepository structureRepository;
+    private final UnitRepository unitRepository;
 
-    public PositionUtil(@Lazy StructureService structureService, @Lazy BuildingService buildingService, @Lazy UnitService unitService, @Lazy WorldMapUtil worldMapUtil) {
-        this.structureService = structureService;
-        this.buildingService = buildingService;
-        this.unitService = unitService;
+    public PositionUtil(@Lazy WorldMapUtil worldMapUtil, BuildingRepository buildingRepository, StructureRepository structureRepository, UnitRepository unitRepository) {
         this.worldMapUtil = worldMapUtil;
+        this.buildingRepository = buildingRepository;
+        this.structureRepository = structureRepository;
+        this.unitRepository = unitRepository;
     }
 
     public Coordinates getNewBuildingCoordinates(BuildingType buildingType) {
@@ -44,18 +44,18 @@ public class PositionUtil {
             positionX = RandUtil.generateRand(0, World.SIZE_WIDTH - 1);
             positionY = RandUtil.generateRand(0, World.SIZE_HEIGHT - 1);
 
-            counter++;
-
             if (worldMap[positionX][positionY] == buildingCode) {
-                areCoordinatesOk = checkNeighbourhood(positionX, positionY, size, worldMap) && checkNeighbourhood(positionX, positionY, size);
+                counter++;
+                areCoordinatesOk = checkNeighbourhood(positionX, positionY, size, worldMap) && checkNeighbourhood(positionX, positionY, size, false);
             }
 
-            if (counter > 10) {
+            if (counter > 16) {
                 buildingCode++;
             }
 
-            if (buildingCode > 5) {
+            if (buildingCode > 4) {
                 buildingCode = 1;
+                counter = 0;
             }
 
         } while (!areCoordinatesOk);
@@ -96,7 +96,7 @@ public class PositionUtil {
             positionX = RandUtil.generateRand(entityPosition.getPositionX() - distance, entityPosition.getPositionX() + entityPosition.getSize() + distance);
             positionY = RandUtil.generateRand(entityPosition.getPositionY() - distance, entityPosition.getPositionY() + entityPosition.getSize() + distance);
 
-            areCoordinatesOk = checkNeighbourhood(positionX, positionY, size);
+            areCoordinatesOk = checkNeighbourhood(positionX, positionY, size, true);
 
         } while (!areCoordinatesOk);
 
@@ -107,12 +107,12 @@ public class PositionUtil {
         return coordinates;
     }
 
-    private boolean checkNeighbourhood(Integer positionX, Integer positionY, Integer size) {
+    private boolean checkNeighbourhood(Integer positionX, Integer positionY, Integer size, Boolean structures) {
         boolean loopState = true;
 
         for (int x = positionX; x < positionX + size; x++) {
             for (int y = positionY; y < positionY + size; y++) {
-                if (!isCellEmpty(x, y)) {
+                if (!isCellEmpty(x, y, structures)) {
                     loopState = false;
                 }
             }
@@ -121,20 +121,22 @@ public class PositionUtil {
         return loopState;
     }
 
-    public boolean isCellEmpty(Integer positionX, Integer positionY) {
-        for (Structure structure : structureService.getAllStructures()) {
-            if (isOccupied(positionX, positionY, structure)) {
-                return false;
-            }
-        }
-
-        for (Building building : buildingService.getAllBuildings()) {
+    public boolean isCellEmpty(Integer positionX, Integer positionY, Boolean structures) {
+        for (Building building : buildingRepository.findAll()) {
             if (isOccupied(positionX, positionY, building)) {
                 return false;
             }
         }
 
-        for (Unit unit : unitService.getAllUnits()) {
+        if (structures) {
+            for (Structure structure : structureRepository.findAll()) {
+                if (isOccupied(positionX, positionY, structure)) {
+                    return false;
+                }
+            }
+        }
+
+        for (Unit unit : unitRepository.findAll()) {
             if (isOccupied(positionX, positionY, unit)) {
                 return false;
             }
@@ -143,13 +145,13 @@ public class PositionUtil {
         return true;
     }
 
-    private boolean isOccupied(Integer positionX, Integer positionY, EntityPosition entityPosition) {
+    public boolean isOccupied(Integer positionX, Integer positionY, EntityPosition entityPosition) {
         return positionX >= entityPosition.getPositionX() && positionX <= entityPosition.getPositionX() + entityPosition.getSize() - 1
                 && positionY >= entityPosition.getPositionY() && positionY <= entityPosition.getPositionY() + entityPosition.getSize() - 1;
     }
 
     public boolean isNearWarehouse(Integer positionX, Integer positionY, Integer distance) {
-        Building building = buildingService.getWarehouse();
+        Building building = buildingRepository.getAllByBuildingType(BuildingType.WAREHOUSE).get(0);
 
         return building.getPositionX() - positionX <= distance
                 && building.getPositionY() - positionY <= distance

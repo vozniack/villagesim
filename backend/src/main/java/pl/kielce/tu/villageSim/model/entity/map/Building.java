@@ -40,6 +40,12 @@ public class Building implements EntityPosition {
     @NotNull
     private Integer size;
 
+    /* Resources */
+
+    private Integer requiredWood = 0;
+
+    private Integer requiredRock = 0;
+
     /* Custom constructor */
 
     public Building(BuildingType buildingType, BuildingState buildingState, Coordinates coordinates) {

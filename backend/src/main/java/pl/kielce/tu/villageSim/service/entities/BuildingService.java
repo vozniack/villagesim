@@ -8,9 +8,8 @@ import pl.kielce.tu.villageSim.model.util.Coordinates;
 import pl.kielce.tu.villageSim.repository.BuildingRepository;
 import pl.kielce.tu.villageSim.types.building.BuildingState;
 import pl.kielce.tu.villageSim.types.building.BuildingType;
+import pl.kielce.tu.villageSim.util.BuildingUtil;
 import pl.kielce.tu.villageSim.util.components.PositionUtil;
-
-import java.util.List;
 
 @Service
 @Slf4j
@@ -18,34 +17,26 @@ import java.util.List;
 public class BuildingService {
     private final BuildingRepository buildingRepository;
     private final PositionUtil positionUtil;
+    private final TaskService taskService;
 
-    public Building createBuilding(BuildingType buildingType, BuildingState buildingState, Coordinates coordinates) {
+    public Building createBuilding(BuildingType buildingType, BuildingState buildingState, Coordinates coordinates, Boolean createTask) {
         if (coordinates == null) {
             coordinates = positionUtil.getNewBuildingCoordinates(buildingType);
         }
 
         log.info("# Creating new building " + buildingType + " at " + coordinates.toString());
 
-        return buildingRepository.save(new Building(buildingType, buildingState, coordinates));
+        Building building = buildingRepository.save(new Building(buildingType, buildingState, coordinates));
+        BuildingUtil.setBuildingRequiredResources(building);
+
+        if (createTask) {
+            taskService.createBuildTask(building);
+        }
+
+        return building;
     }
 
     public void updateBuilding(Building building) {
         buildingRepository.save(building);
-    }
-
-    public List<Building> getAllBuildings() {
-        return (List<Building>) buildingRepository.findAll();
-    }
-
-    public List<Building> getBuildingsByType(BuildingType buildingType) {
-        return (List<Building>) buildingRepository.getAllByBuildingType(buildingType);
-    }
-
-    public Building getWarehouse() {
-        return ((List<Building>) buildingRepository.getAllByBuildingType(BuildingType.WAREHOUSE)).get(0);
-    }
-
-    public void deleteAllBuildings() {
-        buildingRepository.deleteAll();
     }
 }

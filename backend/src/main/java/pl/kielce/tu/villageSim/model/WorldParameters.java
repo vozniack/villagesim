@@ -34,5 +34,5 @@ public class WorldParameters {
 
     public static Integer PEASANTS = 4;
 
-    public static Integer WORKERS = 2;
+    public static Integer WORKERS = 0;
 }

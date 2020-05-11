@@ -1,5 +1,8 @@
 package pl.kielce.tu.villageSim.types.task;
 
 public enum TaskState {
-    ASSIGNED, UNASSIGNED
+    UNASSIGNED,
+    WAIT_FOR_PATH,
+    DELAYED,
+    ASSIGNED
 }

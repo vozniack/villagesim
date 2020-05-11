@@ -6,16 +6,16 @@ import pl.kielce.tu.villageSim.api.dto.WorldDto;
 import pl.kielce.tu.villageSim.api.dto.WorldParametersDto;
 import pl.kielce.tu.villageSim.model.World;
 import pl.kielce.tu.villageSim.model.WorldParameters;
-import pl.kielce.tu.villageSim.service.entities.BuildingService;
-import pl.kielce.tu.villageSim.service.entities.StructureService;
-import pl.kielce.tu.villageSim.service.entities.UnitService;
+import pl.kielce.tu.villageSim.repository.BuildingRepository;
+import pl.kielce.tu.villageSim.repository.StructureRepository;
+import pl.kielce.tu.villageSim.repository.UnitRepository;
 
 @Component
 @RequiredArgsConstructor
 public class WorldMapper {
-    private final UnitService unitService;
-    private final BuildingService buildingService;
-    private final StructureService structureService;
+    private final BuildingRepository buildingRepository;
+    private final StructureRepository structureRepository;
+    private final UnitRepository unitRepository;
 
     public WorldDto createWorldDto() {
         WorldDto worldDto = new WorldDto();
@@ -23,9 +23,9 @@ public class WorldMapper {
         worldDto.setSizeWidth(World.SIZE_WIDTH);
         worldDto.setSizeHeight(World.SIZE_HEIGHT);
 
-        worldDto.setUnits(unitService.getAllUnits());
-        worldDto.setBuildings(buildingService.getAllBuildings());
-        worldDto.setStructures(structureService.getAllStructures());
+        worldDto.setUnits(unitRepository.findAll());
+        worldDto.setBuildings(buildingRepository.findAll());
+        worldDto.setStructures(structureRepository.findAll());
 
         return worldDto;
     }

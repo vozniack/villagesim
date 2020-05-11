@@ -17,6 +17,6 @@ public class BuildingController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Building createBuilding(@RequestParam BuildingType buildingType) {
-        return buildingService.createBuilding(buildingType, BuildingState.PLAN, null);
+        return buildingService.createBuilding(buildingType, BuildingState.PLAN, null, true);
     }
 }

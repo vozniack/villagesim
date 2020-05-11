@@ -31,5 +31,5 @@ public class WorldParametersDto {
 
     private Integer peasants = 4;
 
-    private Integer workers = 2;
+    private Integer workers = 0;
 }

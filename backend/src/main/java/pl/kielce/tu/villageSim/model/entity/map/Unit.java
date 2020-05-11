@@ -1,7 +1,9 @@
 package pl.kielce.tu.villageSim.model.entity.map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.kielce.tu.villageSim.model.entity.Task;
 import pl.kielce.tu.villageSim.model.entity.map.interfaces.EntityPosition;
 import pl.kielce.tu.villageSim.model.util.Coordinates;
 import pl.kielce.tu.villageSim.types.unit.UnitState;
@@ -31,8 +33,6 @@ public class Unit implements EntityPosition {
 
     /* Position */
 
-    /* Position */
-
     @NotNull
     private Integer positionX;
 
@@ -41,6 +41,12 @@ public class Unit implements EntityPosition {
 
     @NotNull
     private Integer size;
+
+    /* Relations */
+
+    @JsonIgnore
+    @OneToOne
+    private Task task;
 
     /* Custom constructor */
 
@@ -59,5 +65,10 @@ public class Unit implements EntityPosition {
     public void setPosition(Integer positionX, Integer positionY) {
         this.positionX = positionX;
         this.positionY = positionY;
+    }
+
+    @Override
+    public String toString() {
+        return "unit " + unitType + "[" + id + "]";
     }
 }

@@ -28,8 +28,7 @@ export class ActionBarComponent implements OnInit {
     },
     {
       'icon': 'nature_people', 'name': 'Jednostki', 'active': false, 'children': [
-        {'icon': 'person', 'name': 'Pomocnik', 'actionType': 'UNIT_PEASANT'},
-        {'icon': 'person', 'name': 'Robotnik', 'actionType': 'UNIT_WORKER'}
+        {'icon': 'person', 'name': 'Pomocnik', 'actionType': 'UNIT_PEASANT'}
       ]
     },
     {'icon': 'book', 'name': 'Polecenia', 'active': false}

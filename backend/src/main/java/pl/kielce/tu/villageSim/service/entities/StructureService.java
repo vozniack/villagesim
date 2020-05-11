@@ -8,9 +8,6 @@ import pl.kielce.tu.villageSim.model.entity.map.Structure;
 import pl.kielce.tu.villageSim.model.util.Coordinates;
 import pl.kielce.tu.villageSim.repository.StructureRepository;
 import pl.kielce.tu.villageSim.types.structure.StructureType;
-import pl.kielce.tu.villageSim.util.RandUtil;
-
-import java.util.List;
 
 @Service
 @Slf4j
@@ -28,26 +25,10 @@ public class StructureService {
         structureRepository.save(structure);
     }
 
-    public List<Structure> getAllStructures() {
-        return (List<Structure>) structureRepository.findAll();
-    }
-
-    public List<Structure> getAllStructuresByType(StructureType structureType) {
-        return (List<Structure>) structureRepository.findAllByStructureType(structureType);
-    }
-
-    public List<Structure> getAllTreesToGrow() {
-        return (List<Structure>) structureRepository.findAllByStructureTypeAndStructureLevelLessThan(StructureType.TREE, 3);
-    }
-
-    public void deleteAllStructures() {
-        structureRepository.deleteAll();
-    }
-
     /* Support methods */
 
     public void clearStructuresNearWarehouse(Building building) {
-        getAllStructures().forEach(structure -> {
+        structureRepository.findAll().forEach(structure -> {
             if (!isFarFromWarehouse(structure, building)) {
                 structureRepository.delete(structure);
             }

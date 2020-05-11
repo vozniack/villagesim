@@ -28,7 +28,7 @@ export class ModalGenerate {
     this.worldParameters.gold = 4;
 
     this.worldParameters.peasants = 4;
-    this.worldParameters.workers = 2;
+    this.worldParameters.workers = 0;
   }
 
   save() {

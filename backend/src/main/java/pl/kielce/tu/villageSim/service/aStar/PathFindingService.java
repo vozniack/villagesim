@@ -29,8 +29,6 @@ public class PathFindingService {
     }
 
     public List<PathNode> findPathTo(Unit unit, Integer posXEnd, Integer posYEnd) {
-        System.out.println("## Starting A* algorithm");
-
         initAlgorithm(unit.getPositionX(), unit.getPositionY(), posXEnd, posYEnd);
 
         addNeighborsToOpenNodesList();
@@ -54,8 +52,6 @@ public class PathFindingService {
             pathNodes.add(0, currentNode);
         }
 
-        System.out.println("## Ending A* algorithm");
-
         return pathNodes;
     }
 
@@ -74,8 +70,6 @@ public class PathFindingService {
         this.currentNode = new PathNode(this.posXStart, this.posYStart, 0d, 0d, null);
 
         this.closedNodes.add(this.currentNode);
-
-        System.out.println("## Init A* algorithm");
     }
 
     private void addNeighborsToOpenNodesList() {

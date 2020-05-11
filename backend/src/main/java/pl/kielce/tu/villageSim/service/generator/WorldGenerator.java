@@ -7,9 +7,12 @@ import pl.kielce.tu.villageSim.model.World;
 import pl.kielce.tu.villageSim.model.WorldParameters;
 import pl.kielce.tu.villageSim.model.entity.map.Building;
 import pl.kielce.tu.villageSim.model.util.Coordinates;
+import pl.kielce.tu.villageSim.repository.BuildingRepository;
+import pl.kielce.tu.villageSim.repository.StructureRepository;
+import pl.kielce.tu.villageSim.repository.TaskRepository;
+import pl.kielce.tu.villageSim.repository.UnitRepository;
 import pl.kielce.tu.villageSim.service.entities.BuildingService;
 import pl.kielce.tu.villageSim.service.entities.StructureService;
-import pl.kielce.tu.villageSim.service.entities.TaskService;
 import pl.kielce.tu.villageSim.service.entities.UnitService;
 import pl.kielce.tu.villageSim.types.building.BuildingState;
 import pl.kielce.tu.villageSim.types.building.BuildingType;
@@ -26,8 +29,11 @@ public class WorldGenerator {
     private final StructureService structureService;
     private final UnitService unitService;
     private final BuildingService buildingService;
-    private final TaskService taskService;
     private final PositionUtil positionUtil;
+    private final BuildingRepository buildingRepository;
+    private final StructureRepository structureRepository;
+    private final UnitRepository unitRepository;
+    private final TaskRepository taskRepository;
 
     public void generateNewWorld() {
         log.info("## Generating new world...");
@@ -48,10 +54,10 @@ public class WorldGenerator {
     }
 
     private void clearWorld() {
-        taskService.deleteAllTasks();
-        buildingService.deleteAllBuildings();
-        unitService.deleteAllUnits();
-        structureService.deleteAllStructures();
+        taskRepository.deleteAll();
+        buildingRepository.deleteAll();
+        structureRepository.deleteAll();
+        unitRepository.deleteAll();
     }
 
     private void setWorldProperties() {
@@ -79,22 +85,23 @@ public class WorldGenerator {
     }
 
     private void generateBuildings() {
-        buildingService.createBuilding(BuildingType.WAREHOUSE, BuildingState.NOT_BROKEN, new Coordinates((World.SIZE_WIDTH / 2) - 2, (World.SIZE_HEIGHT / 2) - 2, BuildingUtil.getBuildingSize(BuildingType.WAREHOUSE)));
+        Building building = buildingService.createBuilding(BuildingType.WAREHOUSE, BuildingState.NOT_BROKEN, new Coordinates((World.SIZE_WIDTH / 2) - 2, (World.SIZE_HEIGHT / 2) - 2, BuildingUtil.getBuildingSize(BuildingType.WAREHOUSE)), false);
 
-        Building warehouse = buildingService.getWarehouse();
-
-        structureService.clearStructuresNearWarehouse(warehouse);
+        structureService.clearStructuresNearWarehouse(building);
     }
 
     private void generateUnits() {
-        Building warehouse = buildingService.getWarehouse();
+        Building warehouse = buildingRepository.getAllByBuildingType(BuildingType.WAREHOUSE).get(0);
 
         for (int i = 0; i < WorldParameters.PEASANTS; i++) {
             unitService.createUnit(UnitType.PEASANT, positionUtil.getUnitCoordinatesNearPosition(warehouse, 1, 4));
         }
 
+        /* #todo to unlock some day
+
         for (int i = 0; i < WorldParameters.WORKERS; i++) {
             unitService.createUnit(UnitType.WORKER, positionUtil.getUnitCoordinatesNearPosition(warehouse, 1, 4));
         }
+        */
     }
 }

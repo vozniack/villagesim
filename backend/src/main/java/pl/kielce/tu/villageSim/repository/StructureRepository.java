@@ -5,10 +5,14 @@ import org.springframework.stereotype.Repository;
 import pl.kielce.tu.villageSim.model.entity.map.Structure;
 import pl.kielce.tu.villageSim.types.structure.StructureType;
 
+import java.util.List;
+
 @Repository
 public interface StructureRepository extends CrudRepository<Structure, Long> {
 
-    Iterable<Structure> findAllByStructureType(StructureType structureType);
+    List<Structure> findAll();
 
-    Iterable<Structure> findAllByStructureTypeAndStructureLevelLessThan(StructureType structureType, Integer structureLevel);
+    List<Structure> findAllByStructureType(StructureType structureType);
+
+    List<Structure> findAllByStructureTypeAndStructureLevelLessThan(StructureType structureType, Integer structureLevel);
 }

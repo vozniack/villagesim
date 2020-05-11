@@ -1,6 +1,11 @@
 package pl.kielce.tu.villageSim.model;
 
 import lombok.Getter;
+import pl.kielce.tu.villageSim.service.aStar.PathNode;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class World {
 
@@ -25,5 +30,9 @@ public class World {
     public static Integer FOOD = 0;
 
     public static Integer GOLD = 0;
+
+    /* Paths */
+
+    public static Map<Long, List<PathNode>> unitPaths = new HashMap<>();
 
 }

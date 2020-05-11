@@ -4,12 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.kielce.tu.villageSim.model.entity.map.Unit;
+import pl.kielce.tu.villageSim.model.entity.map.interfaces.EntityPosition;
 import pl.kielce.tu.villageSim.model.util.Coordinates;
 import pl.kielce.tu.villageSim.repository.UnitRepository;
 import pl.kielce.tu.villageSim.types.unit.UnitState;
 import pl.kielce.tu.villageSim.types.unit.UnitType;
-
-import java.util.List;
+import pl.kielce.tu.villageSim.util.MathUtil;
 
 @Service
 @Slf4j
@@ -27,15 +27,24 @@ public class UnitService {
         unitRepository.save(unit);
     }
 
-    public List<Unit> getAllUnits() {
-        return (List<Unit>) unitRepository.findAll();
-    }
+    /* Support methods */
 
-    public List<Unit> getAllUnitsByUnitState(UnitState unitState) {
-        return (List<Unit>) unitRepository.findAllByUnitState(unitState);
-    }
+    public Unit findNearestUnit(EntityPosition entityPosition, UnitState unitState, UnitType unitType) {
+        Unit selectedUnit = null;
 
-    public void deleteAllUnits() {
-        unitRepository.deleteAll();
+        double distance = 0d;
+
+        for (Unit unit : unitRepository.findAllByUnitStateAndUnitType(unitState, unitType)) {
+            if (distance == 0d) {
+                distance = MathUtil.countDistance(entityPosition, unit);
+                selectedUnit = unit;
+            }
+
+            if (MathUtil.countDistance(entityPosition, unit) < distance) {
+                selectedUnit = unit;
+            }
+        }
+
+        return selectedUnit;
     }
 }

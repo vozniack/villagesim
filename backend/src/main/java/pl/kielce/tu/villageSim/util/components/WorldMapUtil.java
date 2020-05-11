@@ -6,23 +6,23 @@ import pl.kielce.tu.villageSim.model.World;
 import pl.kielce.tu.villageSim.model.entity.map.Building;
 import pl.kielce.tu.villageSim.model.entity.map.Structure;
 import pl.kielce.tu.villageSim.model.entity.map.Unit;
-import pl.kielce.tu.villageSim.service.entities.BuildingService;
-import pl.kielce.tu.villageSim.service.entities.StructureService;
-import pl.kielce.tu.villageSim.service.entities.UnitService;
+import pl.kielce.tu.villageSim.repository.BuildingRepository;
+import pl.kielce.tu.villageSim.repository.StructureRepository;
+import pl.kielce.tu.villageSim.repository.UnitRepository;
 import pl.kielce.tu.villageSim.types.building.BuildingType;
 
 @Component
 public class WorldMapUtil {
-    private final StructureService structureService;
-    private final BuildingService buildingService;
-    private final UnitService unitService;
     private final PositionUtil positionUtil;
+    private final StructureRepository structureRepository;
+    private final BuildingRepository buildingRepository;
+    private final UnitRepository unitRepository;
 
-    public WorldMapUtil(@Lazy StructureService structureService, @Lazy BuildingService buildingService, @Lazy UnitService unitService, @Lazy PositionUtil positionUtil) {
-        this.structureService = structureService;
-        this.buildingService = buildingService;
-        this.unitService = unitService;
+    public WorldMapUtil(@Lazy PositionUtil positionUtil, StructureRepository structureRepository, BuildingRepository buildingRepository, UnitRepository unitRepository) {
         this.positionUtil = positionUtil;
+        this.structureRepository = structureRepository;
+        this.buildingRepository = buildingRepository;
+        this.unitRepository = unitRepository;
     }
 
     public Integer[][] prepareBuildingsMap() {
@@ -30,12 +30,13 @@ public class WorldMapUtil {
 
         fillEmptyArray(array, 0);
 
-        fillBuildings(array, 5, 3);
-        fillBuildingsByType(array, 4, 3, BuildingType.INN);
-        fillBuildingsByType(array, 3, 3, BuildingType.SCHOOL);
-        fillBuildingsByType(array, 2, 3, BuildingType.WAREHOUSE);
+        fillBuildings(array, 4, 3);
 
-        fillBuildings(array, 1, 1);
+        fillBuildingsByType(array, 3, BuildingType.INN);
+        fillBuildingsByType(array, 3, BuildingType.SCHOOL);
+        fillBuildingsByType(array, 2, BuildingType.WAREHOUSE);
+
+        fillBuildings(array, 1, 2);
 
         return array;
     }
@@ -61,26 +62,26 @@ public class WorldMapUtil {
     }
 
     private void fillStructures(Integer[][] array, Integer blockedCellValue) {
-        for (Structure structure : structureService.getAllStructures()) {
+        for (Structure structure : structureRepository.findAll()) {
             array[structure.getPositionX()][structure.getPositionY()] = blockedCellValue;
         }
     }
 
     private void fillUnits(Integer[][] array, Integer blockedCellValue) {
-        for (Unit unit : unitService.getAllUnits()) {
+        for (Unit unit : unitRepository.findAll()) {
             array[unit.getPositionX()][unit.getPositionY()] = blockedCellValue;
         }
     }
 
     private void fillBuildings(Integer[][] array, Integer blockedCellValue, Integer border) {
-        for (Building building : buildingService.getAllBuildings()) {
+        for (Building building : buildingRepository.findAll()) {
             fillAllBuildingCells(array, building, blockedCellValue, border);
         }
     }
 
-    private void fillBuildingsByType(Integer[][] array, Integer blockedCellValue, Integer border, BuildingType buildingType) {
-        for (Building building : buildingService.getBuildingsByType(buildingType)) {
-            fillAllBuildingCells(array, building, blockedCellValue, border);
+    private void fillBuildingsByType(Integer[][] array, Integer blockedCellValue, BuildingType buildingType) {
+        for (Building building : buildingRepository.getAllByBuildingType(buildingType)) {
+            fillAllBuildingCells(array, building, blockedCellValue, 3);
         }
     }
 
