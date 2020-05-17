@@ -9,6 +9,7 @@ import pl.kielce.tu.villageSim.repository.BuildingRepository;
 import pl.kielce.tu.villageSim.repository.UnitRepository;
 import pl.kielce.tu.villageSim.service.MoveService;
 import pl.kielce.tu.villageSim.service.aStar.PathNode;
+import pl.kielce.tu.villageSim.service.communication.CommunicationService;
 import pl.kielce.tu.villageSim.service.entities.TaskService;
 import pl.kielce.tu.villageSim.service.entities.UnitService;
 import pl.kielce.tu.villageSim.types.unit.UnitState;
@@ -25,6 +26,7 @@ public class MoveScheduledService {
     private final UnitService unitService;
     private final MoveService moveService;
     private final TaskService taskService;
+    private final CommunicationService communicationService;
     private final PositionUtil positionUtil;
     private final UnitRepository unitRepository;
     private final BuildingRepository buildingRepository;
@@ -48,6 +50,7 @@ public class MoveScheduledService {
                     if (positionUtil.isCellEmpty(positionX, positionY, true) && positionUtil.isNearWarehouse(positionX, positionY, 4)) {
                         unit.setPosition(positionX, positionY);
                         unitService.updateUnit(unit);
+                        communicationService.sendWorldState();
                     }
                 }
 
@@ -55,24 +58,26 @@ public class MoveScheduledService {
         }
     }
 
-    @Scheduled(fixedDelay = 512)
+    @Scheduled(fixedDelay = 256)
     public void moveBusyUnit() {
         if (SchedulerUtil.canPerform()) {
             unitRepository.findAllByUnitState(UnitState.BUSY).forEach(unit -> {
-
                 List<PathNode> path = World.unitPaths.get(unit.getId());
 
                 if (path != null) {
-
                     if (path.size() > 0) {
                         moveService.moveUnit(unit, path.get(0));
+                        communicationService.sendWorldState();
+
                         path.remove(0);
 
                         World.unitPaths.replace(unit.getId(), path);
                     } else {
                         World.unitPaths.remove(unit.getId());
 
-                        taskService.finalizeTask(unit.getTask());
+                        if (unit.getTask() != null) {
+                            taskService.finalizeTask(unit.getTask());
+                        }
                     }
                 }
             });

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.kielce.tu.villageSim.model.entity.map.Unit;
-import pl.kielce.tu.villageSim.model.entity.map.interfaces.EntityPosition;
+import pl.kielce.tu.villageSim.model.entity.map.interfaces.Position;
 import pl.kielce.tu.villageSim.model.util.Coordinates;
 import pl.kielce.tu.villageSim.repository.UnitRepository;
 import pl.kielce.tu.villageSim.types.unit.UnitState;
@@ -29,18 +29,18 @@ public class UnitService {
 
     /* Support methods */
 
-    public Unit findNearestUnit(EntityPosition entityPosition, UnitState unitState, UnitType unitType) {
+    public Unit findNearestUnit(Position position, UnitState unitState, UnitType unitType) {
         Unit selectedUnit = null;
 
         double distance = 0d;
 
         for (Unit unit : unitRepository.findAllByUnitStateAndUnitType(unitState, unitType)) {
             if (distance == 0d) {
-                distance = MathUtil.countDistance(entityPosition, unit);
+                distance = MathUtil.countDistance(position, unit);
                 selectedUnit = unit;
             }
 
-            if (MathUtil.countDistance(entityPosition, unit) < distance) {
+            if (MathUtil.countDistance(position, unit) < distance) {
                 selectedUnit = unit;
             }
         }

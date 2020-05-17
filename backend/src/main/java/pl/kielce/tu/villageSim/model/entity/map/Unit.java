@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.kielce.tu.villageSim.model.entity.Task;
-import pl.kielce.tu.villageSim.model.entity.map.interfaces.EntityPosition;
+import pl.kielce.tu.villageSim.model.entity.map.interfaces.Position;
 import pl.kielce.tu.villageSim.model.util.Coordinates;
 import pl.kielce.tu.villageSim.types.unit.UnitState;
 import pl.kielce.tu.villageSim.types.unit.UnitType;
@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Data
 @NoArgsConstructor
-public class Unit implements EntityPosition {
+public class Unit implements Position {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

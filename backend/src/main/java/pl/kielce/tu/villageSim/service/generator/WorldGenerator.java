@@ -11,6 +11,7 @@ import pl.kielce.tu.villageSim.repository.BuildingRepository;
 import pl.kielce.tu.villageSim.repository.StructureRepository;
 import pl.kielce.tu.villageSim.repository.TaskRepository;
 import pl.kielce.tu.villageSim.repository.UnitRepository;
+import pl.kielce.tu.villageSim.service.communication.CommunicationService;
 import pl.kielce.tu.villageSim.service.entities.BuildingService;
 import pl.kielce.tu.villageSim.service.entities.StructureService;
 import pl.kielce.tu.villageSim.service.entities.UnitService;
@@ -29,6 +30,7 @@ public class WorldGenerator {
     private final StructureService structureService;
     private final UnitService unitService;
     private final BuildingService buildingService;
+    private final CommunicationService communicationService;
     private final PositionUtil positionUtil;
     private final BuildingRepository buildingRepository;
     private final StructureRepository structureRepository;
@@ -51,9 +53,16 @@ public class WorldGenerator {
         World.IS_ACTIVE = true;
 
         log.info("## New world generated");
+
+        communicationService.sendWorldState();
     }
 
     private void clearWorld() {
+        taskRepository.findAll().forEach(task -> {
+            task.setUnit(null);
+            taskRepository.save(task);
+        });
+
         taskRepository.deleteAll();
         buildingRepository.deleteAll();
         structureRepository.deleteAll();

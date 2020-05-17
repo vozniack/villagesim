@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import pl.kielce.tu.villageSim.repository.StructureRepository;
+import pl.kielce.tu.villageSim.service.communication.CommunicationService;
 import pl.kielce.tu.villageSim.service.entities.StructureService;
 import pl.kielce.tu.villageSim.types.structure.StructureType;
 import pl.kielce.tu.villageSim.util.RandUtil;
@@ -13,6 +14,7 @@ import pl.kielce.tu.villageSim.util.SchedulerUtil;
 @RequiredArgsConstructor
 public class StructureScheduledService {
     private final StructureService structureService;
+    private final CommunicationService communicationService;
     private final StructureRepository structureRepository;
 
     @Scheduled(fixedDelay = 60000) // 1 minute
@@ -24,6 +26,8 @@ public class StructureScheduledService {
                     structureService.updateStructure(tree);
                 }
             });
+
+            communicationService.sendWorldState();
         }
     }
 
@@ -37,5 +41,7 @@ public class StructureScheduledService {
                 }
             });
         }
+
+        communicationService.sendWorldState();
     }
 }

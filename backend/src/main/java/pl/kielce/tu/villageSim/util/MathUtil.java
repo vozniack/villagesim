@@ -1,10 +1,10 @@
 package pl.kielce.tu.villageSim.util;
 
-import pl.kielce.tu.villageSim.model.entity.map.interfaces.EntityPosition;
+import pl.kielce.tu.villageSim.model.entity.map.interfaces.Position;
 
 public class MathUtil {
 
-    public static double countDistance(EntityPosition position1, EntityPosition position2) {
+    public static double countDistance(Position position1, Position position2) {
         int dx = Math.abs(position2.getPositionX() - position1.getPositionX());
         int dy = Math.abs(position2.getPositionY() - position1.getPositionY());
 

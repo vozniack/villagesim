@@ -1,6 +1,6 @@
 package pl.kielce.tu.villageSim.model.entity.map.interfaces;
 
-public interface EntityPosition {
+public interface Position {
 
     Integer getPositionX();
 

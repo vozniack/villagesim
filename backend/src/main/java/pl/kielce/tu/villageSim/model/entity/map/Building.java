@@ -2,7 +2,7 @@ package pl.kielce.tu.villageSim.model.entity.map;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.kielce.tu.villageSim.model.entity.map.interfaces.EntityPosition;
+import pl.kielce.tu.villageSim.model.entity.map.interfaces.Position;
 import pl.kielce.tu.villageSim.model.util.Coordinates;
 import pl.kielce.tu.villageSim.types.building.BuildingState;
 import pl.kielce.tu.villageSim.types.building.BuildingType;
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Data
 @NoArgsConstructor
-public class Building implements EntityPosition {
+public class Building implements Position {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

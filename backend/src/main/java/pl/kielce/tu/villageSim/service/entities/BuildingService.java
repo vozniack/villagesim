@@ -26,17 +26,15 @@ public class BuildingService {
 
         log.info("# Creating new building " + buildingType + " at " + coordinates.toString());
 
-        Building building = buildingRepository.save(new Building(buildingType, buildingState, coordinates));
+        Building building = new Building(buildingType, buildingState, coordinates);
         BuildingUtil.setBuildingRequiredResources(building);
+
+        buildingRepository.save(building);
 
         if (createTask) {
             taskService.createBuildTask(building);
         }
 
         return building;
-    }
-
-    public void updateBuilding(Building building) {
-        buildingRepository.save(building);
     }
 }

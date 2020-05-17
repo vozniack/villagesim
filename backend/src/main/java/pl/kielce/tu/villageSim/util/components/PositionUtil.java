@@ -6,7 +6,7 @@ import pl.kielce.tu.villageSim.model.World;
 import pl.kielce.tu.villageSim.model.entity.map.Building;
 import pl.kielce.tu.villageSim.model.entity.map.Structure;
 import pl.kielce.tu.villageSim.model.entity.map.Unit;
-import pl.kielce.tu.villageSim.model.entity.map.interfaces.EntityPosition;
+import pl.kielce.tu.villageSim.model.entity.map.interfaces.Position;
 import pl.kielce.tu.villageSim.model.util.Coordinates;
 import pl.kielce.tu.villageSim.repository.BuildingRepository;
 import pl.kielce.tu.villageSim.repository.StructureRepository;
@@ -45,7 +45,6 @@ public class PositionUtil {
             positionY = RandUtil.generateRand(0, World.SIZE_HEIGHT - 1);
 
             if (worldMap[positionX][positionY] == buildingCode) {
-                counter++;
                 areCoordinatesOk = checkNeighbourhood(positionX, positionY, size, worldMap) && checkNeighbourhood(positionX, positionY, size, false);
             }
 
@@ -57,6 +56,8 @@ public class PositionUtil {
                 buildingCode = 1;
                 counter = 0;
             }
+
+            counter++;
 
         } while (!areCoordinatesOk);
 
@@ -85,7 +86,7 @@ public class PositionUtil {
         return loopState;
     }
 
-    public Coordinates getUnitCoordinatesNearPosition(EntityPosition entityPosition, Integer size, Integer distance) {
+    public Coordinates getUnitCoordinatesNearPosition(Position position, Integer size, Integer distance) {
         Coordinates coordinates = new Coordinates();
 
         Integer positionX, positionY;
@@ -93,8 +94,8 @@ public class PositionUtil {
         boolean areCoordinatesOk;
 
         do {
-            positionX = RandUtil.generateRand(entityPosition.getPositionX() - distance, entityPosition.getPositionX() + entityPosition.getSize() + distance);
-            positionY = RandUtil.generateRand(entityPosition.getPositionY() - distance, entityPosition.getPositionY() + entityPosition.getSize() + distance);
+            positionX = RandUtil.generateRand(position.getPositionX() - distance, position.getPositionX() + position.getSize() + distance);
+            positionY = RandUtil.generateRand(position.getPositionY() - distance, position.getPositionY() + position.getSize() + distance);
 
             areCoordinatesOk = checkNeighbourhood(positionX, positionY, size, true);
 
@@ -145,9 +146,9 @@ public class PositionUtil {
         return true;
     }
 
-    public boolean isOccupied(Integer positionX, Integer positionY, EntityPosition entityPosition) {
-        return positionX >= entityPosition.getPositionX() && positionX <= entityPosition.getPositionX() + entityPosition.getSize() - 1
-                && positionY >= entityPosition.getPositionY() && positionY <= entityPosition.getPositionY() + entityPosition.getSize() - 1;
+    public boolean isOccupied(Integer positionX, Integer positionY, Position position) {
+        return positionX >= position.getPositionX() && positionX <= position.getPositionX() + position.getSize() - 1
+                && positionY >= position.getPositionY() && positionY <= position.getPositionY() + position.getSize() - 1;
     }
 
     public boolean isNearWarehouse(Integer positionX, Integer positionY, Integer distance) {
