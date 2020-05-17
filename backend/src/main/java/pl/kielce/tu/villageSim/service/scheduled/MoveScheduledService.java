@@ -49,7 +49,7 @@ public class MoveScheduledService {
 
                     if (positionUtil.isCellEmpty(positionX, positionY, true) && positionUtil.isNearWarehouse(positionX, positionY, 4)) {
                         unit.setPosition(positionX, positionY);
-                        unitService.updateUnit(unit);
+                        unitRepository.save(unit);
                         communicationService.sendWorldState();
                     }
                 }

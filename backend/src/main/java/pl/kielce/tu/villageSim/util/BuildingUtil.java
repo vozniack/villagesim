@@ -8,6 +8,7 @@ public class BuildingUtil {
     public static Integer getBuildingSize(BuildingType buildingType) {
         switch (buildingType) {
             case HOUSE:
+            case FARM:
                 return 2;
 
             case SCHOOL:
@@ -41,6 +42,10 @@ public class BuildingUtil {
                 wood = 12;
                 rock = 6;
                 break;
+
+            case FARM:
+                wood = 6;
+                rock = 3;
 
             default:
                 break;

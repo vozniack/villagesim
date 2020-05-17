@@ -31,6 +31,12 @@ public class Unit implements Position {
     @NotNull
     private UnitState unitState;
 
+    @NotNull
+    private Integer health;
+
+    @NotNull
+    private Integer requiredFood;
+
     /* Position */
 
     @NotNull
@@ -57,6 +63,7 @@ public class Unit implements Position {
 
         this.unitType = unitType;
         this.unitState = UnitState.FREE;
+        this.health = 100;
     }
 
     /* Custom setter */

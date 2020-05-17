@@ -23,6 +23,7 @@ export class CanvasService {
   rockColor: string = 'rgba(117, 117, 117,'; // alpha canal is filled by method
 
   buildingColor: string = 'rgba(135, 0, 0, 1.0)';
+  farmColor: string = 'rgba(253, 216, 53, 1.0)';
 
   unitColor: string = 'rgba(0, 188, 212, 1.0)';
 
@@ -80,7 +81,7 @@ export class CanvasService {
 
   drawBuildings(building: Building[]) {
     building.forEach(building => {
-      this.setBuildingColor();
+      this.setBuildingColor(building.buildingType);
       this.drawRectangle(building.positionX * this.tileSize, building.positionY * this.tileSize, (this.tileSize * building.size) - 1, (this.tileSize * building.size) - 1, building.buildingState !== 'PLAN');
     })
   }
@@ -130,9 +131,14 @@ export class CanvasService {
     }
   }
 
-  setBuildingColor() {
-    this.ctx.fillStyle = this.buildingColor;
-    this.ctx.strokeStyle = this.buildingColor;
+  setBuildingColor(buildingType: string) {
+    if (buildingType == 'FARM') {
+      this.ctx.fillStyle = this.farmColor;
+      this.ctx.strokeStyle = this.farmColor;
+    } else {
+      this.ctx.fillStyle = this.buildingColor;
+      this.ctx.strokeStyle = this.buildingColor;
+    }
   }
 
   setUnitColor() {

@@ -44,21 +44,21 @@ public class PositionUtil {
             positionX = RandUtil.generateRand(0, World.SIZE_WIDTH - 1);
             positionY = RandUtil.generateRand(0, World.SIZE_HEIGHT - 1);
 
+            counter++;
+
             if (worldMap[positionX][positionY] == buildingCode) {
                 areCoordinatesOk = checkNeighbourhood(positionX, positionY, size, worldMap) && checkNeighbourhood(positionX, positionY, size, false);
             }
 
-            if (counter > 16) {
+            if (counter > 32) {
                 buildingCode++;
-            }
-
-            if (buildingCode > 4) {
-                buildingCode = 1;
                 counter = 0;
             }
 
-            counter++;
-
+            if (buildingCode > 4) {
+                buildingCode = 2;
+                counter = 0;
+            }
         } while (!areCoordinatesOk);
 
         coordinates.setX(positionX);

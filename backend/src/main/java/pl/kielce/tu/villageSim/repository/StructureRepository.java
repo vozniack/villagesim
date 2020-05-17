@@ -15,4 +15,6 @@ public interface StructureRepository extends CrudRepository<Structure, Long> {
     List<Structure> findAllByStructureType(StructureType structureType);
 
     List<Structure> findAllByStructureTypeAndStructureLevelLessThan(StructureType structureType, Integer structureLevel);
+
+    List<Structure> findAllByStructureTypeAndStructureLevelGreaterThan(StructureType structureType, Integer structureLevel);
 }

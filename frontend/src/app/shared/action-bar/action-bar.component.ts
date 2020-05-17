@@ -22,8 +22,9 @@ export class ActionBarComponent implements OnInit {
     {
       'icon': 'home', 'name': 'Budynki', 'active': false, 'children': [
         {'icon': 'house', 'name': 'Dom', 'actionType': 'BUILDING_HOUSE'},
-        {'icon': 'house', 'name': 'Szkoła', 'actionType': 'BUILDING_SCHOOL'},
-        {'icon': 'house', 'name': 'Gospoda', 'actionType': 'BUILDING_INN'}
+        {'icon': 'apartment', 'name': 'Szkoła', 'actionType': 'BUILDING_SCHOOL'},
+        {'icon': 'free_breakfast', 'name': 'Gospoda', 'actionType': 'BUILDING_INN'},
+        {'icon': 'spa', 'name': 'Farma', 'actionType': 'BUILDING_FARM'}
       ]
     },
     {
@@ -31,7 +32,12 @@ export class ActionBarComponent implements OnInit {
         {'icon': 'person', 'name': 'Pomocnik', 'actionType': 'UNIT_PEASANT'}
       ]
     },
-    {'icon': 'book', 'name': 'Polecenia', 'active': false}
+    {
+      'icon': 'book', 'name': 'Polecenia', 'active': false, 'children': [
+        {'icon': 'fireplace', 'name': 'Zetnij drzewo', 'actionType': 'ACTION_CUT_TREE'},
+        {'icon': 'sports_cricket', 'name': 'Rozbij kamień', 'actionType': 'ACTION_BREAK_STONE'}
+      ]
+    },
   ];
 
   constructor(private buildingService: BuildingService, private unitService: UnitService) {

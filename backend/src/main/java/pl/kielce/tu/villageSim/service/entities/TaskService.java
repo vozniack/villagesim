@@ -25,6 +25,14 @@ public class TaskService {
         taskRepository.save(task);
     }
 
+    public void createLumberjackTask() {
+
+    }
+
+    public void createStonemasonTask() {
+
+    }
+
     public void finalizeTask(Task task) {
         switch (task.getTaskType()) {
             case BUILD:

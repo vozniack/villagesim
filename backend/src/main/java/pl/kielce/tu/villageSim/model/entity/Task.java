@@ -28,6 +28,8 @@ public class Task {
     @NotNull
     private TaskState taskState;
 
+    private Boolean informedAboutProblem;
+
     /* Relations */
 
     @OneToOne
@@ -42,5 +44,6 @@ public class Task {
     public Task(TaskType taskType) {
         this.taskType = taskType;
         this.taskState = TaskState.UNASSIGNED;
+        this.informedAboutProblem = false;
     }
 }

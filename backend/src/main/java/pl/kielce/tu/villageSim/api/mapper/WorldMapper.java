@@ -57,10 +57,10 @@ public class WorldMapper {
         WorldParameters.TREE_FACTOR = worldParametersDto.getTreeFactor();
         WorldParameters.ROCK_FACTOR = worldParametersDto.getRockFactor();
 
-        World.WOOD = worldParametersDto.getWood();
-        World.ROCK = worldParametersDto.getRock();
-        World.FOOD = worldParametersDto.getFood();
-        World.GOLD = worldParametersDto.getGold();
+        WorldParameters.WOOD = worldParametersDto.getWood();
+        WorldParameters.ROCK = worldParametersDto.getRock();
+        WorldParameters.FOOD = worldParametersDto.getFood();
+        WorldParameters.GOLD = worldParametersDto.getGold();
 
         WorldParameters.PEASANTS = worldParametersDto.getPeasants();
         WorldParameters.WORKERS = worldParametersDto.getWorkers();

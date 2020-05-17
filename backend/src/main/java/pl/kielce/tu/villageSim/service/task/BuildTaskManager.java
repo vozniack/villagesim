@@ -57,12 +57,19 @@ public class BuildTaskManager extends AbstractTaskManager<Building> {
 
                             World.unitPaths.put(task.getUnit().getId(), pathNodes);
 
+                            World.WOOD -= building.getRequiredWood();
+                            World.ROCK -= building.getRequiredRock();
+
                             log.info("# Task " + task.getTaskType().toString() + " assigned to unit " + unit.getUnitType().toString());
                         } else {
                             log.info("# Task " + task.getTaskType().toString() + " can't be accessed - no path");
                         }
                     } else {
-                        log.info("# Task " + task.getTaskType().toString() + " can't be finished - not enough resources");
+                        if (!task.getInformedAboutProblem()) {
+                            task.setInformedAboutProblem(true);
+                            log.info("# Task " + task.getTaskType().toString() + " can't be finished - not enough resources");
+                        }
+
                     }
                 }));
     }
@@ -80,6 +87,7 @@ public class BuildTaskManager extends AbstractTaskManager<Building> {
         unitRepository.save(unit);
 
         task.setTaskState(TaskState.FINISHED);
+        task.setUnit(null);
         taskRepository.save(task);
 
         communicationService.sendWorldState();

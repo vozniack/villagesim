@@ -105,12 +105,5 @@ public class WorldGenerator {
         for (int i = 0; i < WorldParameters.PEASANTS; i++) {
             unitService.createUnit(UnitType.PEASANT, positionUtil.getUnitCoordinatesNearPosition(warehouse, 1, 4));
         }
-
-        /* #todo to unlock some day
-
-        for (int i = 0; i < WorldParameters.WORKERS; i++) {
-            unitService.createUnit(UnitType.WORKER, positionUtil.getUnitCoordinatesNearPosition(warehouse, 1, 4));
-        }
-        */
     }
 }

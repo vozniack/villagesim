@@ -17,7 +17,7 @@ public class StructureScheduledService {
     private final CommunicationService communicationService;
     private final StructureRepository structureRepository;
 
-    @Scheduled(fixedDelay = 60000) // 1 minute
+    @Scheduled(fixedDelay = 2048) // 1/4 minute
     public void growTrees() {
         if (SchedulerUtil.canPerform()) {
             structureRepository.findAllByStructureTypeAndStructureLevelLessThan(StructureType.TREE, 3).forEach(tree -> {
@@ -31,11 +31,11 @@ public class StructureScheduledService {
         }
     }
 
-    @Scheduled(fixedDelay = 60000) // 1 minute
+    @Scheduled(fixedDelay = 2048) // 1/4 minute
     public void brokeTrees() {
         if (SchedulerUtil.canPerform()) {
-            structureRepository.findAllByStructureType(StructureType.TREE).forEach(tree -> {
-                if (RandUtil.generateChance(0.05) && tree.getStructureLevel() > 1) {
+            structureRepository.findAllByStructureTypeAndStructureLevelGreaterThan(StructureType.TREE, 1).forEach(tree -> {
+                if (RandUtil.generateChance(0.05)) {
                     tree.setStructureLevel(tree.getStructureLevel() + -1);
                     structureService.updateStructure(tree);
                 }
