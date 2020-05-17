@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Coordinates {
+public class Coordinates implements Comparable<Coordinates> {
 
     private Integer x;
 
@@ -18,5 +18,10 @@ public class Coordinates {
     @Override
     public String toString() {
         return "[" + x + "][" + y + "] / [size: " + size + "]";
+    }
+
+    @Override
+    public int compareTo(Coordinates coordinates) {
+        return this.getSize().compareTo(coordinates.getSize());
     }
 }

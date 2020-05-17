@@ -10,4 +10,11 @@ public class MathUtil {
 
         return Math.sqrt(2) * Math.min(dx, dy) + (Math.max(dx, dy) - Math.min(dx, dy));
     }
+
+    public static double countDistance(Integer pos1X, Integer pos1Y, Integer pos2X, Integer pos2Y) {
+        int dx = Math.abs(pos2X - pos1X);
+        int dy = Math.abs(pos2Y - pos1Y);
+
+        return Math.sqrt(2) * Math.min(dx, dy) + (Math.max(dx, dy) - Math.min(dx, dy));
+    }
 }
