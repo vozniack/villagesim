@@ -37,9 +37,11 @@ public class UnitService {
         Unit unit = new Unit(unitType, coordinates);
         UnitUtil.setUnitRequirementResources(unit);
 
+        unitRepository.save(unit);
+
         communicationService.sendWorldState();
 
-        return unitRepository.save(unit);
+        return unit;
     }
 
     /* Support methods */

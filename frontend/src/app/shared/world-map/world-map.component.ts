@@ -58,6 +58,13 @@ export class WorldMapComponent implements OnInit {
     this.world.units = JSON.parse(value).units;
     this.world.buildings = JSON.parse(value).buildings;
     this.world.structures = JSON.parse(value).structures;
+
+    this.world.wood = JSON.parse(value).wood;
+    this.world.rock = JSON.parse(value).rock;
+    this.world.food = JSON.parse(value).food;
+
+    this.world.unitsAmount = this.world.units.length;
+    this.world.buildingsAmount = this.world.buildings.length;
   }
 
   generateModal() {

@@ -24,6 +24,14 @@
     <div *ngIf="!isGenerated && wasFirstGenerated" [@showContentAnimated] class="loading-spinner">
       <mat-progress-spinner color="primary" diameter="60" mode="indeterminate"></mat-progress-spinner>
     </div>
+    <div *ngIf="this.isGenerated" class="resources-container">
+      <p class="resource text-primary">Drewno: <b>{{this.world.wood}}</b></p>
+      <p class="resource text-primary">Kamień: <b>{{this.world.rock}}</b></p>
+      <p class="resource text-primary">Jedzenie: <b>{{this.world.food}}</b></p>
+      <span class="resource-divider"></span>
+      <p class="resource-right text-primary">Jednostki: <b>{{this.world.unitsAmount}}</b></p>
+      <p class="resource-right text-primary">Budynki: <b>{{this.world.buildingsAmount}}</b></p>
+    </div>
     <div #worldMapContainer>
       <canvas #worldMap [@showContentAnimated] [class.world-map-hidden]="!isGenerated" class="world-map"></canvas>
     </div>

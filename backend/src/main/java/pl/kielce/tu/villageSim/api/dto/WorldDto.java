@@ -25,4 +25,12 @@ public class WorldDto {
     private List<Building> buildings = new ArrayList<>();
 
     private List<Structure> structures = new ArrayList<>();
+
+    /* Resources */
+
+    private Integer wood;
+
+    private Integer rock;
+
+    private Integer food;
 }

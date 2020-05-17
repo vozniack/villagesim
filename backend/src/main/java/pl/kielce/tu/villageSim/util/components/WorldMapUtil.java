@@ -58,8 +58,9 @@ public class WorldMapUtil {
         Integer[][] array = new Integer[World.SIZE_WIDTH][World.SIZE_HEIGHT];
 
         fillEmptyArray(array, 0);
-        fillAllBuildingCells(array, (Building) position, 1, 1, true);
-        fillAllBuildingCells(array, (Building) position, 0, 0, false);
+
+        fillAllPositionCells(array, position, 1, 1, true);
+        fillAllPositionCells(array, position, 0, 0, false);
 
         return array;
     }
@@ -86,26 +87,26 @@ public class WorldMapUtil {
 
     private void fillBuildings(Integer[][] array, Integer blockedCellValue, Integer border) {
         for (Building building : buildingRepository.findAll()) {
-            fillAllBuildingCells(array, building, blockedCellValue, border, false);
+            fillAllPositionCells(array, building, blockedCellValue, border, false);
         }
     }
 
     private void fillBuildingsByType(Integer[][] array, Integer blockedCellValue, BuildingType buildingType) {
         for (Building building : buildingRepository.getAllByBuildingType(buildingType)) {
-            fillAllBuildingCells(array, building, blockedCellValue, 3, false);
+            fillAllPositionCells(array, building, blockedCellValue, 3, false);
         }
     }
 
-    private void fillAllBuildingCells(Integer[][] array, Building building, Integer blockedCellValue, Integer border, Boolean checkCorners) {
-        for (int i = -border; i < building.getSize() + border; i++) {
-            for (int j = -border; j < building.getSize() + border; j++) {
-                if (positionUtil.isInsideMap(building.getPositionX() + i, building.getPositionY() + j)) {
+    private void fillAllPositionCells(Integer[][] array, Position position, Integer blockedCellValue, Integer border, Boolean checkCorners) {
+        for (int i = -border; i < position.getSize() + border; i++) {
+            for (int j = -border; j < position.getSize() + border; j++) {
+                if (positionUtil.isInsideMap(position.getPositionX() + i, position.getPositionY() + j)) {
                     if (checkCorners) {
-                        if (isNotInCorner(i, j, building)) {
-                            array[building.getPositionX() + i][building.getPositionY() + j] = blockedCellValue;
+                        if (isNotInCorner(i, j, position)) {
+                            array[position.getPositionX() + i][position.getPositionY() + j] = blockedCellValue;
                         }
                     } else {
-                        array[building.getPositionX() + i][building.getPositionY() + j] = blockedCellValue;
+                        array[position.getPositionX() + i][position.getPositionY() + j] = blockedCellValue;
                     }
 
                 }

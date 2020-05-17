@@ -4,14 +4,24 @@ import {Building} from "./building";
 
 export class World {
 
-  sizeWidth: number = 64;
+  sizeWidth: number = 96;
 
-  sizeHeight: number = 64;
+  sizeHeight: number = 32;
 
   units: Unit[] = [];
 
   buildings: Building[] = [];
 
   structures: Structure[] = [];
+
+  wood: number = 0;
+
+  rock: number = 0;
+
+  food: number = 0;
+
+  unitsAmount: number = 0;
+
+  buildingsAmount: number = 0;
 }
 

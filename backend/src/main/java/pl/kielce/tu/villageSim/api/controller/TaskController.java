@@ -16,6 +16,14 @@ public class TaskController {
 
     @PostMapping
     public void createTask(@RequestParam TaskType taskType) {
+        switch (taskType) {
+            case CUT_TREE:
+                taskService.createLumberjackTask();
+                break;
 
+            case BREAK_STONE:
+                taskService.createStonemasonTask();
+                break;
+        }
     }
 }

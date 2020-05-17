@@ -12,6 +12,7 @@ import pl.kielce.tu.villageSim.service.aStar.PathNode;
 import pl.kielce.tu.villageSim.service.communication.CommunicationService;
 import pl.kielce.tu.villageSim.service.entities.TaskService;
 import pl.kielce.tu.villageSim.service.entities.UnitService;
+import pl.kielce.tu.villageSim.types.building.BuildingType;
 import pl.kielce.tu.villageSim.types.unit.UnitState;
 import pl.kielce.tu.villageSim.util.RandUtil;
 import pl.kielce.tu.villageSim.util.SchedulerUtil;
@@ -36,12 +37,9 @@ public class MoveScheduledService {
         if (SchedulerUtil.canPerform()) {
             unitRepository.findAllByUnitState(UnitState.FREE).forEach(unit -> {
 
-                /* #todo return near to warehouse
-
-                if (!positionUtil.isNearWarehouse(unit.getPositionX(), unit.getPositionY(), 4)) {
+                if (!positionUtil.isNearWarehouse(unit.getPositionX(), unit.getPositionY(), 8)) {
                     taskService.createMoveTask(unit, buildingRepository.getAllByBuildingType(BuildingType.WAREHOUSE).get(0), null);
                 }
-                */
 
                 if (RandUtil.generateChance(0.1)) {
                     Integer positionX = unit.getPositionX() + RandUtil.generateRand(-1, 1);

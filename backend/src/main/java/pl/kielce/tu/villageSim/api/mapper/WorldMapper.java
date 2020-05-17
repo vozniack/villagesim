@@ -27,6 +27,11 @@ public class WorldMapper {
         worldDto.setBuildings(buildingRepository.findAll());
         worldDto.setStructures(structureRepository.findAll());
 
+        worldDto.setWood(World.WOOD);
+        worldDto.setRock(World.ROCK);
+        worldDto.setFood(World.FOOD);
+
+
         return worldDto;
     }
 

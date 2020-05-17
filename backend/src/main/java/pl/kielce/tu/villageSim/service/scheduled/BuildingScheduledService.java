@@ -16,7 +16,7 @@ public class BuildingScheduledService {
     @Scheduled(fixedDelay = 2048)
     public void drainUnitHealth() {
         if (SchedulerUtil.canPerform()) {
-            buildingRepository.getAllByBuildingType(BuildingType.FARM).forEach(farm -> World.FOOD += 3);
+            buildingRepository.getAllByBuildingType(BuildingType.FARM).forEach(farm -> World.FOOD += 4);
         }
     }
 }

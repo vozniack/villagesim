@@ -11,7 +11,7 @@ import pl.kielce.tu.villageSim.util.components.PathFindingUtil;
 import pl.kielce.tu.villageSim.util.components.WorldMapUtil;
 
 @RequiredArgsConstructor
-public abstract class AbstractTaskManager<Entity> implements TaskManager<Entity> {
+public abstract class AbstractTaskManager {
     protected final UnitService unitService;
     protected final CommunicationService communicationService;
 

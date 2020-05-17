@@ -27,13 +27,12 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class BuildTaskManager extends AbstractTaskManager<Building> {
+public class BuildTaskManager extends AbstractTaskManager {
 
     public BuildTaskManager(UnitService unitService, CommunicationService communicationService, WorldMapUtil worldMapUtil, PathFindingUtil pathFindingUtil, StructureRepository structureRepository, BuildingRepository buildingRepository, TaskRepository taskRepository, UnitRepository unitRepository) {
         super(unitService, communicationService, worldMapUtil, pathFindingUtil, structureRepository, buildingRepository, taskRepository, unitRepository);
     }
 
-    @Override
     @Transactional
     public void prepareTask() {
         List<Task> tasks = taskRepository.findAllByTaskStateAndTaskType(TaskState.UNASSIGNED, TaskType.BUILD);
@@ -48,7 +47,6 @@ public class BuildTaskManager extends AbstractTaskManager<Building> {
                         if (pathNodes != null) {
                             task.setUnit(unit);
                             task.setTaskState(TaskState.ASSIGNED);
-
                             taskRepository.save(task);
 
                             unit.setUnitState(UnitState.BUSY);
@@ -62,7 +60,16 @@ public class BuildTaskManager extends AbstractTaskManager<Building> {
 
                             log.info("# Task " + task.getTaskType().toString() + " assigned to unit " + unit.getUnitType().toString());
                         } else {
-                            log.info("# Task " + task.getTaskType().toString() + " can't be accessed - no path");
+                            buildingRepository.delete(task.getBuilding());
+
+                            unit.setTask(null);
+                            unitRepository.save(unit);
+
+                            task.setTaskState(TaskState.UNFINISHED);
+                            task.setUnit(null);
+                            taskRepository.save(task);
+
+                            log.info("# Task " + task.getTaskType().toString() + " failed - can't find a path");
                         }
                     } else {
                         if (!task.getInformedAboutProblem()) {
@@ -74,7 +81,6 @@ public class BuildTaskManager extends AbstractTaskManager<Building> {
                 }));
     }
 
-    @Override
     @Transactional
     public void finalizeTask(Task task) {
         Building building = task.getBuilding();
@@ -86,6 +92,7 @@ public class BuildTaskManager extends AbstractTaskManager<Building> {
         unit.setUnitState(UnitState.FREE);
         unitRepository.save(unit);
 
+        task.setBuilding(null);
         task.setTaskState(TaskState.FINISHED);
         task.setUnit(null);
         taskRepository.save(task);

@@ -18,20 +18,26 @@ public class UnitScheduledService {
     private final UnitRepository unitRepository;
 
     @Scheduled(fixedDelay = 2048)
-    public void drainUnitHealth() {
+    public void manageUnitHealth() {
         if (SchedulerUtil.canPerform()) {
             unitRepository.findAll().forEach(unit -> {
-                unit.setHealth(unit.getHealth() - RandUtil.generateRand(16, 24));
+                unit.setHealth(unit.getHealth() - RandUtil.generateRand(12, 24));
 
-                if (World.FOOD >= 2) {
-                    World.FOOD -= 2;
-                    unit.setHealth(unit.getHealth() + RandUtil.generateRand(16, 24));
+                if (unit.getHealth() < 75) {
+                    if (World.FOOD >= 2) {
+                        World.FOOD -= 2;
+                        unit.setHealth(unit.getHealth() + RandUtil.generateRand(8, 16));
+                    }
                 }
 
                 if (unit.getHealth() < 0 && unit.getTask() == null) {
-                    unitRepository.delete(unit);
-
-                    log.info("Unit " + unit.getUnitType().toString() + " starved");
+                    if (World.FOOD >= 2) {
+                        World.FOOD -= 2;
+                        unit.setHealth(unit.getHealth() + RandUtil.generateRand(12, 18));
+                    } else {
+                        unitRepository.delete(unit);
+                        log.info("Unit " + unit.getUnitType().toString() + " starved");
+                    }
                 } else {
                     unitRepository.save(unit);
                 }
