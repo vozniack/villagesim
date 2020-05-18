@@ -17,6 +17,7 @@ import pl.kielce.tu.villageSim.service.entities.UnitService;
 import pl.kielce.tu.villageSim.types.resource.ResourceType;
 import pl.kielce.tu.villageSim.types.task.TaskState;
 import pl.kielce.tu.villageSim.types.task.TaskType;
+import pl.kielce.tu.villageSim.types.unit.UnitState;
 import pl.kielce.tu.villageSim.util.components.PathFindingUtil;
 import pl.kielce.tu.villageSim.util.components.WorldMapUtil;
 
@@ -67,7 +68,7 @@ public class TransportTaskManager extends AbstractTaskManager {
 
         unit.setResourceType(null);
         unit.setResourceAmount(0);
-        finalizeUnitState(unit);
+        finalizeUnitState(unit, UnitState.FREE);
 
         finalizeTaskState(task);
 

@@ -72,7 +72,7 @@ public class HarvestTaskManager extends AbstractTaskManager {
         unit.setResourceAmount(8);
         unit.setResourceType(ResourceType.FOOD);
 
-        finalizeUnitState(unit);
+        finalizeUnitState(unit, UnitState.BUSY);
         finalizeTaskState(task);
 
         communicationService.sendWorldState();

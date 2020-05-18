@@ -79,7 +79,7 @@ public class BuildTaskManager extends AbstractTaskManager {
         buildingRepository.save(building);
 
         Unit unit = task.getUnit();
-        finalizeUnitState(unit);
+        finalizeUnitState(unit, UnitState.FREE);
 
         task.setBuilding(null);
         finalizeTaskState(task);

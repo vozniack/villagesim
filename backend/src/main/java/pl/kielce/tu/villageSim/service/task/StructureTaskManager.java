@@ -76,7 +76,7 @@ public class StructureTaskManager extends AbstractTaskManager {
         unit.setResourceAmount(8);
         unit.setResourceType(getResourceTypeByStructureType(task.getStructure().getStructureType()));
 
-        finalizeUnitState(unit);
+        finalizeUnitState(unit, UnitState.BUSY);
 
         task.setStructure(null);
         finalizeTaskState(task);

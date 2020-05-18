@@ -50,16 +50,18 @@ public abstract class AbstractTaskManager {
     }
 
     protected void deleteUnfinishedTask(Task task, Unit unit) {
-        finalizeUnitState(unit);
+        finalizeUnitState(unit, UnitState.FREE);
 
         task.setTaskState(TaskState.UNFINISHED);
         task.setUnit(null);
+        task.setBuilding(null);
+
         taskRepository.save(task);
     }
 
-    protected void finalizeUnitState(Unit unit) {
+    protected void finalizeUnitState(Unit unit, UnitState unitState) {
         unit.setTask(null);
-        unit.setUnitState(UnitState.FREE);
+        unit.setUnitState(unitState);
         unitRepository.save(unit);
     }
 

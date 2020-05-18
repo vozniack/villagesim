@@ -15,20 +15,24 @@ public class TaskScheduledService {
     private final MoveTaskManager moveTaskManager;
     private final HarvestTaskManager harvestTaskManager;
     private final TransportTaskManager transportTaskManager;
+    private final EatTaskManager eatTaskManager;
 
     @Scheduled(fixedDelay = 512)
     public void assignNewTasks() {
         if (SchedulerUtil.canPerform()) {
+            eatTaskManager.prepareTask();
+
+            transportTaskManager.prepareTask();
+
             buildTaskManager.prepareTask();
+
+            harvestTaskManager.prepareTask();
 
             structureTaskManager.prepareTask(TaskType.CUT_TREE);
             structureTaskManager.prepareTask(TaskType.BREAK_STONE);
 
-            harvestTaskManager.prepareTask();
-
-            transportTaskManager.prepareTask();
-
             moveTaskManager.prepareTask();
+
         }
     }
 }

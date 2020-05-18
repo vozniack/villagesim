@@ -22,7 +22,7 @@ public class BuildingScheduledService {
                 if (farm.getBuildingState().equals(BuildingState.NOT_BROKEN)) {
                     farm.setActionCounter(farm.getActionCounter() + 1);
 
-                    if (farm.getActionCounter() > 10) {
+                    if (farm.getActionCounter() > 6) {
                         farm.setIsAction(false);
                         farm.setActionCounter(0);
                     }

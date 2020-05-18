@@ -21,14 +21,16 @@ public class TaskService {
     private final MoveTaskManager moveTaskManager;
     private final HarvestTaskManager harvestTaskManager;
     private final TransportTaskManager transportTaskManager;
+    private final EatTaskManager eatTaskManager;
     private final TaskRepository taskRepository;
 
-    public TaskService(@Lazy BuildTaskManager buildTaskManager, @Lazy StructureTaskManager structureTaskManager, @Lazy MoveTaskManager moveTaskManager, @Lazy HarvestTaskManager harvestTaskManager, @Lazy TransportTaskManager transportTaskManager, TaskRepository taskRepository) {
+    public TaskService(@Lazy BuildTaskManager buildTaskManager, @Lazy StructureTaskManager structureTaskManager, @Lazy MoveTaskManager moveTaskManager, @Lazy HarvestTaskManager harvestTaskManager, @Lazy TransportTaskManager transportTaskManager, @Lazy EatTaskManager eatTaskManager, TaskRepository taskRepository) {
         this.buildTaskManager = buildTaskManager;
         this.structureTaskManager = structureTaskManager;
         this.moveTaskManager = moveTaskManager;
         this.harvestTaskManager = harvestTaskManager;
         this.transportTaskManager = transportTaskManager;
+        this.eatTaskManager = eatTaskManager;
         this.taskRepository = taskRepository;
     }
 
@@ -103,6 +105,15 @@ public class TaskService {
         taskRepository.save(task);
     }
 
+    public void createEatTask(Unit unit) {
+        Task task = new Task(TaskType.EAT);
+
+        task.setUnit(unit);
+        task.setTaskState(TaskState.AWAIT_FOR_PATH);
+
+        taskRepository.save(task);
+    }
+
     public void finalizeTask(Task task) {
         switch (task.getTaskType()) {
             case BUILD:
@@ -124,6 +135,10 @@ public class TaskService {
 
             case MOVE:
                 moveTaskManager.finalizeTask(task);
+                break;
+
+            case EAT:
+                eatTaskManager.finalizeTask(task);
                 break;
         }
     }
