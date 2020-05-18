@@ -12,6 +12,7 @@ import pl.kielce.tu.villageSim.repository.TaskRepository;
 import pl.kielce.tu.villageSim.repository.UnitRepository;
 import pl.kielce.tu.villageSim.service.aStar.PathNode;
 import pl.kielce.tu.villageSim.service.communication.CommunicationService;
+import pl.kielce.tu.villageSim.service.entities.TaskService;
 import pl.kielce.tu.villageSim.service.entities.UnitService;
 import pl.kielce.tu.villageSim.types.building.BuildingState;
 import pl.kielce.tu.villageSim.types.task.TaskState;
@@ -29,8 +30,8 @@ import java.util.Optional;
 @Slf4j
 public class BuildTaskManager extends AbstractTaskManager {
 
-    public BuildTaskManager(UnitService unitService, CommunicationService communicationService, WorldMapUtil worldMapUtil, PathFindingUtil pathFindingUtil, StructureRepository structureRepository, BuildingRepository buildingRepository, TaskRepository taskRepository, UnitRepository unitRepository) {
-        super(unitService, communicationService, worldMapUtil, pathFindingUtil, structureRepository, buildingRepository, taskRepository, unitRepository);
+    public BuildTaskManager(UnitService unitService, TaskService taskService, CommunicationService communicationService, WorldMapUtil worldMapUtil, PathFindingUtil pathFindingUtil, StructureRepository structureRepository, BuildingRepository buildingRepository, TaskRepository taskRepository, UnitRepository unitRepository) {
+        super(unitService, taskService, communicationService, worldMapUtil, pathFindingUtil, structureRepository, buildingRepository, taskRepository, unitRepository);
     }
 
     @Transactional
@@ -45,15 +46,9 @@ public class BuildTaskManager extends AbstractTaskManager {
                         List<PathNode> pathNodes = pathFindingUtil.findPathTo(unit, building);
 
                         if (pathNodes != null) {
-                            task.setUnit(unit);
-                            task.setTaskState(TaskState.ASSIGNED);
-                            taskRepository.save(task);
-
-                            unit.setUnitState(UnitState.BUSY);
-                            unit.setTask(task);
-                            unitRepository.save(unit);
-
-                            World.unitPaths.put(task.getUnit().getId(), pathNodes);
+                            assignTaskToUnit(task, unit);
+                            changeUnitState(task, unit);
+                            createTaskPath(task, pathNodes);
 
                             World.WOOD -= building.getRequiredWood();
                             World.ROCK -= building.getRequiredRock();
@@ -62,13 +57,9 @@ public class BuildTaskManager extends AbstractTaskManager {
                         } else {
                             buildingRepository.delete(task.getBuilding());
 
-                            unit.setTask(null);
-                            unitRepository.save(unit);
+                            task.setBuilding(null);
 
-                            task.setTaskState(TaskState.UNFINISHED);
-                            task.setUnit(null);
-                            taskRepository.save(task);
-
+                            deleteUnfinishedTask(task, unit);
                             log.info("# Task " + task.getTaskType().toString() + " failed - can't find a path");
                         }
                     } else {
@@ -88,14 +79,12 @@ public class BuildTaskManager extends AbstractTaskManager {
         buildingRepository.save(building);
 
         Unit unit = task.getUnit();
-        unit.setTask(null);
-        unit.setUnitState(UnitState.FREE);
-        unitRepository.save(unit);
+        finalizeUnitState(unit);
 
         task.setBuilding(null);
-        task.setTaskState(TaskState.FINISHED);
-        task.setUnit(null);
-        taskRepository.save(task);
+        finalizeTaskState(task);
+
+        // #todo delete all structures below
 
         communicationService.sendWorldState();
     }

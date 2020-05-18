@@ -46,6 +46,12 @@ public class Building implements Position {
 
     private Integer requiredRock = 0;
 
+    /* Farm properties */
+
+    private Boolean isAction = false;
+
+    private Integer actionCounter = 0;
+
     /* Custom constructor */
 
     public Building(BuildingType buildingType, BuildingState buildingState, Coordinates coordinates) {
@@ -55,6 +61,8 @@ public class Building implements Position {
 
         this.buildingType = buildingType;
         this.buildingState = buildingState;
+
+        this.isAction = false;
     }
 
     /* Custom setter */

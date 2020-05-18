@@ -48,7 +48,7 @@ public class WorldMapUtil {
         fillEmptyArray(array, emptyCellValue);
 
         fillStructures(array, blockedCellValue);
-        fillUnits(array, blockedCellValue);
+        // fillUnits(array, blockedCellValue);
         fillBuildings(array, blockedCellValue, 0);
 
         return array;

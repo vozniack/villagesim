@@ -9,15 +9,17 @@ import pl.kielce.tu.villageSim.repository.UnitRepository;
 import pl.kielce.tu.villageSim.service.communication.CommunicationService;
 import pl.kielce.tu.villageSim.util.RandUtil;
 import pl.kielce.tu.villageSim.util.SchedulerUtil;
+import pl.kielce.tu.villageSim.util.components.UnitDeletingUtil;
 
 @Service
 @Slf4j
 @AllArgsConstructor
 public class UnitScheduledService {
     private final CommunicationService communicationService;
+    private final UnitDeletingUtil unitDeletingUtil;
     private final UnitRepository unitRepository;
 
-    @Scheduled(fixedDelay = 2048)
+    @Scheduled(fixedDelay = 8192)
     public void manageUnitHealth() {
         if (SchedulerUtil.canPerform()) {
             unitRepository.findAll().forEach(unit -> {
@@ -35,8 +37,7 @@ public class UnitScheduledService {
                         World.FOOD -= 2;
                         unit.setHealth(unit.getHealth() + RandUtil.generateRand(12, 18));
                     } else {
-                        unitRepository.delete(unit);
-                        log.info("Unit " + unit.getUnitType().toString() + " starved");
+                        unitDeletingUtil.deleteUnit(unit);
                     }
                 } else {
                     unitRepository.save(unit);

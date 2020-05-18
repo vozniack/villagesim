@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import pl.kielce.tu.villageSim.model.entity.Task;
 import pl.kielce.tu.villageSim.model.entity.map.interfaces.Position;
 import pl.kielce.tu.villageSim.model.util.Coordinates;
+import pl.kielce.tu.villageSim.types.resource.ResourceType;
 import pl.kielce.tu.villageSim.types.unit.UnitState;
 import pl.kielce.tu.villageSim.types.unit.UnitType;
 
@@ -47,6 +48,12 @@ public class Unit implements Position {
 
     @NotNull
     private Integer size;
+
+    /* Transport properties */
+
+    private Integer resourceAmount;
+
+    private ResourceType resourceType;
 
     /* Relations */
 

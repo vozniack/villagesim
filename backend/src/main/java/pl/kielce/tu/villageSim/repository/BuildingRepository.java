@@ -13,4 +13,6 @@ public interface BuildingRepository extends CrudRepository<Building, Long> {
     List<Building> findAll();
 
     List<Building> getAllByBuildingType(BuildingType buildingType);
+
+    List<Building> getAllByBuildingTypeAndIsAction(BuildingType buildingType, Boolean isAction);
 }

@@ -19,11 +19,11 @@ export class CanvasService {
   /* Static rgba colors */
 
   groundColor: string = 'rgba(93, 64, 55, 0.1)';
-  treeColor: string = 'rgba(46, 125, 50,'; // alpha canal is filled by method
-  rockColor: string = 'rgba(117, 117, 117,'; // alpha canal is filled by method
+  treeColor: string = 'rgba(46, 125, 50,'; // alpha channel is filled by method
+  rockColor: string = 'rgba(117, 117, 117,'; // alpha channel is filled by method
 
   buildingColor: string = 'rgba(135, 0, 0, 1.0)';
-  farmColor: string = 'rgba(253, 216, 53, 1.0)';
+  farmColor: string = 'rgba(253, 216, 53'; // alpha channel is filled by method
 
   unitColor: string = 'rgba(0, 188, 212, 1.0)';
 
@@ -81,7 +81,7 @@ export class CanvasService {
 
   drawBuildings(building: Building[]) {
     building.forEach(building => {
-      this.setBuildingColor(building.buildingType);
+      this.setBuildingColor(building.buildingType, building.isAction);
       this.drawRectangle(building.positionX * this.tileSize, building.positionY * this.tileSize, (this.tileSize * building.size) - 1, (this.tileSize * building.size) - 1, building.buildingState !== 'PLAN');
     })
   }
@@ -131,10 +131,10 @@ export class CanvasService {
     }
   }
 
-  setBuildingColor(buildingType: string) {
+  setBuildingColor(buildingType: string, isAction: boolean) {
     if (buildingType == 'FARM') {
-      this.ctx.fillStyle = this.farmColor;
-      this.ctx.strokeStyle = this.farmColor;
+      this.ctx.fillStyle = this.farmColor + (isAction ? ', 1.0)' : ', 0.75)');
+      this.ctx.strokeStyle = this.farmColor + ', 1.0)';
     } else {
       this.ctx.fillStyle = this.buildingColor;
       this.ctx.strokeStyle = this.buildingColor;

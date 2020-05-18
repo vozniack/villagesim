@@ -12,6 +12,8 @@ export class Building {
 
   size: number;
 
+  isAction: boolean;
+
   constructor() {
   }
 }

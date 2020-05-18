@@ -1,28 +1,36 @@
 package pl.kielce.tu.villageSim.service.entities;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import pl.kielce.tu.villageSim.model.entity.Task;
 import pl.kielce.tu.villageSim.model.entity.map.Building;
 import pl.kielce.tu.villageSim.model.entity.map.Structure;
 import pl.kielce.tu.villageSim.model.entity.map.Unit;
 import pl.kielce.tu.villageSim.repository.TaskRepository;
-import pl.kielce.tu.villageSim.service.task.BuildTaskManager;
-import pl.kielce.tu.villageSim.service.task.MoveTaskManager;
-import pl.kielce.tu.villageSim.service.task.StructureTaskManager;
+import pl.kielce.tu.villageSim.service.task.*;
 import pl.kielce.tu.villageSim.types.structure.StructureType;
 import pl.kielce.tu.villageSim.types.task.TaskState;
 import pl.kielce.tu.villageSim.types.task.TaskType;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class TaskService {
     private final BuildTaskManager buildTaskManager;
     private final StructureTaskManager structureTaskManager;
     private final MoveTaskManager moveTaskManager;
+    private final HarvestTaskManager harvestTaskManager;
+    private final TransportTaskManager transportTaskManager;
     private final TaskRepository taskRepository;
+
+    public TaskService(@Lazy BuildTaskManager buildTaskManager, @Lazy StructureTaskManager structureTaskManager, @Lazy MoveTaskManager moveTaskManager, @Lazy HarvestTaskManager harvestTaskManager, @Lazy TransportTaskManager transportTaskManager, TaskRepository taskRepository) {
+        this.buildTaskManager = buildTaskManager;
+        this.structureTaskManager = structureTaskManager;
+        this.moveTaskManager = moveTaskManager;
+        this.harvestTaskManager = harvestTaskManager;
+        this.transportTaskManager = transportTaskManager;
+        this.taskRepository = taskRepository;
+    }
 
     public void createBuildTask(Building building) {
         Task task = new Task(TaskType.BUILD);
@@ -55,6 +63,29 @@ public class TaskService {
         taskRepository.save(task);
     }
 
+    public void createHarvestTask(Building farm) {
+        Task task = new Task(TaskType.HARVEST);
+
+        task.setBuilding(farm);
+
+        log.info("# Creating new harvesting task with farm id: " + farm.getId());
+
+        taskRepository.save(task);
+    }
+
+    public void createTransportTask(Unit unit, Building building) {
+        Task task = new Task(TaskType.TRANSPORT);
+
+        task.setUnit(unit);
+        task.setBuilding(building);
+
+        task.setTaskState(TaskState.AWAIT_FOR_PATH);
+
+        log.info("# Creating new transporting task with unit id: " + unit.getId() + " and building id: " + building.getId());
+
+        taskRepository.save(task);
+    }
+
     public void createMoveTask(Unit unit, Building building, Structure structure) {
         Task task = new Task(TaskType.MOVE);
 
@@ -81,6 +112,14 @@ public class TaskService {
             case CUT_TREE:
             case BREAK_STONE:
                 structureTaskManager.finalizeTask(task);
+                break;
+
+            case HARVEST:
+                harvestTaskManager.finalizeTask(task);
+                break;
+
+            case TRANSPORT:
+                transportTaskManager.finalizeTask(task);
                 break;
 
             case MOVE:
