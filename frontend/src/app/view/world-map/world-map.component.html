@@ -1,0 +1,52 @@
+<mat-card class="world-map-card">
+  <mat-card-header class="mat-card-header-primary">
+    <h2 [@showContentAnimated]>{{this.cardTitle()}}</h2>
+    <span class="card-bar-divider"></span>
+    <!--<button (click)="this.look()" class="card-bar-button" color="accent" mat-flat-button>Pa na to</button> #todo to delete -->
+    <button (click)="this.generateModal()" *ngIf="isActive || isGenerated" class="card-bar-button button-border-white"
+            mat-stroked-button>Generuj nowy świat
+    </button>
+    <div *ngIf="isActive || isGenerated" class="vertical-separator"></div>
+    <button (click)="this.currentView = 'WORLD_MAP'" *ngIf="isActive || isGenerated"
+            [class.button-border-white-active]="this.currentView === 'WORLD_MAP'"
+            class="card-bar-button button-border-white"
+            mat-stroked-button matTooltip="Świat" matTooltipPosition="below">
+      <mat-icon class="card-bar-button-icon">language</mat-icon>
+    </button>
+    <button (click)="this.currentView = 'STATISTICS'" *ngIf="isActive || isGenerated"
+            [class.button-border-white-active]="this.currentView === 'STATISTICS'"
+            class="card-bar-button button-border-white"
+            mat-stroked-button matTooltip="Statystyki" matTooltipPosition="below">
+      <mat-icon class="card-bar-button-icon">pie_chart</mat-icon>
+    </button>
+    <button (click)="this.currentView = 'LOGS'" *ngIf="isActive || isGenerated"
+            [class.button-border-white-active]="this.currentView === 'LOGS'"
+            class="card-bar-button button-border-white"
+            mat-stroked-button matTooltip="Logi" matTooltipPosition="below">
+      <mat-icon class="card-bar-button-icon">list_alt</mat-icon>
+    </button>
+    <div *ngIf="isActive || isGenerated" class="vertical-separator"></div>
+    <button (click)="this.pause()" *ngIf="isActive || isGenerated" [class.button-warn]="!isActive"
+            [color]="this.isActive ? 'accent' : 'warn'" [disabled]="!this.isGenerated" class="card-bar-button"
+            color="accent"
+            mat-flat-button matTooltip="Pauza" matTooltipPosition="below">
+      <mat-icon>pause</mat-icon>
+    </button>
+  </mat-card-header>
+  <mat-card-content (window:resize)="this.resizeMap()">
+    <div *ngIf="!wasFirstGenerated" [@showContentAnimated] class="startup-container">
+      <button (click)="this.generateModal()" color="primary" mat-flat-button>Wygeneruj świat by rozpocząć symulację
+      </button>
+    </div>
+    <div *ngIf="!isGenerated && wasFirstGenerated" [@showContentAnimated] class="loading-spinner">
+      <mat-progress-spinner color="primary" diameter="60" mode="indeterminate"></mat-progress-spinner>
+    </div>
+    <div #worldMapContainer>
+      <canvas #worldMap [class.world-map-hidden]="!isGenerated || this.currentView !== 'WORLD_MAP'"></canvas>
+      <app-statistics [currentView]="this.currentView"></app-statistics>
+      <app-logs [currentView]="this.currentView"></app-logs>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+

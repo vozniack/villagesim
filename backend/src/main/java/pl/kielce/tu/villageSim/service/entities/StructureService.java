@@ -21,10 +21,6 @@ public class StructureService {
         structureRepository.save(new Structure(structureType, structureLevel, coordinates));
     }
 
-    public void updateStructure(Structure structure) {
-        structureRepository.save(structure);
-    }
-
     /* Support methods */
 
     public void clearStructuresNearWarehouse(Building building) {

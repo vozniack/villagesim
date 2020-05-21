@@ -23,7 +23,7 @@ public class StructureScheduledService {
             structureRepository.findAllByStructureTypeAndStructureLevelLessThan(StructureType.TREE, 3).forEach(tree -> {
                 if (RandUtil.generateChance(0.05)) {
                     tree.setStructureLevel(tree.getStructureLevel() + 1);
-                    structureService.updateStructure(tree);
+                    structureRepository.save(tree);
                 }
             });
 
@@ -37,7 +37,7 @@ public class StructureScheduledService {
             structureRepository.findAllByStructureTypeAndStructureLevelGreaterThan(StructureType.TREE, 1).forEach(tree -> {
                 if (RandUtil.generateChance(0.05)) {
                     tree.setStructureLevel(tree.getStructureLevel() + -1);
-                    structureService.updateStructure(tree);
+                    structureRepository.save(tree);
                 }
             });
         }

@@ -18,6 +18,7 @@ import pl.kielce.tu.villageSim.types.resource.ResourceType;
 import pl.kielce.tu.villageSim.types.task.TaskState;
 import pl.kielce.tu.villageSim.types.task.TaskType;
 import pl.kielce.tu.villageSim.types.unit.UnitState;
+import pl.kielce.tu.villageSim.util.ResourceUtil;
 import pl.kielce.tu.villageSim.util.components.PathFindingUtil;
 import pl.kielce.tu.villageSim.util.components.WorldMapUtil;
 
@@ -76,7 +77,6 @@ public class TransportTaskManager extends AbstractTaskManager {
 
     private void finalizeTransport(ResourceType resourceType, Integer resourceAmount) {
         if (resourceType != null && resourceAmount != null) {
-            communicationService.sendResources(resourceType, resourceAmount);
 
             switch (resourceType) {
                 case WOOD:
@@ -91,6 +91,8 @@ public class TransportTaskManager extends AbstractTaskManager {
                     World.FOOD += resourceAmount;
                     break;
             }
+
+            communicationService.sendResources(resourceType, ResourceUtil.getCurrentResource(resourceType));
         }
     }
 }

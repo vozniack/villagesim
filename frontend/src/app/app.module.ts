@@ -11,7 +11,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatCardModule} from "@angular/material/card";
 import {HttpClientModule} from "@angular/common/http";
-import {WorldMapComponent} from './shared/world-map/world-map.component';
+import {WorldMapComponent} from './view/world-map/world-map.component';
 import {ActionBarComponent} from './shared/action-bar/action-bar.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
@@ -20,6 +20,9 @@ import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
+import {StatisticsComponent} from './view/statistics/statistics.component';
+import {LogsComponent} from './view/logs/logs.component';
+import {WoodChartComponent} from './view/statistics/wood-chart/wood-chart.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,9 @@ import {FormsModule} from "@angular/forms";
     WorldMapComponent,
     ActionBarComponent,
     ModalGenerate,
+    StatisticsComponent,
+    LogsComponent,
+    WoodChartComponent,
   ],
   imports: [
     BrowserModule,

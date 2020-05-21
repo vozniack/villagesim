@@ -4,10 +4,8 @@ import {World} from "../../model/world/world";
 import {CanvasService} from "../../service/canvas/canvas.service";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {MatDialog} from "@angular/material/dialog";
-import {ModalGenerate} from "../modals/generate-modal/modal-generate.component";
+import {ModalGenerate} from "../../shared/modals/generate-modal/modal-generate.component";
 import {WorldParameters} from "../../model/others/worldParameters";
-import {ResourceService} from "../../service/resource/resource.service";
-import {Resource} from "../../model/world/resource";
 
 @Component({
   selector: 'app-world-map',
@@ -16,7 +14,7 @@ import {Resource} from "../../model/world/resource";
   animations: [
     trigger('showContentAnimated', [
       transition(':enter', [
-        style({opacity: 0}),
+        style({opacity: 0.5}),
         animate('0.2s linear', style({opacity: 1}))
       ]),
     ]),
@@ -30,6 +28,8 @@ export class WorldMapComponent implements OnInit {
   isGenerated: boolean = false;
   wasFirstGenerated: boolean = false;
 
+  currentView: string = 'WORLD_MAP';
+
   worldParameters: WorldParameters = new WorldParameters();
 
   @ViewChild("worldMapContainer", {static: true})
@@ -40,16 +40,12 @@ export class WorldMapComponent implements OnInit {
 
   ctx: CanvasRenderingContext2D;
 
-  constructor(private worldService: WorldService, private canvasService: CanvasService, private dialog: MatDialog, private resourceService: ResourceService) {
+  constructor(private worldService: WorldService, private canvasService: CanvasService, private dialog: MatDialog) {
     this.worldService.world$.subscribe((value: World) => {
       if (this.isActive) {
         this.parseJson(value);
         this.canvasService.drawMap(this.world);
       }
-    })
-
-    this.resourceService.resource$.subscribe((value: Resource) => {
-      console.log(value);
     })
   }
 
@@ -96,8 +92,6 @@ export class WorldMapComponent implements OnInit {
               this.wasFirstGenerated = true;
               this.resizeMap();
             }
-
-            // #todo some error message
           })
         }
       })
@@ -115,6 +109,8 @@ export class WorldMapComponent implements OnInit {
     });
   }
 
+  // #todo to delete
+
   look() {
     this.canvasService.drawMap(this.world);
 
@@ -125,5 +121,18 @@ export class WorldMapComponent implements OnInit {
       this.canvasService.drawPath(response.path);
       this.canvasService.drawUnits(this.world.units);
     })
+  }
+
+  cardTitle() {
+    switch (this.currentView) {
+      case 'WORLD_MAP':
+        return 'Mapa świata';
+
+      case 'STATISTICS':
+        return 'Statystyki';
+
+      case 'LOGS':
+        return 'Logi';
+    }
   }
 }

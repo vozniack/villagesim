@@ -59,14 +59,17 @@ public class WorldGenerator {
 
     private void clearWorld() {
         taskRepository.findAll().forEach(task -> {
+            task.setStructure(null);
+            task.setBuilding(null);
             task.setUnit(null);
             taskRepository.save(task);
         });
 
-        taskRepository.deleteAll();
-        buildingRepository.deleteAll();
         structureRepository.deleteAll();
+        buildingRepository.deleteAll();
         unitRepository.deleteAll();
+
+        taskRepository.deleteAll();
     }
 
     private void setWorldProperties() {

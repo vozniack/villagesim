@@ -18,7 +18,7 @@ public class CommunicationService {
     private final ResourcesMapper resourcesMapper;
 
     public void sendWorldState() {
-        // webSocketService.sendMessageToWebSocket(WORLD_TOPIC, worldMapper.createWorldDto());
+        webSocketService.sendMessageToWebSocket(WORLD_TOPIC, worldMapper.createWorldDto());
     }
 
     public void sendResources(ResourceType resourceType, Integer resourceAmount) {

@@ -58,7 +58,7 @@ public class Unit implements Position {
     /* Relations */
 
     @JsonIgnore
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Task task;
 
     /* Custom constructor */

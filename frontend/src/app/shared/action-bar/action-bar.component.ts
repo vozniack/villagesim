@@ -61,30 +61,20 @@ export class ActionBarComponent implements OnInit {
 
     switch (child.actionType.split("-")[0]) {
       case 'BUILDING':
-        this.buildingService.createBuilding(actionProperty).subscribe(response => {
-          this.parseResponse(response);
-        });
-
+        this.buildingService.createBuilding(actionProperty).subscribe();
         break;
 
       case 'UNIT':
-        this.unitService.createUnit(actionProperty).subscribe(response => {
-          this.parseResponse(response);
-        });
+        this.unitService.createUnit(actionProperty).subscribe();
         break;
 
       case 'TASK':
-        this.taskService.createTask(actionProperty).subscribe(response => {
-          this.parseResponse(response);
-        })
+        this.taskService.createTask(actionProperty).subscribe();
         break;
     }
 
     this.changeActionActive(child);
   }
 
-  parseResponse(response: any) {
-    console.log(response.status);
-  }
 
 }
