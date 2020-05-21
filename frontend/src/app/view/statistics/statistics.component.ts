@@ -24,6 +24,10 @@ export class StatisticsComponent implements OnInit {
   rockHistory: string[] = [];
   foodHistory: string[] = [];
 
+  newWoodData: any;
+  newRocKData: any;
+  newFoodData: any;
+
   constructor(private resourceService: ResourceService) {
     this.resourceService.resource$.subscribe((value: any) => {
       this.parseJson(value);
@@ -37,14 +41,17 @@ export class StatisticsComponent implements OnInit {
     switch (JSON.parse(value).resourceType) {
       case 'WOOD':
         this.woodHistory.push(JSON.parse(value).resourceAmount);
+        this.newWoodData = JSON.parse(value).resourceAmount;
         break;
 
       case 'ROCK':
         this.rockHistory.push(JSON.parse(value).resourceAmount);
+        this.newRocKData = JSON.parse(value).resourceAmount;
         break;
 
       case 'FOOD':
         this.foodHistory.push(JSON.parse(value).resourceAmount);
+        this.newFoodData = JSON.parse(value).resourceAmount;
         break;
     }
   }

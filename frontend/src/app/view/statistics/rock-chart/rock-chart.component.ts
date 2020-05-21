@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-wood-chart',
-  templateUrl: './wood-chart.component.html',
-  styleUrls: ['./wood-chart.component.sass']
+  selector: 'app-rock-chart',
+  templateUrl: './rock-chart.component.html',
+  styleUrls: ['./rock-chart.component.sass']
 })
-export class WoodChartComponent implements OnInit {
+export class RockChartComponent implements OnInit {
 
   options: any;
   data: any[] = [];
@@ -13,14 +13,14 @@ export class WoodChartComponent implements OnInit {
   @Input()
   dataHistory: any = [];
 
+  constructor() {
+  }
+
   @Input()
   set newData(newData: any) {
     if (newData != null) {
       this.refreshOptions();
     }
-  }
-
-  constructor() {
   }
 
   ngOnInit(): void {
@@ -44,12 +44,13 @@ export class WoodChartComponent implements OnInit {
           data: this.dataHistory,
           type: 'line',
           smooth: true,
-          areaStyle: {color: 'rgba(93, 64, 55, 0.85)'},
-          itemStyle: {color: 'rgba(93, 64, 55, 0.85)'},
+          areaStyle: {color: 'rgba(120, 120, 120, 0.85)'},
+          itemStyle: {color: 'rgba(120, 120, 120, 0.85)'},
         }
       ],
       animationEasing: 'elasticIn',
     };
-
   }
+
+
 }

@@ -1,3 +1,17 @@
 <div *ngIf="this.currentView === 'STATISTICS'" [@showContentAnimated] class="statistics-container">
-  <h4>Statystyki</h4>
+  <div class="row">
+    <div class="col-lg-4">
+      <h4 class="statistics-title title-wood">Drewno (aktualnie: {{this.newWoodData}})</h4>
+      <app-wood-chart [dataHistory]="this.woodHistory" [newData]="this.newWoodData"></app-wood-chart>
+    </div>
+    <div class="col-lg-4">
+      <h4 class="statistics-title title-rock">Kamień (aktualnie: {{this.newRocKData}})</h4>
+      <app-rock-chart [dataHistory]="this.rockHistory" [newData]="this.newRocKData"></app-rock-chart>
+    </div>
+    <div class="col-lg-4">
+      <h4 class="statistics-title title-food">Jedzenie (aktualnie: {{this.newFoodData}})</h4>
+      <app-food-chart [dataHistory]="this.foodHistory" [newData]="this.newFoodData"></app-food-chart>
+    </div>
+  </div>
+
 </div>

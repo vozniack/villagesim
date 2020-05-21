@@ -23,6 +23,11 @@ import {FormsModule} from "@angular/forms";
 import {StatisticsComponent} from './view/statistics/statistics.component';
 import {LogsComponent} from './view/logs/logs.component';
 import {WoodChartComponent} from './view/statistics/wood-chart/wood-chart.component';
+import {NgxEchartsModule} from "ngx-echarts";
+
+import * as echarts from 'echarts';
+import {RockChartComponent} from './view/statistics/rock-chart/rock-chart.component';
+import {FoodChartComponent} from './view/statistics/food-chart/food-chart.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +40,8 @@ import {WoodChartComponent} from './view/statistics/wood-chart/wood-chart.compon
     StatisticsComponent,
     LogsComponent,
     WoodChartComponent,
+    RockChartComponent,
+    FoodChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +57,10 @@ import {WoodChartComponent} from './view/statistics/wood-chart/wood-chart.compon
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    NgxEchartsModule.forRoot({
+      echarts
+    })
   ],
   providers: [{
     provide: MatDialogRef,
