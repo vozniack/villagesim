@@ -27,7 +27,6 @@ import java.util.List;
 @Service
 @Slf4j
 public class TransportTaskManager extends AbstractTaskManager {
-
     public TransportTaskManager(UnitService unitService, TaskService taskService, CommunicationService communicationService, WorldMapUtil worldMapUtil, PathFindingUtil pathFindingUtil, StructureRepository structureRepository, BuildingRepository buildingRepository, TaskRepository taskRepository, UnitRepository unitRepository) {
         super(unitService, taskService, communicationService, worldMapUtil, pathFindingUtil, structureRepository, buildingRepository, taskRepository, unitRepository);
     }
@@ -76,18 +75,22 @@ public class TransportTaskManager extends AbstractTaskManager {
     }
 
     private void finalizeTransport(ResourceType resourceType, Integer resourceAmount) {
-        switch (resourceType) {
-            case WOOD:
-                World.WOOD += resourceAmount;
-                break;
+        if (resourceType != null && resourceAmount != null) {
+            communicationService.sendResources(resourceType, resourceAmount);
 
-            case ROCK:
-                World.ROCK += resourceAmount;
-                break;
+            switch (resourceType) {
+                case WOOD:
+                    World.WOOD += resourceAmount;
+                    break;
 
-            case FOOD:
-                World.FOOD += resourceAmount;
-                break;
+                case ROCK:
+                    World.ROCK += resourceAmount;
+                    break;
+
+                case FOOD:
+                    World.FOOD += resourceAmount;
+                    break;
+            }
         }
     }
 }

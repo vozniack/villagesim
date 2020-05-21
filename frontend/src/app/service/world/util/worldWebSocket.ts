@@ -7,7 +7,7 @@ import {Subject} from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
-export class WebSocket {
+export class WorldWebSocket {
 
   private stompClient: any;
 

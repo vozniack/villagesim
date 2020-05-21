@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {WebSocket} from "./util/webSocket";
+import {WorldWebSocket} from "./util/worldWebSocket";
 import {World} from "../../model/world/world";
 import {Subject} from "rxjs";
 import {WorldParameters} from "../../model/others/worldParameters";
@@ -16,7 +16,7 @@ export class WorldService {
   private worldDataSource = new Subject<World>();
   world$ = this.worldDataSource.asObservable();
 
-  constructor(private httpClient: HttpClient, private webSocket: WebSocket) {
+  constructor(private httpClient: HttpClient, private webSocket: WorldWebSocket) {
     this.webSocket.connect();
 
     this.webSocket.world$.subscribe((value: World) => {

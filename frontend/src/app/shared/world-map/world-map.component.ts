@@ -6,6 +6,8 @@ import {animate, style, transition, trigger} from "@angular/animations";
 import {MatDialog} from "@angular/material/dialog";
 import {ModalGenerate} from "../modals/generate-modal/modal-generate.component";
 import {WorldParameters} from "../../model/others/worldParameters";
+import {ResourceService} from "../../service/resource/resource.service";
+import {Resource} from "../../model/world/resource";
 
 @Component({
   selector: 'app-world-map',
@@ -38,12 +40,16 @@ export class WorldMapComponent implements OnInit {
 
   ctx: CanvasRenderingContext2D;
 
-  constructor(private worldService: WorldService, private canvasService: CanvasService, private dialog: MatDialog) {
+  constructor(private worldService: WorldService, private canvasService: CanvasService, private dialog: MatDialog, private resourceService: ResourceService) {
     this.worldService.world$.subscribe((value: World) => {
       if (this.isActive) {
         this.parseJson(value);
         this.canvasService.drawMap(this.world);
       }
+    })
+
+    this.resourceService.resource$.subscribe((value: Resource) => {
+      console.log(value);
     })
   }
 
