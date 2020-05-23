@@ -28,6 +28,8 @@ import {NgxEchartsModule} from "ngx-echarts";
 import * as echarts from 'echarts';
 import {RockChartComponent} from './view/statistics/rock-chart/rock-chart.component';
 import {FoodChartComponent} from './view/statistics/food-chart/food-chart.component';
+import {ScrollingModule} from "@angular/cdk/scrolling";
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -43,25 +45,27 @@ import {FoodChartComponent} from './view/statistics/food-chart/food-chart.compon
     RockChartComponent,
     FoodChartComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    HttpClientModule,
-    MatTooltipModule,
-    MatProgressSpinnerModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    NgxEchartsModule.forRoot({
-      echarts
-    })
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCardModule,
+        HttpClientModule,
+        MatTooltipModule,
+        MatProgressSpinnerModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        NgxEchartsModule.forRoot({
+            echarts
+        }),
+        ScrollingModule,
+        MatListModule
+    ],
   providers: [{
     provide: MatDialogRef,
     useValue: {}

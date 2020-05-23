@@ -1,3 +1,8 @@
 <div *ngIf="this.currentView === 'LOGS'" [@showContentAnimated] class="logs-container">
-  <h4>Logi</h4>
+  <div class="scrollable-container">
+    <mat-list-item *ngFor="let log of this.logs" class="log">
+      <span class="time">[ {{log.time}} ]</span>
+      <span class="message text-{{log.status}}">{{log.message}}</span>
+    </mat-list-item>
+  </div>
 </div>

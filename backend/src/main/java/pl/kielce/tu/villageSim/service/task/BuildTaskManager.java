@@ -15,6 +15,7 @@ import pl.kielce.tu.villageSim.service.communication.CommunicationService;
 import pl.kielce.tu.villageSim.service.entities.TaskService;
 import pl.kielce.tu.villageSim.service.entities.UnitService;
 import pl.kielce.tu.villageSim.types.building.BuildingState;
+import pl.kielce.tu.villageSim.types.log.LogType;
 import pl.kielce.tu.villageSim.types.resource.ResourceType;
 import pl.kielce.tu.villageSim.types.task.TaskState;
 import pl.kielce.tu.villageSim.types.task.TaskType;
@@ -58,19 +59,20 @@ public class BuildTaskManager extends AbstractTaskManager {
                             communicationService.sendResources(ResourceType.WOOD, ResourceUtil.getCurrentResource(ResourceType.WOOD));
                             communicationService.sendResources(ResourceType.ROCK, ResourceUtil.getCurrentResource(ResourceType.ROCK));
 
-                            log.info("# Task " + task.getTaskType().toString() + " assigned to unit " + unit.getUnitType().toString());
+                            communicationService.sendLog("Zadanie " + task.getTaskType().toString() + " zostało przypisane do jednostki " + unit.getUnitType().toString(), null, LogType.INFO);
                         } else {
                             buildingRepository.delete(task.getBuilding());
 
                             task.setBuilding(null);
 
                             deleteUnfinishedTask(task, unit);
-                            log.info("# Task " + task.getTaskType().toString() + " failed - can't find a path");
+                            communicationService.sendLog("Budynek " + task.getBuilding().getBuildingType().toString() +" nie może być zbudowany - nie udało się udnaleźć trasy", null, LogType.ERROR);
                         }
                     } else {
                         if (!task.getInformedAboutProblem()) {
                             task.setInformedAboutProblem(true);
-                            log.info("# Task " + task.getTaskType().toString() + " can't be finished - not enough resources");
+
+                            communicationService.sendLog("Budynek " + task.getBuilding().getBuildingType().toString() + " nie może być zbudowany - za mało surowców", null, LogType.ERROR);
                         }
 
                     }
@@ -92,5 +94,6 @@ public class BuildTaskManager extends AbstractTaskManager {
         // #todo delete all structures below
 
         communicationService.sendWorldState();
+        communicationService.sendLog("Budynek " + building.getBuildingType().toString() + " zbudowany", null, LogType.SUCCESS);
     }
 }

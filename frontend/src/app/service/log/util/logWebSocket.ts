@@ -7,15 +7,15 @@ import {Resource} from "../../../model/others/resource";
 @Injectable({
     providedIn: 'root'
 })
-export class ResourceWebSocket {
+export class LogWebSocket {
 
     private stompClient: any;
 
     private endpoint: string = 'http://localhost:8080/world';
-    private topicToReceive: string = '/topic/resource';
+    private topicToReceive: string = '/topic/log';
 
-    private resourceDataSource = new Subject<Resource>();
-    resource$ = this.resourceDataSource.asObservable();
+    private logDataSource = new Subject<Resource>();
+    log$ = this.logDataSource.asObservable();
 
     connect() {
         console.log("Initialize Web Socket connection...")
@@ -33,7 +33,7 @@ export class ResourceWebSocket {
     }
 
     onMessageReceived(message) {
-        this.resourceDataSource.next(message.body);
+        this.logDataSource.next(message.body);
     }
 
     onErrorCallback(error) {

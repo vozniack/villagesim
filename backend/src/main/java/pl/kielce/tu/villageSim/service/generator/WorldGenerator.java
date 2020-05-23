@@ -17,11 +17,15 @@ import pl.kielce.tu.villageSim.service.entities.StructureService;
 import pl.kielce.tu.villageSim.service.entities.UnitService;
 import pl.kielce.tu.villageSim.types.building.BuildingState;
 import pl.kielce.tu.villageSim.types.building.BuildingType;
+import pl.kielce.tu.villageSim.types.log.LogType;
 import pl.kielce.tu.villageSim.types.structure.StructureType;
 import pl.kielce.tu.villageSim.types.unit.UnitType;
 import pl.kielce.tu.villageSim.util.BuildingUtil;
 import pl.kielce.tu.villageSim.util.RandUtil;
+import pl.kielce.tu.villageSim.util.TimeUtil;
 import pl.kielce.tu.villageSim.util.components.PositionUtil;
+
+import java.time.LocalDateTime;
 
 @Component
 @Slf4j
@@ -46,6 +50,8 @@ public class WorldGenerator {
 
         setWorldProperties();
 
+        TimeUtil.START_TIME = LocalDateTime.now();
+
         generateStructures();
         generateBuildings();
         generateUnits();
@@ -55,6 +61,7 @@ public class WorldGenerator {
         log.info("## New world generated");
 
         communicationService.sendWorldState();
+        communicationService.sendLog("Wygenerowano nowy świat!", "00:00", LogType.INFO);
     }
 
     private void clearWorld() {
