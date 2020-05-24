@@ -14,10 +14,12 @@ import pl.kielce.tu.villageSim.service.aStar.PathNode;
 import pl.kielce.tu.villageSim.service.communication.CommunicationService;
 import pl.kielce.tu.villageSim.service.entities.TaskService;
 import pl.kielce.tu.villageSim.service.entities.UnitService;
+import pl.kielce.tu.villageSim.types.log.LogType;
 import pl.kielce.tu.villageSim.types.resource.ResourceType;
 import pl.kielce.tu.villageSim.types.task.TaskState;
 import pl.kielce.tu.villageSim.types.task.TaskType;
 import pl.kielce.tu.villageSim.types.unit.UnitState;
+import pl.kielce.tu.villageSim.util.CommunicationUtil;
 import pl.kielce.tu.villageSim.util.ResourceUtil;
 import pl.kielce.tu.villageSim.util.components.PathFindingUtil;
 import pl.kielce.tu.villageSim.util.components.WorldMapUtil;
@@ -47,6 +49,7 @@ public class TransportTaskManager extends AbstractTaskManager {
                 changeUnitState(task, unit);
                 createTaskPath(task, pathNodes);
 
+                communicationService.sendLog(CommunicationUtil.getAssignTaskMessage(task), null, LogType.INFO);
                 log.info("# Task " + task.getTaskType().toString() + " assigned to unit " + unit.getUnitType().toString());
             } else {
                 deleteUnfinishedTask(task, unit);
@@ -55,6 +58,7 @@ public class TransportTaskManager extends AbstractTaskManager {
                 unit.setResourceAmount(0);
                 unitRepository.save(unit);
 
+                communicationService.sendLog(CommunicationUtil.getCantFindPathMessage(task), null, LogType.ERROR);
                 log.info("# Task " + task.getTaskType().toString() + " failed - can't find a path");
             }
         });
@@ -65,6 +69,8 @@ public class TransportTaskManager extends AbstractTaskManager {
         Unit unit = task.getUnit();
 
         finalizeTransport(unit.getResourceType(), unit.getResourceAmount());
+
+        communicationService.sendLog("Zadanie " + task.getTaskType().toString() + " zakończone powodzeniem - dostarczono " + unit.getResourceAmount().toString() + " " + unit.getResourceType().toString(), null, LogType.SUCCESS);
 
         unit.setResourceType(null);
         unit.setResourceAmount(0);

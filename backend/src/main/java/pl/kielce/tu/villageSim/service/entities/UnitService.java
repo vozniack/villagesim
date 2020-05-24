@@ -11,6 +11,7 @@ import pl.kielce.tu.villageSim.repository.BuildingRepository;
 import pl.kielce.tu.villageSim.repository.UnitRepository;
 import pl.kielce.tu.villageSim.service.communication.CommunicationService;
 import pl.kielce.tu.villageSim.types.building.BuildingType;
+import pl.kielce.tu.villageSim.types.log.LogType;
 import pl.kielce.tu.villageSim.types.unit.UnitState;
 import pl.kielce.tu.villageSim.types.unit.UnitType;
 import pl.kielce.tu.villageSim.util.MathUtil;
@@ -39,6 +40,7 @@ public class UnitService {
 
         unitRepository.save(unit);
 
+        communicationService.sendLog("Jednostka " + unit.getUnitType().toString() + " została utworzona", null, LogType.SUCCESS);
         communicationService.sendWorldState();
 
         return unit;

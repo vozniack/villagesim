@@ -8,6 +8,8 @@ import pl.kielce.tu.villageSim.model.entity.map.Unit;
 import pl.kielce.tu.villageSim.repository.BuildingRepository;
 import pl.kielce.tu.villageSim.repository.TaskRepository;
 import pl.kielce.tu.villageSim.repository.UnitRepository;
+import pl.kielce.tu.villageSim.service.communication.CommunicationService;
+import pl.kielce.tu.villageSim.types.log.LogType;
 import pl.kielce.tu.villageSim.types.task.TaskState;
 import pl.kielce.tu.villageSim.types.task.TaskType;
 
@@ -18,6 +20,7 @@ public class UnitDeletingUtil {
     private final UnitRepository unitRepository;
     private final TaskRepository taskRepository;
     private final BuildingRepository buildingRepository;
+    private final CommunicationService communicationService;
 
     public void deleteUnit(Unit unit) {
         taskRepository.findAllByUnit(unit).forEach(task -> {
@@ -39,6 +42,7 @@ public class UnitDeletingUtil {
 
         unitRepository.delete(unit);
 
+        communicationService.sendLog("Jednostka " + unit.getUnitType().toString() + " zmarła z głodu", null, LogType.ERROR);
         log.info("Unit " + unit.getUnitType().toString() + " starved");
     }
 }

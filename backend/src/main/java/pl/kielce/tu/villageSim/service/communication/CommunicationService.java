@@ -1,7 +1,6 @@
 package pl.kielce.tu.villageSim.service.communication;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.kielce.tu.villageSim.api.mapper.LogMapper;
 import pl.kielce.tu.villageSim.api.mapper.ResourcesMapper;
@@ -10,7 +9,6 @@ import pl.kielce.tu.villageSim.types.log.LogType;
 import pl.kielce.tu.villageSim.types.resource.ResourceType;
 
 @Service
-@Slf4j
 @AllArgsConstructor
 public class CommunicationService {
     private final static String WORLD_TOPIC = "/topic/world";
@@ -32,8 +30,6 @@ public class CommunicationService {
     }
 
     public void sendLog(String message, String time, LogType logType) {
-        log.info(message);
-
         webSocketService.sendMessageToWebSocket(LOG_TOPIC, logMapper.createLogDto(message, time, logType));
     }
 }

@@ -52,6 +52,8 @@ public class WorldGenerator {
 
         TimeUtil.START_TIME = LocalDateTime.now();
 
+        communicationService.sendLog("Wygenerowano nowy świat!", "00:00", LogType.INFO);
+
         generateStructures();
         generateBuildings();
         generateUnits();
@@ -61,7 +63,6 @@ public class WorldGenerator {
         log.info("## New world generated");
 
         communicationService.sendWorldState();
-        communicationService.sendLog("Wygenerowano nowy świat!", "00:00", LogType.INFO);
     }
 
     private void clearWorld() {

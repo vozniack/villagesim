@@ -18,6 +18,8 @@ public class TimeUtil {
 
         String seconds = String.valueOf(Duration.between(START_TIME, now).toSeconds());
 
+        seconds = String.valueOf(Integer.parseInt(seconds) - (60 * Integer.parseInt(minutes)));
+
         if (Integer.parseInt(seconds) < 0) {
             seconds = "00";
         }

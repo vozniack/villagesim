@@ -14,12 +14,14 @@ import pl.kielce.tu.villageSim.service.communication.CommunicationService;
 import pl.kielce.tu.villageSim.service.entities.TaskService;
 import pl.kielce.tu.villageSim.service.entities.UnitService;
 import pl.kielce.tu.villageSim.types.building.BuildingType;
+import pl.kielce.tu.villageSim.types.log.LogType;
 import pl.kielce.tu.villageSim.types.resource.ResourceType;
 import pl.kielce.tu.villageSim.types.structure.StructureType;
 import pl.kielce.tu.villageSim.types.task.TaskState;
 import pl.kielce.tu.villageSim.types.task.TaskType;
 import pl.kielce.tu.villageSim.types.unit.UnitState;
 import pl.kielce.tu.villageSim.types.unit.UnitType;
+import pl.kielce.tu.villageSim.util.CommunicationUtil;
 import pl.kielce.tu.villageSim.util.RandUtil;
 import pl.kielce.tu.villageSim.util.components.PathFindingUtil;
 import pl.kielce.tu.villageSim.util.components.WorldMapUtil;
@@ -51,9 +53,12 @@ public class StructureTaskManager extends AbstractTaskManager {
                         changeUnitState(task, unit);
                         createTaskPath(task, pathNodes);
 
+                        communicationService.sendLog(CommunicationUtil.getAssignTaskMessage(task), null, LogType.INFO);
                         log.info("# Task " + task.getTaskType().toString() + " assigned to unit " + unit.getUnitType().toString());
                     } else {
                         deleteUnfinishedTask(task, unit);
+
+                        communicationService.sendLog(CommunicationUtil.getCantFindPathMessage(task), null, LogType.ERROR);
                         log.info("# Task " + task.getTaskType().toString() + " failed - can't find a path");
                     }
                 }));
@@ -75,6 +80,8 @@ public class StructureTaskManager extends AbstractTaskManager {
 
         unit.setResourceAmount(8);
         unit.setResourceType(getResourceTypeByStructureType(task.getStructure().getStructureType()));
+
+        communicationService.sendLog("Zadanie " + task.getTaskType().toString() + " zakończone powodzeniem - zebrano " + unit.getResourceAmount().toString() + " " + unit.getResourceType().toString(), null, LogType.SUCCESS);
 
         finalizeUnitState(unit, UnitState.BUSY);
 
