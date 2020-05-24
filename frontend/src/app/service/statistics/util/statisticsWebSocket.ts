@@ -5,27 +5,27 @@ import {Subject} from "rxjs";
 import {Resource} from "../../../model/others/resource";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
-export class ResourceWebSocket {
+export class StatisticsWebSocket {
 
-    private stompClient: any;
+  private stompClient: any;
 
-    private endpoint: string = 'http://localhost:8080/world';
-    private topicToReceive: string = '/topic/resource';
+  private endpoint: string = 'http://localhost:8080/world';
+  private topicToReceive: string = '/topic/statistics';
 
-    private resourceDataSource = new Subject<Resource>();
-    resource$ = this.resourceDataSource.asObservable();
+  private statisticsDataSource = new Subject<Resource>();
+  statistics$ = this.statisticsDataSource.asObservable();
 
-    connect() {
-        console.log("Initialize Web Socket connection...")
+  connect() {
+    console.log("Initialize Web Socket connection...")
 
-        let webSocket = new SockJS(this.endpoint);
-        this.stompClient = Stomp.over(webSocket);
+    let webSocket = new SockJS(this.endpoint);
+    this.stompClient = Stomp.over(webSocket);
 
-        const _this = this;
+    const _this = this;
 
-        this.stompClient.connect({}, function (frame) {
+    this.stompClient.connect({}, function (frame) {
             _this.stompClient.subscribe(_this.topicToReceive, (message) => {
                 _this.onMessageReceived(message);
             })
@@ -33,7 +33,7 @@ export class ResourceWebSocket {
     }
 
     onMessageReceived(message) {
-        this.resourceDataSource.next(message.body);
+      this.statisticsDataSource.next(message.body);
     }
 
     onErrorCallback(error) {

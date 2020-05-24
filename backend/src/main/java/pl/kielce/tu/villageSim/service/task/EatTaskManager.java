@@ -16,13 +16,11 @@ import pl.kielce.tu.villageSim.service.entities.TaskService;
 import pl.kielce.tu.villageSim.service.entities.UnitService;
 import pl.kielce.tu.villageSim.types.building.BuildingType;
 import pl.kielce.tu.villageSim.types.log.LogType;
-import pl.kielce.tu.villageSim.types.resource.ResourceType;
 import pl.kielce.tu.villageSim.types.task.TaskState;
 import pl.kielce.tu.villageSim.types.task.TaskType;
 import pl.kielce.tu.villageSim.types.unit.UnitState;
 import pl.kielce.tu.villageSim.util.CommunicationUtil;
 import pl.kielce.tu.villageSim.util.RandUtil;
-import pl.kielce.tu.villageSim.util.ResourceUtil;
 import pl.kielce.tu.villageSim.util.components.PathFindingUtil;
 import pl.kielce.tu.villageSim.util.components.WorldMapUtil;
 
@@ -86,6 +84,6 @@ public class EatTaskManager extends AbstractTaskManager {
         finalizeTaskState(task);
 
         communicationService.sendWorldState();
-        communicationService.sendResources(ResourceType.FOOD, ResourceUtil.getCurrentResource(ResourceType.FOOD));
+        communicationService.sendStatistics();
     }
 }

@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-rock-chart',
-  templateUrl: './rock-chart.component.html',
-  styleUrls: ['./rock-chart.component.sass']
+  selector: 'app-building-chart',
+  templateUrl: './building-chart.component.html',
+  styleUrls: ['./building-chart.component.sass']
 })
-export class RockChartComponent implements OnInit {
+export class BuildingChartComponent implements OnInit {
 
   options: any;
   data: any[] = [];
@@ -44,13 +44,11 @@ export class RockChartComponent implements OnInit {
           data: this.dataHistory,
           type: 'line',
           smooth: true,
-          areaStyle: {color: 'rgba(120, 120, 120, 0.85)'},
-          itemStyle: {color: 'rgba(120, 120, 120, 0.85)'},
+          areaStyle: {color: 'rgba(0, 188, 212, 0.75)'},
+          itemStyle: {color: 'rgba(0, 188, 212, 0.75)'},
         }
       ],
       animationEasing: 'elasticIn',
     };
   }
-
-
 }

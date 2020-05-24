@@ -63,6 +63,7 @@ public class WorldGenerator {
         log.info("## New world generated");
 
         communicationService.sendWorldState();
+        communicationService.sendStatistics();
     }
 
     private void clearWorld() {

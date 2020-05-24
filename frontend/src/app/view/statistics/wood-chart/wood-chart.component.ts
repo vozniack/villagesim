@@ -14,8 +14,8 @@ export class WoodChartComponent implements OnInit {
   dataHistory: any = [];
 
   @Input()
-  set newData(newData: any) {
-    if (newData != null) {
+  set dataCounter(dataCounter: any) {
+    if (dataCounter != null) {
       this.refreshOptions();
     }
   }

@@ -1,16 +1,30 @@
 <div *ngIf="this.currentView === 'STATISTICS'" [@showContentAnimated] class="statistics-container">
+  <div class="control-container">
+    <mat-slide-toggle (change)="this.reloadView()">Widok rozszerzony</mat-slide-toggle>
+  </div>
+
   <div class="row">
-    <div class="col-lg-4">
+    <div [class.col-lg-12]="this.fullView" class="col-lg-4">
       <h4 class="statistics-title title-wood">Drewno (aktualnie: {{this.newWoodData}})</h4>
-      <app-wood-chart [dataHistory]="this.woodHistory" [newData]="this.newWoodData"></app-wood-chart>
+      <app-wood-chart [dataCounter]="this.dataCounter" [dataHistory]="this.woodHistory"></app-wood-chart>
     </div>
-    <div class="col-lg-4">
+    <div [class.col-lg-12]="this.fullView" class="col-lg-4">
       <h4 class="statistics-title title-rock">Kamień (aktualnie: {{this.newRocKData}})</h4>
-      <app-rock-chart [dataHistory]="this.rockHistory" [newData]="this.newRocKData"></app-rock-chart>
+      <app-rock-chart [dataCounter]="this.dataCounter" [dataHistory]="this.rockHistory"></app-rock-chart>
     </div>
-    <div class="col-lg-4">
+    <div [class.col-lg-12]="this.fullView" class="col-lg-4">
       <h4 class="statistics-title title-food">Jedzenie (aktualnie: {{this.newFoodData}})</h4>
-      <app-food-chart [dataHistory]="this.foodHistory" [newData]="this.newFoodData"></app-food-chart>
+      <app-food-chart [dataCounter]="this.dataCounter" [dataHistory]="this.foodHistory"></app-food-chart>
+    </div>
+  </div>
+  <div class="row">
+    <div [class.col-lg-12]="this.fullView" class="col-lg-6">
+      <h4 class="statistics-title title-other">Jednostki (aktualnie: {{this.newUnitData}})</h4>
+      <app-unit-chart [dataCounter]="this.dataCounter" [dataHistory]="this.unitHistory"></app-unit-chart>
+    </div>
+    <div [class.col-lg-12]="this.fullView" class="col-lg-6">
+      <h4 class="statistics-title title-other">Budynki (aktualnie: {{this.newBuildingData}})</h4>
+      <app-building-chart [dataCounter]="this.dataCounter" [dataHistory]="this.buildingHistory"></app-building-chart>
     </div>
   </div>
 

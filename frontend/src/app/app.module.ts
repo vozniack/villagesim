@@ -30,6 +30,9 @@ import {RockChartComponent} from './view/statistics/rock-chart/rock-chart.compon
 import {FoodChartComponent} from './view/statistics/food-chart/food-chart.component';
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {MatListModule} from "@angular/material/list";
+import {UnitChartComponent} from "./view/statistics/unit-chart/unit-chart.component";
+import {BuildingChartComponent} from "./view/statistics/building-chart/building-chart.component";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 @NgModule({
   declarations: [
@@ -44,28 +47,31 @@ import {MatListModule} from "@angular/material/list";
     WoodChartComponent,
     RockChartComponent,
     FoodChartComponent,
+    UnitChartComponent,
+    BuildingChartComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatIconModule,
-        MatCardModule,
-        HttpClientModule,
-        MatTooltipModule,
-        MatProgressSpinnerModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        MatInputModule,
-        FormsModule,
-        NgxEchartsModule.forRoot({
-            echarts
-        }),
-        ScrollingModule,
-        MatListModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    HttpClientModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    NgxEchartsModule.forRoot({
+      echarts
+    }),
+    ScrollingModule,
+    MatListModule,
+    MatSlideToggleModule
+  ],
   providers: [{
     provide: MatDialogRef,
     useValue: {}

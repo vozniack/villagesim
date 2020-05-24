@@ -20,7 +20,6 @@ import pl.kielce.tu.villageSim.types.task.TaskState;
 import pl.kielce.tu.villageSim.types.task.TaskType;
 import pl.kielce.tu.villageSim.types.unit.UnitState;
 import pl.kielce.tu.villageSim.util.CommunicationUtil;
-import pl.kielce.tu.villageSim.util.ResourceUtil;
 import pl.kielce.tu.villageSim.util.components.PathFindingUtil;
 import pl.kielce.tu.villageSim.util.components.WorldMapUtil;
 
@@ -98,7 +97,7 @@ public class TransportTaskManager extends AbstractTaskManager {
                     break;
             }
 
-            communicationService.sendResources(resourceType, ResourceUtil.getCurrentResource(resourceType));
+            communicationService.sendStatistics();
         }
     }
 }

@@ -16,13 +16,11 @@ import pl.kielce.tu.villageSim.service.entities.TaskService;
 import pl.kielce.tu.villageSim.service.entities.UnitService;
 import pl.kielce.tu.villageSim.types.building.BuildingState;
 import pl.kielce.tu.villageSim.types.log.LogType;
-import pl.kielce.tu.villageSim.types.resource.ResourceType;
 import pl.kielce.tu.villageSim.types.task.TaskState;
 import pl.kielce.tu.villageSim.types.task.TaskType;
 import pl.kielce.tu.villageSim.types.unit.UnitState;
 import pl.kielce.tu.villageSim.types.unit.UnitType;
 import pl.kielce.tu.villageSim.util.CommunicationUtil;
-import pl.kielce.tu.villageSim.util.ResourceUtil;
 import pl.kielce.tu.villageSim.util.components.PathFindingUtil;
 import pl.kielce.tu.villageSim.util.components.WorldMapUtil;
 
@@ -57,10 +55,9 @@ public class BuildTaskManager extends AbstractTaskManager {
                             World.WOOD -= building.getRequiredWood();
                             World.ROCK -= building.getRequiredRock();
 
-                            communicationService.sendResources(ResourceType.WOOD, ResourceUtil.getCurrentResource(ResourceType.WOOD));
-                            communicationService.sendResources(ResourceType.ROCK, ResourceUtil.getCurrentResource(ResourceType.ROCK));
+                            communicationService.sendStatistics();
 
-                            communicationService.sendLog("Zadanie " + CommunicationUtil.getBuildingTaskDescription(task) + " zostało przypisane do jednostki " + unit.getUnitType().toString(), null, LogType.INFO);
+                            communicationService.sendLog(CommunicationUtil.getAssignTaskMessage(task), null, LogType.INFO);
                             log.info("# Task " + task.getTaskType().toString() + " assigned to unit " + unit.getUnitType().toString());
                         } else {
                             buildingRepository.delete(task.getBuilding());
@@ -68,7 +65,7 @@ public class BuildTaskManager extends AbstractTaskManager {
                             task.setBuilding(null);
 
                             deleteUnfinishedTask(task, unit);
-                            communicationService.sendLog("Budynek " + task.getBuilding().getBuildingType().toString() + " nie może być zbudowany - nie udało się udnaleźć trasy", null, LogType.ERROR);
+                            communicationService.sendLog(CommunicationUtil.getCantFindPathMessage(task), null, LogType.ERROR);
                             log.info("# Task " + task.getTaskType().toString() + " failed - can't find a path");
                         }
                     } else {

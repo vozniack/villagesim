@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {animate, style, transition, trigger} from "@angular/animations";
-import {ResourceService} from "../../service/resource/resource.service";
+import {StatisticsService} from "../../service/statistics/statistics.service";
 
 @Component({
   selector: 'app-statistics',
@@ -23,13 +23,21 @@ export class StatisticsComponent implements OnInit {
   woodHistory: string[] = [];
   rockHistory: string[] = [];
   foodHistory: string[] = [];
+  unitHistory: string[] = [];
+  buildingHistory: string[] = [];
 
   newWoodData: any;
   newRocKData: any;
   newFoodData: any;
+  newUnitData: any;
+  newBuildingData: any;
 
-  constructor(private resourceService: ResourceService) {
-    this.resourceService.resource$.subscribe((value: any) => {
+  dataCounter = 0;
+
+  fullView: boolean = false;
+
+  constructor(private statisticsService: StatisticsService) {
+    this.statisticsService.statistics$.subscribe((value: any) => {
       this.parseJson(value);
     })
   }
@@ -37,23 +45,24 @@ export class StatisticsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  reloadView() {
+    this.fullView = !this.fullView;
+  }
+
   private parseJson(value: any) {
-    switch (JSON.parse(value).resourceType) {
-      case 'WOOD':
-        this.woodHistory.push(JSON.parse(value).resourceAmount);
-        this.newWoodData = JSON.parse(value).resourceAmount;
-        break;
+    this.dataCounter++;
 
-      case 'ROCK':
-        this.rockHistory.push(JSON.parse(value).resourceAmount);
-        this.newRocKData = JSON.parse(value).resourceAmount;
-        break;
+    this.woodHistory.push(JSON.parse(value).wood);
+    this.rockHistory.push(JSON.parse(value).rock);
+    this.foodHistory.push(JSON.parse(value).food);
+    this.unitHistory.push(JSON.parse(value).units);
+    this.buildingHistory.push(JSON.parse(value).buildings)
 
-      case 'FOOD':
-        this.foodHistory.push(JSON.parse(value).resourceAmount);
-        this.newFoodData = JSON.parse(value).resourceAmount;
-        break;
-    }
+    this.newWoodData = JSON.parse(value).wood;
+    this.newRocKData = JSON.parse(value).rock;
+    this.newFoodData = JSON.parse(value).food;
+    this.newUnitData = JSON.parse(value).units;
+    this.newBuildingData = JSON.parse(value).buildings;
   }
 
 }
