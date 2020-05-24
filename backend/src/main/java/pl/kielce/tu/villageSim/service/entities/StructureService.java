@@ -23,20 +23,28 @@ public class StructureService {
 
     /* Support methods */
 
-    public void clearStructuresNearWarehouse(Building building) {
+    public void clearStructuresUnderBuilding(Building building) {
         structureRepository.findAll().forEach(structure -> {
-            if (!isFarFromWarehouse(structure, building)) {
+            if (isFarFromBuilding(structure, building, 0)) {
                 structureRepository.delete(structure);
             }
         });
     }
 
-    private boolean isFarFromWarehouse(Structure structure, Building building) {
+    public void clearStructuresNearWarehouse(Building building) {
+        structureRepository.findAll().forEach(structure -> {
+            if (isFarFromBuilding(structure, building, 4)) {
+                structureRepository.delete(structure);
+            }
+        });
+    }
+
+    private boolean isFarFromBuilding(Structure structure, Building building, Integer offsetSize) {
         int buildingPosX = building.getPositionX(), buildingPosY = building.getPositionY();
         int structurePosX = structure.getPositionX(), structurePosY = structure.getPositionY();
-        int offsetSize = building.getSize();
+        int buildingSize = building.getSize();
 
-        return buildingPosY - structurePosY > 4 + offsetSize || structurePosY - buildingPosY > 5 + offsetSize
-                || buildingPosX - structurePosX > 4 + offsetSize || structurePosX - buildingPosX > 5 + offsetSize;
+        return buildingPosY - structurePosY <= offsetSize + buildingSize && structurePosY - buildingPosY <= offsetSize + buildingSize
+                && buildingPosX - structurePosX <= offsetSize + buildingSize && structurePosX - buildingPosX <= offsetSize + buildingSize;
     }
 }

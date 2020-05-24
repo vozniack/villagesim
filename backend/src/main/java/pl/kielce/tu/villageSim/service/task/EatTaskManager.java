@@ -12,6 +12,7 @@ import pl.kielce.tu.villageSim.repository.TaskRepository;
 import pl.kielce.tu.villageSim.repository.UnitRepository;
 import pl.kielce.tu.villageSim.service.aStar.PathNode;
 import pl.kielce.tu.villageSim.service.communication.CommunicationService;
+import pl.kielce.tu.villageSim.service.entities.StructureService;
 import pl.kielce.tu.villageSim.service.entities.TaskService;
 import pl.kielce.tu.villageSim.service.entities.UnitService;
 import pl.kielce.tu.villageSim.types.building.BuildingType;
@@ -31,8 +32,8 @@ import java.util.List;
 @Slf4j
 public class EatTaskManager extends AbstractTaskManager {
 
-    public EatTaskManager(UnitService unitService, TaskService taskService, CommunicationService communicationService, WorldMapUtil worldMapUtil, PathFindingUtil pathFindingUtil, StructureRepository structureRepository, BuildingRepository buildingRepository, TaskRepository taskRepository, UnitRepository unitRepository) {
-        super(unitService, taskService, communicationService, worldMapUtil, pathFindingUtil, structureRepository, buildingRepository, taskRepository, unitRepository);
+    public EatTaskManager(UnitService unitService, TaskService taskService, StructureService structureService, CommunicationService communicationService, WorldMapUtil worldMapUtil, PathFindingUtil pathFindingUtil, StructureRepository structureRepository, BuildingRepository buildingRepository, TaskRepository taskRepository, UnitRepository unitRepository) {
+        super(unitService, taskService, structureService, communicationService, worldMapUtil, pathFindingUtil, structureRepository, buildingRepository, taskRepository, unitRepository);
     }
 
     @Transactional

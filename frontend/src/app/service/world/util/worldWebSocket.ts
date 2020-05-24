@@ -41,14 +41,4 @@ export class WorldWebSocket {
     console.log("## Error callback")
     console.log(error);
   }
-
-  _disconnect() { // #todo use it somewhere
-    if (this.stompClient !== null) {
-      this.stompClient.disconnect();
-    }
-  }
-
-  _send(message) { // #todo use it somewhere
-    this.stompClient.send(this.topicToSend, {}, JSON.stringify(message));
-  }
 }

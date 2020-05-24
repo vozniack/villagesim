@@ -12,6 +12,7 @@ import pl.kielce.tu.villageSim.repository.TaskRepository;
 import pl.kielce.tu.villageSim.repository.UnitRepository;
 import pl.kielce.tu.villageSim.service.aStar.PathNode;
 import pl.kielce.tu.villageSim.service.communication.CommunicationService;
+import pl.kielce.tu.villageSim.service.entities.StructureService;
 import pl.kielce.tu.villageSim.service.entities.TaskService;
 import pl.kielce.tu.villageSim.service.entities.UnitService;
 import pl.kielce.tu.villageSim.types.building.BuildingState;
@@ -32,8 +33,8 @@ import java.util.Optional;
 @Slf4j
 public class BuildTaskManager extends AbstractTaskManager {
 
-    public BuildTaskManager(UnitService unitService, TaskService taskService, CommunicationService communicationService, WorldMapUtil worldMapUtil, PathFindingUtil pathFindingUtil, StructureRepository structureRepository, BuildingRepository buildingRepository, TaskRepository taskRepository, UnitRepository unitRepository) {
-        super(unitService, taskService, communicationService, worldMapUtil, pathFindingUtil, structureRepository, buildingRepository, taskRepository, unitRepository);
+    public BuildTaskManager(UnitService unitService, TaskService taskService, StructureService structureService, CommunicationService communicationService, WorldMapUtil worldMapUtil, PathFindingUtil pathFindingUtil, StructureRepository structureRepository, BuildingRepository buildingRepository, TaskRepository taskRepository, UnitRepository unitRepository) {
+        super(unitService, taskService, structureService, communicationService, worldMapUtil, pathFindingUtil, structureRepository, buildingRepository, taskRepository, unitRepository);
     }
 
     @Transactional
@@ -92,9 +93,9 @@ public class BuildTaskManager extends AbstractTaskManager {
         task.setBuilding(null);
         finalizeTaskState(task);
 
-        // #todo delete all structures below
+        structureService.clearStructuresUnderBuilding(building);
 
         communicationService.sendWorldState();
-        communicationService.sendLog("Budynek " + building.getBuildingType().toString() + " zbudowany", null, LogType.SUCCESS);
+        communicationService.sendLog("Budynek " + building.getBuildingType().toString() + " został zbudowany", null, LogType.SUCCESS);
     }
 }

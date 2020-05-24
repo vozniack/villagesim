@@ -10,6 +10,7 @@ import pl.kielce.tu.villageSim.repository.TaskRepository;
 import pl.kielce.tu.villageSim.repository.UnitRepository;
 import pl.kielce.tu.villageSim.service.aStar.PathNode;
 import pl.kielce.tu.villageSim.service.communication.CommunicationService;
+import pl.kielce.tu.villageSim.service.entities.StructureService;
 import pl.kielce.tu.villageSim.service.entities.TaskService;
 import pl.kielce.tu.villageSim.service.entities.UnitService;
 import pl.kielce.tu.villageSim.types.task.TaskState;
@@ -23,6 +24,7 @@ import java.util.List;
 public abstract class AbstractTaskManager {
     protected final UnitService unitService;
     protected final TaskService taskService;
+    protected final StructureService structureService;
     protected final CommunicationService communicationService;
 
     protected final WorldMapUtil worldMapUtil;

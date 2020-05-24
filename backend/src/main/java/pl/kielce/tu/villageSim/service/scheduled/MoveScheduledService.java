@@ -5,13 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import pl.kielce.tu.villageSim.model.World;
-import pl.kielce.tu.villageSim.repository.BuildingRepository;
 import pl.kielce.tu.villageSim.repository.UnitRepository;
 import pl.kielce.tu.villageSim.service.MoveService;
 import pl.kielce.tu.villageSim.service.aStar.PathNode;
 import pl.kielce.tu.villageSim.service.communication.CommunicationService;
 import pl.kielce.tu.villageSim.service.entities.TaskService;
-import pl.kielce.tu.villageSim.service.entities.UnitService;
 import pl.kielce.tu.villageSim.types.unit.UnitState;
 import pl.kielce.tu.villageSim.util.RandUtil;
 import pl.kielce.tu.villageSim.util.SchedulerUtil;
@@ -23,26 +21,16 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class MoveScheduledService {
-    private final UnitService unitService;
     private final MoveService moveService;
     private final TaskService taskService;
     private final CommunicationService communicationService;
     private final PositionUtil positionUtil;
     private final UnitRepository unitRepository;
-    private final BuildingRepository buildingRepository;
 
     @Scheduled(fixedRate = 512)
     public void moveFreeUnit() {
         if (SchedulerUtil.canPerform()) {
             unitRepository.findAllByUnitState(UnitState.FREE).forEach(unit -> {
-
-                /* #todo probably to delete
-
-
-                if (!positionUtil.isNearWarehouse(unit.getPositionX(), unit.getPositionY(), 8)) {
-                    taskService.createMoveTask(unit, buildingRepository.getAllByBuildingType(BuildingType.WAREHOUSE).get(0), null);
-                }
-                */
 
                 if (RandUtil.generateChance(0.1)) {
                     Integer positionX = unit.getPositionX() + RandUtil.generateRand(-1, 1);

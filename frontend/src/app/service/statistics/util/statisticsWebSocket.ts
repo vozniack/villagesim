@@ -40,10 +40,4 @@ export class StatisticsWebSocket {
         console.log("## Error callback")
         console.log(error);
     }
-
-    _disconnect() {
-        if (this.stompClient !== null) {
-            this.stompClient.disconnect();
-        }
-    }
 }

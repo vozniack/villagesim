@@ -2,7 +2,7 @@
   <mat-card-header class="mat-card-header-primary">
     <h2 [@showContentAnimated]>{{this.cardTitle()}}</h2>
     <span class="card-bar-divider"></span>
-    <!--<button (click)="this.look()" class="card-bar-button" color="accent" mat-flat-button>Pa na to</button> #todo to delete -->
+    <!--<button (click)="this.look()" class="card-bar-button" color="accent" *ngIf="isActive || isGenerated" mat-flat-button>Rysuj ścieżkę</button>-->
     <button (click)="this.generateModal()" *ngIf="isActive || isGenerated" class="card-bar-button button-border-white"
             mat-stroked-button>Generuj nowy świat
     </button>

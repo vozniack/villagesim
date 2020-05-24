@@ -94,8 +94,6 @@ public class WorldGenerator {
     private void generateStructures() {
         int worldSize = World.SIZE_WIDTH * World.SIZE_HEIGHT;
 
-        // #todo check if cell is empty
-
         for (int i = 0; i < worldSize * WorldParameters.TREE_FACTOR; i++) {
             structureService.createStructure(StructureType.TREE, RandUtil.generateRand(1, 3), new Coordinates(RandUtil.generateRand(0, World.SIZE_WIDTH - 1), RandUtil.generateRand(0, World.SIZE_HEIGHT - 1), 1));
         }

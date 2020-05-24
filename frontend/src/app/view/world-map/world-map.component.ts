@@ -109,9 +109,7 @@ export class WorldMapComponent implements OnInit {
     });
   }
 
-  // #todo to delete
-
-  look() {
+  look() { // temporary method for finding path
     this.canvasService.drawMap(this.world);
 
     let posX = Math.floor(Math.random() * (this.world.sizeWidth - 1)) + 1;
