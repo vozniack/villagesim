@@ -79,7 +79,7 @@ public class StructureTaskManager extends AbstractTaskManager {
 
         Unit unit = task.getUnit();
 
-        unit.setResourceAmount(8);
+        unit.setResourceAmount(RandUtil.generateRand(5, 10));
         unit.setResourceType(getResourceTypeByStructureType(task.getStructure().getStructureType()));
 
         communicationService.sendLog("Zadanie " + task.getTaskType().toString() + " zakończone powodzeniem - zebrano " + unit.getResourceAmount().toString() + " " + unit.getResourceType().toString(), null, LogType.SUCCESS);

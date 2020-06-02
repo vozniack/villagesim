@@ -13,7 +13,6 @@ export class WorldWebSocket {
 
   private endpoint: string = 'http://localhost:8080/world';
   private topicToReceive: string = '/topic/world';
-  private topicToSend: string = '/app/hello';
 
   private worldDataSource = new Subject<World>();
   world$ = this.worldDataSource.asObservable();

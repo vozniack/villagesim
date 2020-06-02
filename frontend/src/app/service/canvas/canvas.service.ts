@@ -110,11 +110,6 @@ export class CanvasService {
     } else {
       this.ctx.strokeRect(x, y, width, height);
     }
-
-  }
-
-  drawCircle(x, y, radius) {
-    this.ctx.arc(x, y, radius, 0, Math.PI, true);
   }
 
   /* Colors methods */

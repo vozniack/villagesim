@@ -31,7 +31,6 @@ public class WorldMapper {
         worldDto.setRock(World.ROCK);
         worldDto.setFood(World.FOOD);
 
-
         return worldDto;
     }
 

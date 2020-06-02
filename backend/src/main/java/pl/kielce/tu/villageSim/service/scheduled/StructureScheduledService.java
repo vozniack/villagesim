@@ -5,7 +5,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import pl.kielce.tu.villageSim.repository.StructureRepository;
 import pl.kielce.tu.villageSim.service.communication.CommunicationService;
-import pl.kielce.tu.villageSim.service.entities.StructureService;
 import pl.kielce.tu.villageSim.types.structure.StructureType;
 import pl.kielce.tu.villageSim.util.RandUtil;
 import pl.kielce.tu.villageSim.util.SchedulerUtil;
@@ -13,11 +12,10 @@ import pl.kielce.tu.villageSim.util.SchedulerUtil;
 @Component
 @RequiredArgsConstructor
 public class StructureScheduledService {
-    private final StructureService structureService;
     private final CommunicationService communicationService;
     private final StructureRepository structureRepository;
 
-    @Scheduled(fixedDelay = 2048) // 1/4 minute
+    @Scheduled(fixedDelay = 2048) // 2 seconds
     public void growTrees() {
         if (SchedulerUtil.canPerform()) {
             structureRepository.findAllByStructureTypeAndStructureLevelLessThan(StructureType.TREE, 3).forEach(tree -> {
@@ -31,7 +29,7 @@ public class StructureScheduledService {
         }
     }
 
-    @Scheduled(fixedDelay = 2048) // 1/4 minute
+    @Scheduled(fixedDelay = 2048) // 2 seconds
     public void brokeTrees() {
         if (SchedulerUtil.canPerform()) {
             structureRepository.findAllByStructureTypeAndStructureLevelGreaterThan(StructureType.TREE, 1).forEach(tree -> {
